@@ -1,0 +1,90 @@
+# 📘 FramePulse — Complete Project & Viva Guide for Group Members
+*(Game Performance & Review Analytics System — CT-263 Object-Oriented Analysis & Design)*
+
+Ye file group ke **har member** ke liye banayi gayi hai taake lab demonstration (**CCA**) aur written report (**CCP**) dono ke waqt har member ko 100% clear ho ke hamara project kya hai, kyun banaya gaya hai, diagrams ka kya matlab hai, aur Java code mein kaun sa OOP concept kahan laga hua hai.
+
+---
+
+## 1. 🎯 Project Idea (Asaan Alfaaz Mein)
+Jab koi naya PC game release hota hai, to gamers aur developers ko do cheezon ka pata lagana hota hai:
+1. **Hardware Performance (Telemetry):** Game alag-alag resolutions (`1080p`, `1440p`, `4K`) par kitne **FPS (Frames Per Second)** de raha hai, **CPU aur GPU** kitna % use kar raha hai, aur kya game **crash** ho raha hai ya nahi?
+2. **Player Reviews & Ratings:** Gamers ko game ki story, gameplay aur optimization kaisi lagi (**1 se 5 stars** + written comment)?
+
+**Masla (Problem):** Aam taur par FPS benchmarks alag tools mein hote hain aur reviews alag websites par, aur reviews mein aksar spam/toxic comments aa jate hain jinse game ki average rating kharab ho jati hai.
+
+**Hamara Solution (`FramePulse`):**
+Humne **Java Swing** mein ek desktop application banayi hai jahan:
+- **Gamer** apna gameplay FPS session (`LOG-301`) aur game review (`REV-901`) submit karta hai.
+- **Admin** toxic ya spam reviews ko reject/delete karta hai aur sahi reviews ko approve karta hai.
+- **Analytics Engine** automatically har game ki **Average Rating**, **Average FPS**, aur **System Stability Score (out of 100)** calculate karta hai, graph banata hai, aur **Game Report (`REP-001`)** generate karta hai.
+
+---
+
+## 2. 📝 Report Sections (CCP Written Report ke Liye Ready Content)
+
+### A. Introduction
+Modern video games require continuous monitoring of both technical performance (frame rates, hardware utilization, crash frequency) and player satisfaction. **FramePulse (Game Performance & Review Analytics System)** is an Object-Oriented Java application that integrates hardware telemetry logging with moderated community reviews to produce real-time stability metrics and analytical reports.
+
+### B. Objectives
+1. To design and implement a modular Java desktop application following core **OOAD principles** (Abstraction, Encapsulation, Inheritance, Polymorphism, Composition, and Design Patterns).
+2. To enable gamers to log hardware telemetry (**FPS, CPU %, GPU %, resolution, crash status**) and submit star ratings with written reviews.
+3. To provide administrators with moderation controls (**Approve, Reject, Delete**) to prevent spam/toxic reviews from distorting game ratings.
+4. To compute automated analytics (**Average Rating, Average FPS, System Stability Score**) and generate exportable reports.
+
+### C. Problem Statement
+Existing platforms separate hardware benchmarking from user review platforms, forcing players and developers to consult multiple disconnected sources. Furthermore, unmoderated review systems are vulnerable to spam and review-bombing, while raw FPS numbers alone do not reflect crash stability. A unified system is needed to combine moderated player ratings with multi-session hardware telemetry into a single stability index.
+
+---
+
+## 3. 🧱 OOP Concepts & Design Patterns (Viva Mein Sabse Zyada Pucha Jane Wala Part)
+
+Miss jab lab mein puchein ke **"Aapne OOP ke kaun-kaun se concepts aur Design Pattern kahan use kiye hain?"**, to ye table dikhana aur batana:
+
+| OOP Concept / Pattern | Hamare Code Mein Kahan Hai? | Viva Mein Kaise Samjhayein? |
+| :--- | :--- | :--- |
+| **1. Abstraction** | `src/User.java` (`abstract class User`) aur `src/Refreshable.java` (`interface`) | "`User` ek abstract class hai kyunki system mein koi generic 'User' nahi hota — har user ya to `Gamer` hota hai ya `Admin`. Ismein `getRole()` abstract method hai." |
+| **2. Inheritance (Generalization)** | `Gamer extends User` (`src/Gamer.java`), `Admin extends User` (`src/Admin.java`) | "`Gamer` aur `Admin` dono `User` class se `userId`, `username`, `email`, `login()`, aur `logout()` inherit karte hain taake code duplicate na ho." |
+| **3. Polymorphism** | `getRole()` in `User.java`, `Gamer.java`, `Admin.java` + `@Override toString()` + `@Override paintComponent(Graphics g)` | "`getRole()` method `Gamer` ke liye `'Gamer'` aur `Admin` ke liye `'Admin'` return karta hai (Method Overriding / Runtime Polymorphism)." |
+| **4. Encapsulation** | Saari model classes (`Game.java`, `Review.java`, `PerformanceLog.java`) | "Har class ke data fields `private` hain (jaise `-averageFps`, `-rating`, `-comment`) aur unhein sirf public getters/setters ke zariye access kiya jata hai." |
+| **5. Composition (Strong Has-A)** | `Game.java` contains `List<PerformanceSession>` and `List<Review>` | "Class diagram mein `Game` ke saath filled diamond (`*--`) laga hai: `Review` aur `PerformanceLog` kisi `Game` ka hissa hain; agar `Game` delete ho to uske logs aur reviews bhi khatam ho jate hain." |
+| **6. Association** | `Gamer` submits `Review` & generates `PerformanceLog`; `Admin` manages `Game` | "Ek `Gamer` multiple reviews (`0..*`) aur performance logs (`0..*`) submit kar sakta hai." |
+| **7. Singleton Design Pattern** | `src/AnalyticsEngine.java` (`AnalyticsEngine.getInstance()`) | "Pure system mein calculations karne ke liye sirf ek hi `AnalyticsEngine` object chahiye hota hai, isliye humne `private` constructor aur `public static getInstance()` ke saath **Singleton Pattern** lagaya hai." |
+
+---
+
+## 4. 📐 8 UML Diagrams ka Breakdown (`diagrams/` folder)
+
+Hamare `diagrams/` folder mein saare 8 diagrams `.png` aur `.puml` dono formats mein maujood hain:
+
+1. **Class Diagram (`1_class_diagram.png`)**: System ki **8 classes** dikhata hai (`User`, `Gamer`, `Admin`, `Game`, `Review`, `PerformanceLog`, `AnalyticsEngine`, `Report`) aur unke beech Inheritance, Association aur Composition relationships.
+2. **Object Diagram (`2_object_diagram.png`)**: Ek specific moment ka snapshot dikhata hai jismein real objects aur values hain:
+   - `admin1 : Admin` (`A-101`, `admin_usman`)
+   - `gamer1 : Gamer` (`G-201`, `shadow_ninja`, `45.5 hrs`)
+   - `cyberGame : Game` (`GM-501`, `Cyber Odyssey`, `Action`)
+   - `perfLog1 : PerformanceLog` (`LOG-301`, `72.4 FPS`, `CPU 64%`, `GPU 91.5%`, `1440p`)
+   - `review1 : Review` (`REV-901`, `rating = 4`, `"Great story and visuals"`)
+   - `gameReport : Report` (`REP-001`, `overallScore = 82.5`)
+   *(Note: Yehi exact values hamari Java app start hote hi Dashboard par dikhti hain!)*
+3. **Use Case Diagram (`3_use_case_diagram.png`)**: Actors (`Admin`, `Gamer`, aur `Analytics Engine`) aur 7 use cases dikhata hai, jismein `<<include>>` relationship se `Calculate Ratings & System Stability` har action ke saath chalta hai.
+4. **Sequence Diagram (`4_sequence_diagram.png`)**: Step 1 se Step 21 tak time-ordered messages dikhata hai (`login()` -> `logSession()` -> `submitReview()` -> `calculateAverageRating()` -> `calculateAverageFps()` -> `Display Updated Analytics`).
+5. **Communication Diagram (`5_communication_diagram.png`)**: Sequence diagram ka hi object-link view hai (`1: Gamer`, `2: System Interface`, `3: Game`, `4: Analytics Engine`, `5: Database`).
+6. **Activity Diagram (`6_activity_diagram.png`)**: 3 Swimlanes (`Gamer / User`, `System UI & Game`, `Analytics Engine & DB`) mein login check aur phir `Submit Review` ya `Log Performance` ka flowchart dikhata hai.
+7. **Component Diagram (`7_component_diagram.png`)**: System ko 3 layers mein divide karta hai: **Presentation Layer** (`UI / GUI Component`), **Business Logic Layer** (`Authentication`, `Game Management`, `Review & Performance Logger`, `Analytics Engine`), aur **Data Access Layer** (`Database Handler Component`).
+8. **Deployment Diagram (`8_deployment_diagram.png`)**: 3 nodes dikhata hai: `Client Device (Gamer/Admin PC)` -> `Application Server / Local Execution Environment` -> `Database Server / Storage Node`.
+
+---
+
+## 5. 🖥️ Live Lab Demo Script (2 Minute Mein Miss ko Kaise Dikhana Hai)
+
+1. **App Chalaana:** Project folder mein `.\run.bat` par double-click karo (ya terminal mein `javac -d out src\*.java` aur `java -cp out Main` chalao).
+2. **Screen 1 — Analytics Dashboard:**
+   - Miss ko dikhao ke Object Diagram wala exact data (`Cyber Odyssey GM-501`, `4.0 / 5.0` Rating, `72.4 FPS`, `82.5 / 100` Stability Score, `LOG-301` by `shadow_ninja`) saamne load hua hai.
+   - Top-right par **"Export Report"** button dabao — popup mein `REP-001` report khul jayegi (`Report.exportReport()`).
+3. **Screen 2 — Log FPS Session:**
+   - Sidebar se **Log FPS Session** kholo, `Cyber Odyssey` select karo, Player name `usman`, Resolution `1440p`, FPS `95`, CPU `50`, GPU `80` daal kar **Log Session** dabao.
+4. **Screen 3 — Submit Review:**
+   - Sidebar se **Submit Review** kholo, 5th star par click karo (`5 / 5`), comment likho aur **Submit Review** dabao (batao ke abhi ye review `PENDING` hai).
+5. **Screen 4 — Admin Moderation:**
+   - Sidebar se **Admin Moderation** kholo — abhi wala review `PENDING` list mein dikhega. Usay select karke **Approve** dabao (aur kisi spam review ko **Delete** karke dikhao).
+6. **Wapas Dashboard par Jao:**
+   - Dikhao ke Average Rating, Average FPS, Stability Score aur FPS Line Chart sab live update ho gaye hain!

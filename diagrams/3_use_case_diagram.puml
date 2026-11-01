@@ -1,0 +1,49 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam backgroundColor #FFFFFF
+skinparam roundCorner 8
+skinparam shadowing false
+skinparam defaultFontName "Segoe UI"
+skinparam usecase {
+    BackgroundColor #FAF7F3
+    BorderColor #6F4E37
+    FontColor #3B2A20
+    ArrowColor #6F4E37
+}
+skinparam actor {
+    BackgroundColor #FAF7F3
+    BorderColor #6F4E37
+    FontColor #3B2A20
+}
+
+actor "Admin" as Admin
+actor "Gamer" as Gamer
+actor "Analytics Engine" as Engine <<Subsystem>>
+
+rectangle "Game Performance & Review Analytics System" {
+    usecase "Login / Logout" as UC_Login
+    usecase "Add / Update Game Data" as UC_AddGame
+    usecase "Log Hardware Performance\n(FPS, GPU & CPU)" as UC_LogPerf
+    usecase "View Game Analytics\n& Reports" as UC_ViewAnalytics
+    usecase "Delete Toxic Reviews" as UC_DeleteReview
+    usecase "Submit Game Review\n& Rating" as UC_SubmitReview
+    usecase "Calculate Ratings &\nSystem Stability" as UC_Calculate
+}
+
+Admin --> UC_Login
+Admin --> UC_AddGame
+Admin --> UC_ViewAnalytics
+Admin --> UC_DeleteReview
+
+Gamer --> UC_Login
+Gamer --> UC_LogPerf
+Gamer --> UC_ViewAnalytics
+Gamer --> UC_SubmitReview
+
+UC_LogPerf ..> UC_Calculate : <<include>>
+UC_SubmitReview ..> UC_Calculate : <<include>>
+UC_ViewAnalytics ..> UC_Calculate : <<include>>
+
+UC_Calculate --> Engine
+@enduml

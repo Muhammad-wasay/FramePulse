@@ -1,0 +1,41 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam roundCorner 8
+skinparam shadowing false
+skinparam defaultFontName "Segoe UI"
+skinparam node {
+    BackgroundColor #FAF7F3
+    BorderColor #6F4E37
+    FontColor #3B2A20
+}
+skinparam artifact {
+    BackgroundColor #FFFFFF
+    BorderColor #6F4E37
+    FontColor #3B2A20
+}
+skinparam database {
+    BackgroundColor #EFECE6
+    BorderColor #6F4E37
+    FontColor #3B2A20
+}
+skinparam arrow {
+    Color #6F4E37
+    FontColor #3B2A20
+}
+
+node "Client Device\n(Gamer / Admin PC)" as Client {
+    artifact "Desktop GUI / Frontend App\n(.exe / python / java)" as GUI
+}
+
+node "Application Server /\nLocal Execution Environment" as Server {
+    artifact "Core Business Logic" as Logic
+    artifact "Analytics Engine" as Engine
+}
+
+node "Database Server /\nStorage Node" as DBNode {
+    database "SQLite / MySQL\nDatabase File" as DB
+}
+
+Client -down-> Server : TCP / HTTP\n(User Actions & Input)
+Server -down-> DBNode : SQL Queries / Database Driver
+@enduml

@@ -1,0 +1,27 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam roundCorner 8
+skinparam shadowing false
+skinparam defaultFontName "Segoe UI"
+skinparam rectangle {
+    BackgroundColor #FAF7F3
+    BorderColor #6F4E37
+    FontColor #3B2A20
+}
+skinparam arrow {
+    Color #6F4E37
+    FontColor #3B2A20
+}
+
+rectangle "1 : Gamer" as Gamer
+rectangle "2 : System Interface" as UI
+rectangle "3 : Game" as Game
+rectangle "4 : Analytics Engine" as Engine
+rectangle "5 : Database" as DB
+
+Gamer -right-> UI : 1: submit data\n1.1: submitReview() / logSession()
+UI -down-> Game : 2: process request
+Game -down-> DB : 3: save records
+Game -left-> Engine : 4: trigger analysis
+Engine -right-> DB : 5: query metrics
+@enduml

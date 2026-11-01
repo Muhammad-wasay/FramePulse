@@ -1,0 +1,54 @@
+@startuml
+autonumber
+skinparam backgroundColor #FFFFFF
+skinparam roundCorner 8
+skinparam shadowing false
+skinparam defaultFontName "Segoe UI"
+skinparam sequence {
+    ArrowColor #6F4E37
+    LifeLineBorderColor #6F4E37
+    LifeLineBackgroundColor #FAF7F3
+    ParticipantBackgroundColor #FAF7F3
+    ParticipantBorderColor #6F4E37
+    ParticipantFontColor #3B2A20
+    ActorBackgroundColor #FAF7F3
+    ActorBorderColor #6F4E37
+    ActorFontColor #3B2A20
+}
+
+actor "Gamer" as Gamer
+participant "System Interface" as UI
+participant "Game Class" as Game
+participant "Analytics Engine" as Engine
+participant "Database / Storage" as DB
+
+Gamer -> UI : login(userName, password)
+UI -> DB : verifyCredentials()
+DB --> UI : Success
+UI --> Gamer : Login Successful
+
+note right of Gamer : Gamer submits gameplay\nsession data
+Gamer -> UI : logSession(gameId, fps, cpu, gpu)
+UI -> Game : recordPerformance()
+Game -> DB : savePerformanceLog()
+DB --> Game : logSaved
+
+note right of Gamer : Gamer writes a review
+Gamer -> UI : submitReview(gameId, rating, comment)
+UI -> Game : addReview()
+Game -> DB : saveReview()
+DB --> Game : reviewSaved
+
+note over Engine : Automated or Triggered\nAnalysis
+UI -> Engine : calculateAverageRating(gameId)
+Engine -> DB : fetchAllReviews(gameId)
+DB --> Engine : reviewsList
+Engine --> UI : returnAvgRating
+
+UI -> Engine : calculateAverageFps(gameId)
+Engine -> DB : fetchAllLogs(gameId)
+DB --> Engine : logsList
+Engine --> UI : returnAvgFps
+
+UI --> Gamer : Display Updated Analytics & Report
+@enduml

@@ -1,0 +1,86 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam backgroundColor #FFFFFF
+skinparam roundCorner 8
+skinparam shadowing false
+skinparam defaultFontName "Segoe UI"
+skinparam class {
+    BackgroundColor #FAF7F3
+    BorderColor #6F4E37
+    HeaderBackgroundColor #EFECE6
+    FontColor #3B2A20
+    ArrowColor #6F4E37
+}
+
+abstract class User {
+    # userID : String
+    # username : String
+    # email : String
+    + login()
+    + logout()
+}
+
+class Gamer {
+    - playTimeHours : double
+    + submitReview(gameID, rating, comment)
+    + logSession(gameId, fps, cpu, gpu)
+}
+
+class Admin {
+    + addGame(game)
+    + deleteReview(reviewId)
+}
+
+class Game {
+    - gameID : String
+    - title : String
+    - genre : String
+    - releaseDate : String
+    + getGameDetails()
+}
+
+class Review {
+    - reviewID : String
+    - comment : String
+    - rating : int
+    - submissionDate : String
+    + getReviewSummary()
+}
+
+class PerformanceLog {
+    - logID : String
+    - averageFPS : double
+    - cpuUsagePercent : double
+    - gpuUsagePercent : double
+    - resolution : String
+    + getMetricSummary()
+}
+
+class AnalyticsEngine {
+    + calculateAverageRating(gameId)
+    + calculateAverageFps(gameId)
+    + getSystemStabilityScore(gameId)
+    + generateGameReport(gameId)
+}
+
+class Report {
+    - reportId : String
+    - generatedDate : String
+    - overallScore : double
+    - summaryText : String
+    + exportReport()
+}
+
+User <|-- Gamer
+User <|-- Admin
+
+Admin --> Game : manages
+Gamer "1" --> "0..*" Review : submits
+Gamer "1" --> "0..*" PerformanceLog : generates
+
+Game "1" *-- "0..*" Review : contains
+Game "1" *-- "0..*" PerformanceLog : records
+
+AnalyticsEngine --> Game : processes
+AnalyticsEngine --> Report : produces
+@enduml

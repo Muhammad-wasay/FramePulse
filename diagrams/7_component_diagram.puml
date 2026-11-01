@@ -1,0 +1,51 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam roundCorner 8
+skinparam shadowing false
+skinparam defaultFontName "Segoe UI"
+skinparam componentStyle uml2
+skinparam component {
+    BackgroundColor #FAF7F3
+    BorderColor #6F4E37
+    FontColor #3B2A20
+    ArrowColor #6F4E37
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #8B7766
+    FontColor #3B2A20
+}
+skinparam database {
+    BackgroundColor #EFECE6
+    BorderColor #6F4E37
+    FontColor #3B2A20
+}
+
+package "Presentation Layer" {
+    [UI / GUI Component] as UI
+}
+
+package "Business Logic Layer" {
+    [Authentication Component] as Auth
+    [Game Management Component] as GameMgmt
+    [Review & Performance Logger] as Logger
+    [Analytics Engine Component] as Engine
+}
+
+package "Data Access Layer" {
+    [Database Handler Component] as DBHandler
+}
+
+database "DB Storage" as DB
+
+UI --> Auth
+UI --> GameMgmt
+UI --> Logger
+UI --> Engine
+
+GameMgmt --> DBHandler
+Logger --> DBHandler
+Engine --> DBHandler
+
+DBHandler --> DB
+@enduml

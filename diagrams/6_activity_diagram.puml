@@ -1,0 +1,52 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam roundCorner 8
+skinparam shadowing false
+skinparam defaultFontName "Segoe UI"
+skinparam activity {
+    BackgroundColor #FAF7F3
+    BorderColor #6F4E37
+    FontColor #3B2A20
+    ArrowColor #6F4E37
+    DiamondBackgroundColor #EFECE6
+    DiamondBorderColor #6F4E37
+}
+skinparam swimlane {
+    BorderColor #6F4E37
+    TitleBackgroundColor #EFECE6
+    TitleFontColor #3B2A20
+}
+
+|Gamer / User|
+start
+repeat
+  :Enter Username & Password;
+  |System UI & Game|
+  :Verify Credentials;
+  backward:Show Error & Retry;
+repeat while (Valid Credentials?) is (No) not (Yes)
+
+:Open Dashboard;
+
+|Gamer / User|
+:Select Action;
+if (Action Type?) then (Submit Review)
+  :Enter Rating & Comment;
+  |System UI & Game|
+  :Save Review in Game Object;
+  |Analytics Engine & DB|
+  :Calculate Average Rating;
+else (Log Performance)
+  |Gamer / User|
+  :Enter FPS, CPU & GPU Stats;
+  |System UI & Game|
+  :Save Performance Log;
+  |Analytics Engine & DB|
+  :Calculate Average FPS & Stability;
+endif
+
+|Analytics Engine & DB|
+:Generate Updated Game Report;
+:Display Analytics & Success Message;
+stop
+@enduml

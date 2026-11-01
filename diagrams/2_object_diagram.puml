@@ -1,0 +1,67 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam roundCorner 8
+skinparam shadowing false
+skinparam defaultFontName "Segoe UI"
+skinparam object {
+    BackgroundColor #FAF7F3
+    BorderColor #6F4E37
+    HeaderBackgroundColor #EFECE6
+    FontColor #3B2A20
+    ArrowColor #6F4E37
+}
+
+object "admin1 : Admin" as admin1 {
+    userId = "A-101"
+    username = "admin_usman"
+    email = "admin@gaming.org"
+}
+
+object "gamer1 : Gamer" as gamer1 {
+    userId = "G-201"
+    username = "shadow_ninja"
+    email = "gamer1@gmail.com"
+    playTimeHours = 45.5
+}
+
+object "cyberGame : Game" as cyberGame {
+    gameId = "GM-501"
+    title = "Cyber Odyssey"
+    genre = "Action"
+    releaseDate = "2023-11-15"
+}
+
+object "review1 : Review" as review1 {
+    reviewId = "REV-901"
+    rating = 4
+    comment = "Great story and visuals"
+    submissionDate = "2026-10-10"
+}
+
+object "perfLog1 : PerformanceLog" as perfLog1 {
+    logId = "LOG-301"
+    averageFps = 72.4
+    cpuUsagePercent = 64.0
+    gpuUsagePercent = 91.5
+    resolution = "1440p"
+    timestamp = "2026-10-10 09:15"
+}
+
+object "engine : AnalyticsEngine" as engine {
+}
+
+object "gameReport : Report" as gameReport {
+    reportId = "REP-001"
+    generatedDate = "2026-10-10"
+    overallScore = 82.5
+    summaryText = "Solid 1440p performance with 4/5 user rating"
+}
+
+admin1 --> cyberGame : manages
+gamer1 --> review1 : submitted
+gamer1 --> perfLog1 : recorded
+cyberGame *-- review1 : contains
+cyberGame *-- perfLog1 : records
+engine --> cyberGame : analyzes
+engine --> gameReport : generated
+@enduml
