@@ -234,5 +234,6 @@ java -cp out Main
 ## 👤 Authors & Project Team
 
 - **Muhammad Wasay** — [@Muhammad-wasay](https://github.com/Muhammad-wasay) (`wasayrafiq6@gmail.com`)
-- **M. Usman Masood** & **CT-263 OOAD Group Members**
+- **M. Usman Masood**
+- **Raza Ali**
 - **Course:** CT-263 Object-Oriented Analysis & Design (CCA Live Demonstration & CCP Report)
