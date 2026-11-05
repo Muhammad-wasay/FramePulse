@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "secondary-fixed": "#ffe083", "on-secondary-fixed-variant": "#574500", "surface-dim": "#dcd9dd", "on-secondary-container": "#6f5900", "primary-fixed-dim": "#7bd0ff", "on-tertiary-container": "#841630", "surface-container-high": "#eae7eb", "secondary-fixed-dim": "#eec200", "surface": "#fbf8fc", "tertiary-container": "#ff919e", "on-error-container": "#93000a", "tertiary-fixed-dim": "#ffb2b9", "surface-container-highest": "#e4e1e6", "inverse-on-surface": "#f3f0f4", "on-secondary-fixed": "#231b00", "primary": "#00668a", "on-background": "#1b1b1e", "on-primary-fixed": "#001e2c", "outline-variant": "#bdc8d1", "surface-tint": "#00668a", "on-tertiary": "#ffffff", "on-surface-variant": "#3e484f", "primary-container": "#38bdf8", "surface-container-lowest": "#ffffff", "tertiary": "#a93349", "surface-bright": "#fbf8fc", "on-error": "#ffffff", "on-tertiary-fixed": "#400010", "inverse-surface": "#303033", "surface-variant": "#e4e1e6", "outline": "#6e7980", "secondary": "#735c00", "on-secondary": "#ffffff", "inverse-primary": "#7bd0ff", "primary-fixed": "#c4e7ff", "on-primary-fixed-variant": "#004c69", "surface-container-low": "#f6f2f7", "secondary-container": "#fed01b", "error-container": "#ffdad6", "on-tertiary-fixed-variant": "#891933", "surface-container": "#f0edf1", "on-surface": "#1b1b1e", "error": "#ba1a1a", "on-primary-container": "#004965", "tertiary-fixed": "#ffdadc", "on-primary": "#ffffff", "background": "#fbf8fc" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "gutter": "1.25rem", "space-md": "1rem", "gutter-mobile": "0.75rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "margin": "2rem", "space-2xl": "3rem", "space-xl": "2.25rem", "space-sm": "0.5rem", "margin-mobile": "1rem" }, "fontFamily": { "headline-md": [ "Space Grotesk" ], "headline-lg": [ "Space Grotesk" ], "label-md": [ "Space Grotesk" ], "headline-sm": [ "Space Grotesk" ], "label-lg": [ "Space Grotesk" ], "display-hero": [ "Space Grotesk" ], "body-md": [ "Plus Jakarta Sans" ], "display-hero-mobile": [ "Space Grotesk" ], "label-sm": [ "Space Grotesk" ], "headline-lg-mobile": [ "Space Grotesk" ], "body-sm": [ "Plus Jakarta Sans" ], "body-lg": [ "Plus Jakarta Sans" ] }, "fontSize": { "headline-md": [ "24px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "headline-lg": [ "32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "label-md": [ "12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "700" } ], "headline-sm": [ "20px", { "lineHeight": "26px", "letterSpacing": "0em", "fontWeight": "600" } ], "label-lg": [ "14px", { "lineHeight": "18px", "letterSpacing": "0.04em", "fontWeight": "700" } ], "display-hero": [ "48px", { "lineHeight": "52px", "letterSpacing": "-0.03em", "fontWeight": "700" } ], "body-md": [ "15px", { "lineHeight": "22px", "fontWeight": "500" } ], "display-hero-mobile": [ "32px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "label-sm": [ "10px", { "lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "700" } ], "headline-lg-mobile": [ "24px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" } ], "body-sm": [ "13px", { "lineHeight": "18px", "fontWeight": "500" } ], "body-lg": [ "18px", { "lineHeight": "28px", "fontWeight": "400" } ] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest border-r-[2.5px] border-[#18181b] shadow-[4px_0px_0px_#18181b] z-50 flex flex-col justify-between p-space-md"><div class="flex flex-col gap-space-lg"><div class="flex items-center gap-space-sm p-space-sm bg-surface-container-low rounded-xl border-[2px] border-[#18181b] shadow-[3px_3px_0px_#18181b]"><img alt="FramePulse Toon Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Wl0VtHtB-WNhhWt3xkPXqe3iaJ0c-JtWmLQIHZjtKBSeT-rDgam3lLNALZij96tBACJUsxs4pZMfBws2A2pmJn6J2gUpLkVF0MB6TDbrUx4RJ1drrDw1QygT1q2hPmHPhnAooSJsmEXoc-8yrupL3_DIdSZEdSwYJgHcHS9WXTJ7nzF3bLpiKVd0TjCgIT7VfIA6RKXRkHZGKHoB3Mc-CNlbfquje7xZKYezskj-Xl"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm uppercase tracking-tight text-[#18181b]">FramePulse</span><span class="font-label-sm text-label-sm uppercase text-on-surface-variant font-bold">Game Telemetry &amp; Reviews</span></div></div><nav class="flex flex-col gap-space-sm" data-active-classes="bg-primary-container text-on-primary-container shadow-[3px_3px_0px_#18181b] -translate-y-0.5"><a class="flex items-center justify-between px-space-md py-space-sm rounded-lg border-[2px] border-[#18181b] bg-surface font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant shadow-[2px_2px_0px_#18181b] transition-all hover:bg-surface-container-high hover:text-on-surface hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-none" data-path="analytics-dashboard" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px]">monitoring</span><span>Analytics Dashboard</span></div></a><a aria-current="page" class="flex items-center justify-between px-space-md py-space-sm rounded-lg border-[2px] border-[#18181b] font-label-lg uppercase tracking-wider transition-all active:translate-y-0.5 bg-primary-container text-on-primary-container shadow-[3px_3px_0px_#18181b] -translate-y-0.5" data-path="log-fps-session" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px]">speed</span><span>Log FPS Session</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-lg border-[2px] border-[#18181b] bg-surface font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant shadow-[2px_2px_0px_#18181b] transition-all hover:bg-surface-container-high hover:text-on-surface hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-none" data-path="submit-review" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px]">rate_review</span><span>Submit Review</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-lg border-[2px] border-[#18181b] bg-surface font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant shadow-[2px_2px_0px_#18181b] transition-all hover:bg-surface-container-high hover:text-on-surface hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-none" data-path="admin-moderation" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px]">gavel</span><span>Admin Moderation</span></div><span class="flex items-center justify-center w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container border-[1.5px] border-[#18181b] font-label-sm text-label-sm font-bold shadow-[1px_1px_0px_#18181b]">3</span></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-lg border-[2px] border-[#18181b] bg-surface font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant shadow-[2px_2px_0px_#18181b] transition-all hover:bg-surface-container-high hover:text-on-surface hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-none" data-path="manage-games" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px]">sports_esports</span><span>Manage Games</span></div></a></nav></div><div class="p-space-sm bg-surface-container-low rounded-xl border-[2px] border-[#18181b] shadow-[3px_3px_0px_#18181b] flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="relative"><div class="w-10 h-10 rounded-full bg-primary-container border-[2px] border-[#18181b] flex items-center justify-center shadow-[2px_2px_0px_#18181b]"><span class="material-symbols-outlined text-on-primary-container text-[20px]">shield_person</span></div><span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-[#4ade80] rounded-full border-[1.5px] border-[#18181b]"></span></div><div class="flex flex-col"><span class="font-label-lg text-label-lg text-[#18181b]">admin_usman</span><span class="font-label-sm text-label-sm uppercase bg-secondary-fixed text-on-secondary-fixed-variant px-1.5 py-0.5 rounded border border-[#18181b] w-fit font-bold">Lv.42 Auditor</span></div></div><div class="flex items-center"><span class="material-symbols-outlined text-on-surface-variant text-[20px] hover:text-[#18181b] cursor-pointer">more_vert</span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/90 backdrop-blur-md border-b-[2.5px] border-[#18181b] z-40 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 px-3 py-1 rounded-full bg-[#faf9f6] border-[2px] border-[#18181b] shadow-[2px_2px_0px_#18181b]"><span class="w-2.5 h-2.5 rounded-full bg-[#4ade80] animate-pulse border border-[#18181b]"></span><span class="font-label-md text-label-md uppercase text-[#18181b]">🟢 Ingest Online 12.4ms</span></div><div class="hidden md:flex items-center gap-1 font-label-md text-label-md text-on-surface-variant"><span class="uppercase">Telemetry Cluster</span><span class="material-symbols-outlined text-[16px]">chevron_right</span><span class="uppercase font-bold text-[#18181b]">Live Stream 01</span></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-sm"><button class="w-9 h-9 rounded-lg bg-surface-container-lowest border-[2px] border-[#18181b] shadow-[2px_2px_0px_#18181b] flex items-center justify-center hover:-translate-y-0.5 active:translate-y-0 active:shadow-none transition-all"><span class="material-symbols-outlined text-[20px] text-on-surface">refresh</span></button><button class="w-9 h-9 rounded-lg bg-surface-container-lowest border-[2px] border-[#18181b] shadow-[2px_2px_0px_#18181b] flex items-center justify-center hover:-translate-y-0.5 active:translate-y-0 active:shadow-none transition-all"><span class="material-symbols-outlined text-[20px] text-on-surface">notifications</span></button></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center border-[2px] border-[#18181b] shadow-[2px_2px_0px_#18181b]"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="relative w-full pt-16 px-space-lg py-space-lg bg-background min-h-screen"><div class="flex flex-col w-full">
+<!-- Sub-header & Action Bar -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-lg">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm uppercase tracking-wider shadow-[2px_2px_0px_#18181b]">
+<span class="material-symbols-outlined text-[14px]">sensors</span>
+          Telemetry Ingest Node #04 // Calibration Ready
+        </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm uppercase">
+<span class="w-2 h-2 rounded-full bg-[#4ade80]"></span> Port 9021 Active
+        </span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface uppercase tracking-tight flex items-center gap-space-sm">
+        Log FPS Session
+        <span class="font-label-md text-label-md px-2 py-0.5 rounded bg-primary-container text-on-primary-container uppercase shadow-[2px_2px_0px_#18181b]">REC MODE</span>
+</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Submit standardized frame pacing, telemetry traces, and crash incident reports to verify stability rankings.</p>
+</div>
+<!-- Quick Telemetry Badge Strip -->
+<div class="flex items-center gap-space-sm bg-surface-container-lowest p-space-sm rounded-xl shadow-[4px_4px_0px_#18181b]">
+<div class="flex items-center gap-space-xs px-space-sm py-1 rounded-lg bg-surface-container">
+<span class="material-symbols-outlined text-primary text-[18px]">memory</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Engine</span>
+<span class="font-label-md text-label-md text-on-surface">Vulkan 1.3</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs px-space-sm py-1 rounded-lg bg-secondary-fixed">
+<span class="material-symbols-outlined text-on-secondary-fixed text-[18px]">bolt</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-secondary-fixed-variant uppercase">Sampler</span>
+<span class="font-label-md text-label-md text-on-secondary-fixed">1,000 Hz</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bento Grid 2-Column Core Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT COLUMN: Input Form Panel (7 cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-md">
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-[4px_4px_0px_#18181b] relative overflow-hidden">
+<!-- Cel-shaded Manga Ribbon Strip -->
+<div class="absolute -top-3 -right-8 w-36 h-10 bg-secondary-container text-on-secondary-container font-label-sm text-label-sm uppercase flex items-center justify-center rotate-12 shadow-[2px_2px_0px_#18181b] select-none font-bold">
+          FORM CAL-04
+        </div>
+<div class="flex items-center justify-between pb-space-sm mb-space-md bg-surface-container-low -mx-space-lg -mt-space-lg px-space-lg pt-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-container text-on-primary-container shadow-[2px_2px_0px_#18181b]">
+<span class="material-symbols-outlined text-[20px]">videogame_asset</span>
+</span>
+<div>
+<h2 class="font-headline-sm text-headline-sm uppercase text-on-surface">Session Details Form</h2>
+<p class="font-label-sm text-label-sm uppercase text-on-surface-variant">Validated against FramePulse Integrity V2</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm uppercase px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant">Live Audit</span>
+</div>
+<form class="flex flex-col gap-space-lg" id="fps-session-form" onsubmit="event.preventDefault(); triggerSubmit();">
+<!-- Game Selection & Player Handle -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Game Dropdown -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md uppercase tracking-wider text-on-surface flex items-center gap-1" for="game-select">
+<span class="material-symbols-outlined text-[16px] text-primary">sports_esports</span>
+                Target Game Profile
+              </label>
+<div class="relative">
+<select class="w-full bg-[#faf9f6] text-on-surface font-body-md text-body-md rounded-lg px-3 py-2.5 shadow-[2px_2px_0px_#18181b] focus:bg-surface-container-lowest focus:shadow-[3px_3px_0px_#18181b] outline-none appearance-none cursor-pointer transition-all" id="game-select">
+<option selected="" value="cyber-odyssey">🎮 Cyber Odyssey GM-501 (DX12)</option>
+<option value="valkyrie-zero">⚔️ Valkyrie Protocol: Zero (Vulkan)</option>
+<option value="mecha-assault">🤖 Neon Assault 2099 (RayTraced)</option>
+<option value="hyper-drift">🏎️ HyperDrift Kansei (Unreal 5.4)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant text-[20px]">expand_more</span>
+</div>
+</div>
+<!-- Player Handle -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md uppercase tracking-wider text-on-surface flex items-center gap-1" for="player-handle">
+<span class="material-symbols-outlined text-[16px] text-secondary">badge</span>
+                Player Call-Sign
+              </label>
+<div class="relative">
+<input class="w-full bg-[#faf9f6] text-on-surface font-body-md text-body-md rounded-lg px-3 py-2.5 shadow-[2px_2px_0px_#18181b] focus:bg-surface-container-lowest focus:shadow-[3px_3px_0px_#18181b] outline-none transition-all placeholder:text-outline" id="player-handle" placeholder="e.g. NexusRider_42" type="text" value="NexusRider_42"/>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">verified</span>
+</div>
+</div>
+</div>
+<!-- Resolution Pills -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md uppercase tracking-wider text-on-surface flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary">aspect_ratio</span>
+                Render Resolution Matrix
+              </label>
+<span class="font-label-sm text-label-sm uppercase px-2 py-0.5 rounded bg-primary-fixed-dim text-on-primary-fixed font-bold" id="res-badge-label">1440p (Standard Baseline)</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm" id="res-picker-group">
+<button class="res-btn py-2 px-3 rounded-lg bg-surface-container-low text-on-surface-variant font-label-md text-label-md uppercase shadow-[2px_2px_0px_#18181b] hover:bg-surface-container transition-all flex flex-col items-center" onclick="selectRes(this, '720p HD', 1.0)" type="button">
+<span>720p HD</span>
+<span class="font-label-sm text-label-sm opacity-70">1280x720</span>
+</button>
+<button class="res-btn py-2 px-3 rounded-lg bg-surface-container-low text-on-surface-variant font-label-md text-label-md uppercase shadow-[2px_2px_0px_#18181b] hover:bg-surface-container transition-all flex flex-col items-center" onclick="selectRes(this, '1080p FHD', 1.0)" type="button">
+<span>1080p FHD</span>
+<span class="font-label-sm text-label-sm opacity-70">1920x1080</span>
+</button>
+<button class="res-btn active-res py-2 px-3 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md uppercase shadow-[3px_3px_0px_#18181b] -translate-y-0.5 transition-all flex flex-col items-center font-bold" onclick="selectRes(this, '1440p QHD', 1.0)" type="button">
+<span>1440p QHD</span>
+<span class="font-label-sm text-label-sm opacity-80">2560x1440</span>
+</button>
+<button class="res-btn py-2 px-3 rounded-lg bg-surface-container-low text-on-surface-variant font-label-md text-label-md uppercase shadow-[2px_2px_0px_#18181b] hover:bg-surface-container transition-all flex flex-col items-center" onclick="selectRes(this, '4K UHD', 1.0)" type="button">
+<span>4K UHD</span>
+<span class="font-label-sm text-label-sm opacity-70">3840x2160</span>
+</button>
+</div>
+</div>
+<!-- Dynamic Numeric Sliders & Telemetry Meters -->
+<div class="flex flex-col gap-space-md p-space-md bg-surface-container-low rounded-xl shadow-[3px_3px_0px_#18181b]">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md uppercase text-on-surface flex items-center gap-1.5 font-bold">
+<span class="material-symbols-outlined text-secondary text-[18px]">equalizer</span>
+                Core Telemetry Stream Readings
+              </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Hardware Auto-Sync</span>
+</div>
+<!-- Average FPS Meter -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded-sm bg-primary-container shadow-[1px_1px_0px_#18181b]"></span>
+<label class="font-label-md text-label-md uppercase text-on-surface" for="fps-range">Average Frame Rate (FPS)</label>
+</div>
+<div class="flex items-center gap-1">
+<input class="w-16 text-center font-headline-sm text-headline-sm bg-surface-container-lowest text-on-surface py-0.5 rounded shadow-[2px_2px_0px_#18181b] outline-none" id="fps-number" max="360" min="15" oninput="updateSliders('fps', this.value)" type="number" value="142"/>
+<span class="font-label-sm text-label-sm uppercase font-bold text-on-surface-variant">FPS</span>
+</div>
+</div>
+<input class="w-full accent-primary cursor-pointer h-3 rounded-lg bg-surface-container-highest appearance-none shadow-inner" id="fps-range" max="240" min="15" oninput="updateSliders('fps', this.value)" type="range" value="142"/>
+<div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant uppercase">
+<span>30 FPS (Floor)</span>
+<span>60 FPS</span>
+<span>120 FPS</span>
+<span>144+ FPS (Pro)</span>
+</div>
+</div>
+<!-- CPU Load Meter -->
+<div class="flex flex-col gap-1.5 pt-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded-sm bg-secondary-container shadow-[1px_1px_0px_#18181b]"></span>
+<label class="font-label-md text-label-md uppercase text-on-surface" for="cpu-range">Average CPU Load (%)</label>
+</div>
+<div class="flex items-center gap-1">
+<input class="w-16 text-center font-headline-sm text-headline-sm bg-surface-container-lowest text-on-surface py-0.5 rounded shadow-[2px_2px_0px_#18181b] outline-none" id="cpu-number" max="100" min="0" oninput="updateSliders('cpu', this.value)" type="number" value="54"/>
+<span class="font-label-sm text-label-sm uppercase font-bold text-on-surface-variant">%</span>
+</div>
+</div>
+<!-- Inked Segmented Progress Meter -->
+<div class="relative w-full h-4 bg-surface-container-highest rounded-full overflow-hidden shadow-[2px_2px_0px_#18181b]">
+<div class="h-full bg-secondary-container transition-all duration-150 flex items-center justify-end pr-1" id="cpu-progress-bar" style="width: 54%;">
+<span class="w-1 h-full bg-[#18181b] opacity-40"></span>
+</div>
+</div>
+<input class="w-full accent-secondary cursor-pointer -mt-1 h-2 opacity-80" id="cpu-range" max="100" min="5" oninput="updateSliders('cpu', this.value)" type="range" value="54"/>
+</div>
+<!-- GPU Load Meter -->
+<div class="flex flex-col gap-1.5 pt-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded-sm bg-tertiary-container shadow-[1px_1px_0px_#18181b]"></span>
+<label class="font-label-md text-label-md uppercase text-on-surface" for="gpu-range">GPU Core Saturation (%)</label>
+</div>
+<div class="flex items-center gap-1">
+<input class="w-16 text-center font-headline-sm text-headline-sm bg-surface-container-lowest text-on-surface py-0.5 rounded shadow-[2px_2px_0px_#18181b] outline-none" id="gpu-number" max="100" min="0" oninput="updateSliders('gpu', this.value)" type="number" value="89"/>
+<span class="font-label-sm text-label-sm uppercase font-bold text-on-surface-variant">%</span>
+</div>
+</div>
+<!-- Inked GPU Meter -->
+<div class="relative w-full h-4 bg-surface-container-highest rounded-full overflow-hidden shadow-[2px_2px_0px_#18181b]">
+<div class="h-full bg-tertiary-container transition-all duration-150 flex items-center justify-end pr-1" id="gpu-progress-bar" style="width: 89%;">
+<span class="w-1 h-full bg-[#18181b] opacity-40"></span>
+</div>
+</div>
+<input class="w-full accent-tertiary cursor-pointer -mt-1 h-2 opacity-80" id="gpu-range" max="100" min="10" oninput="updateSliders('gpu', this.value)" type="range" value="89"/>
+</div>
+</div>
+<!-- Prominent Cartoon Crash Penalty Card -->
+<div class="p-space-md rounded-xl bg-error-container/40 hover:bg-error-container/60 transition-all cursor-pointer shadow-[3px_3px_0px_#18181b] flex items-center justify-between" id="crash-card" onclick="toggleCrashCheckbox()">
+<div class="flex items-start gap-space-sm pr-2">
+<span class="flex-shrink-0 w-9 h-9 rounded-lg bg-tertiary-container flex items-center justify-center text-on-tertiary-container shadow-[2px_2px_0px_#18181b]">
+<span class="material-symbols-outlined text-[22px]">warning</span>
+</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface leading-tight">Critical Incident / Crash Event</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">The game crashed, froze, or hit fatal memory fault during this session (-30 pts penalty).</p>
+</div>
+</div>
+<!-- Custom Neo-brutalist Checkbox -->
+<div class="flex items-center pl-2">
+<div class="w-7 h-7 rounded-lg bg-surface-container-lowest shadow-[2px_2px_0px_#18181b] flex items-center justify-center transition-all" id="custom-crash-box">
+<span class="material-symbols-outlined text-tertiary font-bold text-[20px] hidden" id="crash-checkmark">close</span>
+</div>
+<input class="hidden" id="crash-input" onchange="recalculateScore()" type="checkbox"/>
+</div>
+</div>
+<!-- Action Buttons Bar -->
+<div class="flex flex-col sm:flex-row items-center gap-space-md pt-space-xs">
+<button class="w-full sm:flex-1 py-3 px-space-lg rounded-xl bg-primary-container text-on-primary-container font-headline-sm text-headline-sm uppercase tracking-wider shadow-[4px_4px_0px_#18181b] hover:-translate-y-1 hover:shadow-[6px_6px_0px_#18181b] active:translate-y-0.5 active:shadow-[1px_1px_0px_#18181b] transition-all flex items-center justify-center gap-space-sm" id="btn-submit" type="submit">
+<span class="material-symbols-outlined text-[24px]">bolt</span>
+<span>Log Session Telemetry</span>
+</button>
+<button class="w-full sm:w-auto py-3 px-space-md rounded-xl bg-surface-container-high text-on-surface font-label-lg text-label-lg uppercase tracking-wider shadow-[3px_3px_0px_#18181b] hover:bg-surface-container-highest hover:-translate-y-0.5 active:translate-y-0 active:shadow-none transition-all flex items-center justify-center gap-1.5" onclick="resetForm()" type="button">
+<span class="material-symbols-outlined text-[18px]">restart_alt</span>
+<span>Clear Form</span>
+</button>
+</div>
+</form>
+</div>
+<!-- Recent Uploads Micro-Strip -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-[3px_3px_0px_#18181b] flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">history_toggle_off</span>
+<span class="font-label-md text-label-md uppercase text-on-surface">Recent Submissions (Last 15m)</span>
+</div>
+<div class="flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant">
+<span class="px-2 py-0.5 rounded bg-surface-container">Cyber Odyssey // 138 FPS (Rank S)</span>
+<span class="px-2 py-0.5 rounded bg-surface-container">Valkyrie // 64 FPS (Rank A)</span>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Formula Breakdown & Live Simulation HUD (5 cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-lg">
+<!-- Anime Power-Level Live Badge Preview Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-[4px_4px_0px_#18181b] relative overflow-hidden">
+<!-- Manga burst pattern accent corner -->
+<div class="flex items-center justify-between pb-space-sm mb-space-md">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-secondary-container shadow-[1px_1px_0px_#18181b] animate-ping"></span>
+<span class="font-label-lg text-label-lg uppercase tracking-wider text-on-surface font-bold">Realtime Score Projection</span>
+</div>
+<span class="font-label-sm text-label-sm uppercase px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-bold">Dynamic Engine</span>
+</div>
+<div class="flex flex-col items-center justify-center p-space-lg rounded-xl bg-surface-container-low shadow-[3px_3px_0px_#18181b] relative">
+<!-- Background stylized comic speed-lines inline SVG -->
+<svg class="absolute inset-0 w-full h-full opacity-10 pointer-events-none" preserveaspectratio="none" viewbox="0 0 200 200">
+<line stroke="#18181b" stroke-width="2" x1="0" x2="100" y1="0" y2="100"></line>
+<line stroke="#18181b" stroke-width="2" x1="200" x2="100" y1="0" y2="100"></line>
+<line stroke="#18181b" stroke-width="2" x1="0" x2="100" y1="200" y2="100"></line>
+<line stroke="#18181b" stroke-width="2" x1="200" x2="100" y1="200" y2="100"></line>
+<line stroke="#18181b" stroke-width="2" x1="100" x2="100" y1="0" y2="100"></line>
+<line stroke="#18181b" stroke-width="2" x1="100" x2="100" y1="200" y2="100"></line>
+</svg>
+<span class="font-label-md text-label-md uppercase text-on-surface-variant tracking-widest font-bold">Calculated Stability</span>
+<div class="flex items-baseline gap-2 my-space-xs z-10">
+<span class="font-display-hero text-display-hero text-on-surface tracking-tighter" id="calculated-score">98.5</span>
+<span class="font-headline-sm text-headline-sm text-on-surface-variant">/ 100</span>
+</div>
+<!-- Tier Badge Plaque -->
+<div class="mt-space-xs px-space-md py-1 rounded-full bg-secondary-container text-on-secondary-container font-headline-sm text-headline-sm uppercase tracking-wider shadow-[3px_3px_0px_#18181b] flex items-center gap-2" id="tier-badge">
+<span class="material-symbols-outlined text-[20px]">military_tech</span>
+<span id="tier-text">TIER S • OVERCLOCKED</span>
+</div>
+<!-- Radial Mini Visualizer / Bar -->
+<div class="w-full mt-space-md flex flex-col gap-1 z-10">
+<div class="flex justify-between font-label-sm text-label-sm uppercase font-bold text-on-surface">
+<span id="fps-split-text">FPS Yield: 68.5 / 70</span>
+<span id="crash-split-text">Incident Factor: 30 / 30</span>
+</div>
+<div class="w-full h-3 bg-surface-container-highest rounded-full overflow-hidden shadow-[2px_2px_0px_#18181b] flex">
+<div class="bg-primary-container h-full transition-all duration-300" id="bar-fps-part" style="width: 68.5%;"></div>
+<div class="bg-secondary-container h-full transition-all duration-300" id="bar-crash-part" style="width: 30%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Stylized Cel-Shaded Formula Blackboard / Comic Note Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-[4px_4px_0px_#18181b] flex flex-col gap-space-md relative">
+<!-- Comic Note Header Tag -->
+<div class="flex items-center gap-space-sm">
+<span class="w-8 h-8 rounded-lg bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed shadow-[2px_2px_0px_#18181b]">
+<span class="material-symbols-outlined text-[20px]">functions</span>
+</span>
+<div>
+<h3 class="font-headline-sm text-headline-sm uppercase text-on-surface">Formula Breakdown</h3>
+<p class="font-label-sm text-label-sm uppercase text-on-surface-variant">Deterministic Quality Scoring</p>
+</div>
+</div>
+<!-- Chalkboard / Comic Formula Display Card -->
+<div class="p-space-md rounded-xl bg-surface-container font-headline-sm text-headline-sm text-on-surface text-center shadow-[3px_3px_0px_#18181b]">
+<div class="font-label-sm text-label-sm uppercase text-on-surface-variant tracking-wider pb-1">Mathematical Index</div>
+<div class="tracking-tight text-primary font-bold">
+            [ Stability Score ] = <br class="sm:hidden"/>
+<span class="text-primary">FPS Weight (max 70)</span> + <span class="text-secondary">Crash-Free (max 30)</span>
+</div>
+</div>
+<!-- Step 1 & Step 2 Itemized Breakdown Panels -->
+<div class="flex flex-col gap-space-sm">
+<!-- Step 1 Item -->
+<div class="p-space-sm rounded-lg bg-surface-container-low shadow-[2px_2px_0px_#18181b] flex items-start gap-space-sm">
+<div class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container font-label-sm text-label-sm font-bold flex items-center justify-center shadow-[1px_1px_0px_#18181b] flex-shrink-0 mt-0.5">
+              1
+            </div>
+<div class="flex flex-col flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md uppercase text-on-surface font-bold">Frame Pacing &amp; FPS Weight</span>
+<span class="font-label-sm text-label-sm uppercase bg-primary-fixed px-1.5 py-0.5 rounded text-on-primary-fixed font-bold">Up to 70 Pts</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Normalized against 144Hz competitive threshold. Framerates above 120 FPS hit 65+ points.</p>
+<div class="flex items-center gap-2 mt-1.5">
+<span class="inline-flex items-center gap-0.5 font-label-sm text-label-sm text-primary font-bold">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> 60 FPS = 35.0 pts
+                </span>
+<span class="inline-flex items-center gap-0.5 font-label-sm text-label-sm text-primary font-bold">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> 144 FPS = 70.0 pts
+                </span>
+</div>
+</div>
+</div>
+<!-- Step 2 Item -->
+<div class="p-space-sm rounded-lg bg-surface-container-low shadow-[2px_2px_0px_#18181b] flex items-start gap-space-sm">
+<div class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold flex items-center justify-center shadow-[1px_1px_0px_#18181b] flex-shrink-0 mt-0.5">
+              2
+            </div>
+<div class="flex flex-col flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md uppercase text-on-surface font-bold">Crash-Free Reliability</span>
+<span class="font-label-sm text-label-sm uppercase bg-secondary-fixed px-1.5 py-0.5 rounded text-on-secondary-fixed font-bold">30 Pts Base</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Sessions with zero client crashes receive full 30 reliability bonus. Any crash zeroes this module.</p>
+<div class="flex items-center gap-2 mt-1.5 font-label-sm text-label-sm text-on-surface-variant font-bold">
+<span class="inline-flex items-center gap-0.5 text-on-surface">
+<span class="material-symbols-outlined text-[14px] text-[#4ade80]">check_circle</span> Zero Crash = +30.0
+                </span>
+<span class="inline-flex items-center gap-0.5 text-tertiary">
+<span class="material-symbols-outlined text-[14px]">cancel</span> Crashed = -30.0 Pts
+                </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Pro-Tip Anime Mascot Bubble -->
+<div class="p-space-sm rounded-xl bg-secondary-fixed/50 shadow-[2px_2px_0px_#18181b] flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center shadow-[2px_2px_0px_#18181b] flex-shrink-0">
+<span class="material-symbols-outlined text-on-secondary-container text-[22px]">lightbulb</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md uppercase text-on-secondary-fixed font-bold">Auditor Pro-Tip</span>
+<p class="font-body-sm text-body-sm text-on-secondary-fixed-variant leading-tight">Run at least 15 uninterrupted gameplay minutes before submitting to guarantee high-integrity auditor certification.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Toast Notification Container (Hidden by default, triggered via JS) -->
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-32 transition-transform duration-300 ease-out" id="submit-toast">
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-[5px_5px_0px_#18181b] flex items-center gap-space-sm max-w-sm">
+<div class="w-10 h-10 rounded-full bg-[#4ade80] flex items-center justify-center text-[#18181b] shadow-[2px_2px_0px_#18181b] flex-shrink-0">
+<span class="material-symbols-outlined text-[24px]">task_alt</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm uppercase text-on-surface">Session Ingested!</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Trace synced to Telemetry Cluster node #04.</span>
+</div>
+</div>
+</div>
+<!-- Micro-Interactions & Live Calculator Script -->
+<script>
+    let currentFps = 142;
+    let isCrashed = false;
+    let currentResolution = '1440p QHD';
+
+    function updateSliders(type, val) {
+      val = parseInt(val) || 0;
+      if (type === 'fps') {
+        currentFps = Math.max(15, Math.min(360, val));
+        document.getElementById('fps-range').value = currentFps;
+        document.getElementById('fps-number').value = currentFps;
+      } else if (type === 'cpu') {
+        const cpuVal = Math.max(0, Math.min(100, val));
+        document.getElementById('cpu-range').value = cpuVal;
+        document.getElementById('cpu-number').value = cpuVal;
+        document.getElementById('cpu-progress-bar').style.width = cpuVal + '%';
+      } else if (type === 'gpu') {
+        const gpuVal = Math.max(0, Math.min(100, val));
+        document.getElementById('gpu-range').value = gpuVal;
+        document.getElementById('gpu-number').value = gpuVal;
+        document.getElementById('gpu-progress-bar').style.width = gpuVal + '%';
+      }
+      recalculateScore();
+    }
+
+    function toggleCrashCheckbox() {
+      const checkbox = document.getElementById('crash-input');
+      checkbox.checked = !checkbox.checked;
+      isCrashed = checkbox.checked;
+      syncCrashUi();
+      recalculateScore();
+    }
+
+    function syncCrashUi() {
+      const checkmark = document.getElementById('crash-checkmark');
+      const box = document.getElementById('custom-crash-box');
+      const card = document.getElementById('crash-card');
+
+      if (isCrashed) {
+        checkmark.classList.remove('hidden');
+        box.classList.add('bg-tertiary-container');
+        card.classList.remove('bg-error-container/40');
+        card.classList.add('bg-error-container');
+      } else {
+        checkmark.classList.add('hidden');
+        box.classList.remove('bg-tertiary-container');
+        card.classList.remove('bg-error-container');
+        card.classList.add('bg-error-container/40');
+      }
+    }
+
+    function selectRes(btn, label) {
+      document.querySelectorAll('.res-btn').forEach(b => {
+        b.className = 'res-btn py-2 px-3 rounded-lg bg-surface-container-low text-on-surface-variant font-label-md text-label-md uppercase shadow-[2px_2px_0px_#18181b] hover:bg-surface-container transition-all flex flex-col items-center';
+      });
+      btn.className = 'res-btn active-res py-2 px-3 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md uppercase shadow-[3px_3px_0px_#18181b] -translate-y-0.5 transition-all flex flex-col items-center font-bold';
+      currentResolution = label;
+      document.getElementById('res-badge-label').innerText = label + ' (Standard Baseline)';
+      recalculateScore();
+    }
+
+    function recalculateScore() {
+      // 1. Calculate FPS component: capped at 70 pts
+      // 144 FPS = 70 pts, 60 FPS = 35 pts, scale linear up to 144
+      const fpsRatio = Math.min(currentFps / 144, 1.0);
+      const fpsPoints = Number((fpsRatio * 70).toFixed(1));
+
+      // 2. Crash component: 30 pts or 0
+      const crashPoints = isCrashed ? 0 : 30;
+
+      const totalScore = Number((fpsPoints + crashPoints).toFixed(1));
+
+      // UI update
+      document.getElementById('calculated-score').innerText = totalScore.toFixed(1);
+      document.getElementById('fps-split-text').innerText = `FPS Yield: ${fpsPoints} / 70`;
+      document.getElementById('crash-split-text').innerText = `Incident Factor: ${crashPoints} / 30`;
+
+      document.getElementById('bar-fps-part').style.width = (fpsPoints / 100 * 100) + '%';
+      document.getElementById('bar-crash-part').style.width = (crashPoints / 100 * 100) + '%';
+
+      // Tier badge calculation
+      const tierBadge = document.getElementById('tier-badge');
+      const tierText = document.getElementById('tier-text');
+
+      if (totalScore >= 95) {
+        tierBadge.className = 'mt-space-xs px-space-md py-1 rounded-full bg-secondary-container text-on-secondary-container font-headline-sm text-headline-sm uppercase tracking-wider shadow-[3px_3px_0px_#18181b] flex items-center gap-2';
+        tierText.innerText = 'TIER S • OVERCLOCKED';
+      } else if (totalScore >= 80) {
+        tierBadge.className = 'mt-space-xs px-space-md py-1 rounded-full bg-primary-container text-on-primary-container font-headline-sm text-headline-sm uppercase tracking-wider shadow-[3px_3px_0px_#18181b] flex items-center gap-2';
+        tierText.innerText = 'TIER A • ESPORTS GRADE';
+      } else if (totalScore >= 60) {
+        tierBadge.className = 'mt-space-xs px-space-md py-1 rounded-full bg-surface-container-high text-on-surface font-headline-sm text-headline-sm uppercase tracking-wider shadow-[3px_3px_0px_#18181b] flex items-center gap-2';
+        tierText.innerText = 'TIER B • PLAYABLE';
+      } else {
+        tierBadge.className = 'mt-space-xs px-space-md py-1 rounded-full bg-tertiary-container text-on-tertiary-container font-headline-sm text-headline-sm uppercase tracking-wider shadow-[3px_3px_0px_#18181b] flex items-center gap-2';
+        tierText.innerText = 'TIER D • UNSTABLE';
+      }
+    }
+
+    function resetForm() {
+      document.getElementById('fps-session-form').reset();
+      updateSliders('fps', 142);
+      updateSliders('cpu', 54);
+      updateSliders('gpu', 89);
+      isCrashed = false;
+      document.getElementById('crash-input').checked = false;
+      syncCrashUi();
+      recalculateScore();
+    }
+
+    function triggerSubmit() {
+      const toast = document.getElementById('submit-toast');
+      toast.classList.remove('translate-y-32');
+      setTimeout(() => {
+        toast.classList.add('translate-y-32');
+      }, 3500);
+    }
+
+    // Init score on page load
+    recalculateScore();
+  </script>
+</div></main></div></body></html>

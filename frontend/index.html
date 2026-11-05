@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/logo/favicon.png" />
+    <title>FramePulse — Coffee Toon Gaming Telemetry &amp; Reviews</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:opsz,wght@10..72,100..900&family=Bungee&family=Changa+One:ital@0;1&family=Geist+Mono:ital,wght@0,100..900;1,100..900&family=Geist+Pixel&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Outfit:wght@100..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Ranchers&family=Red+Hat+Mono:ital,wght@0,300..700;1,300..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Rubik+Spray+Paint&family=Saira:ital,wght@0,100..900;1,100..900&family=Sekuya&family=Space+Grotesk:wght@600;700;800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              /* Eye-Safe Warm Coffee / Mocha / Caramel Gaming Toon Palette */
+              background: '#f2e9de',
+              surface: '#f7f0e6',
+              'surface-dim': '#e5d6c3',
+              'surface-bright': '#fdf9f3',
+              'surface-container-lowest': 'rgba(253, 249, 243, 0.86)',
+              'surface-container-low': '#efe4d4',
+              'surface-container': '#e6d7c3',
+              'surface-container-high': '#dcc8af',
+              'surface-container-highest': '#d2baa0',
+              'surface-variant': '#dfcfb9',
+              'on-surface': '#2b1d14',
+              'on-surface-variant': '#6e523e',
+              'on-background': '#2b1d14',
+              outline: '#2b1d14',
+              'outline-variant': '#bda58e',
+              primary: '#7c4a21',
+              'on-primary': '#fdf9f3',
+              'primary-container': '#c88a52',
+              'on-primary-container': '#2b1d14',
+              'primary-fixed': '#ebd2b7',
+              'primary-fixed-dim': '#d9b58e',
+              'on-primary-fixed': '#2b1d14',
+              'on-primary-fixed-variant': '#4a2c11',
+              secondary: '#8a5a10',
+              'on-secondary': '#fdf9f3',
+              'secondary-container': '#e8b252',
+              'on-secondary-container': '#2b1d14',
+              'secondary-fixed': '#f7deb0',
+              'secondary-fixed-dim': '#e5c27e',
+              'on-secondary-fixed': '#2b1d14',
+              'on-secondary-fixed-variant': '#5c3b06',
+              tertiary: '#8c331e',
+              'on-tertiary': '#fdf9f3',
+              'tertiary-container': '#df7a5e',
+              'on-tertiary-container': '#2b1d14',
+              'tertiary-fixed': '#f6cdc1',
+              'tertiary-fixed-dim': '#e6a593',
+              'on-tertiary-fixed': '#2b1d14',
+              'on-tertiary-fixed-variant': '#66200f',
+              error: '#b42318',
+              'on-error': '#ffffff',
+              'error-container': '#f9d2cc',
+              'on-error-container': '#3b0907',
+              'surface-tint': '#7c4a21',
+            },
+            fontFamily: {
+              'display-hero': ['Space Grotesk', 'sans-serif'],
+              'headline-lg': ['Space Grotesk', 'sans-serif'],
+              'headline-md': ['Space Grotesk', 'sans-serif'],
+              'headline-sm': ['Space Grotesk', 'sans-serif'],
+              'title-lg': ['Plus Jakarta Sans', 'sans-serif'],
+              'body-lg': ['Plus Jakarta Sans', 'sans-serif'],
+              'body-md': ['Plus Jakarta Sans', 'sans-serif'],
+              'body-sm': ['Plus Jakarta Sans', 'sans-serif'],
+              'label-lg': ['Plus Jakarta Sans', 'sans-serif'],
+              'label-md': ['Plus Jakarta Sans', 'sans-serif'],
+              'label-sm': ['Plus Jakarta Sans', 'sans-serif'],
+            },
+            fontSize: {
+              'display-hero': ['2.5rem', { lineHeight: '1.05', letterSpacing: '-0.03em', fontWeight: '700' }],
+              'headline-lg': ['2rem', { lineHeight: '1.15', letterSpacing: '-0.02em', fontWeight: '700' }],
+              'headline-md': ['1.5rem', { lineHeight: '1.2', letterSpacing: '-0.015em', fontWeight: '700' }],
+              'headline-sm': ['1.15rem', { lineHeight: '1.25', letterSpacing: '-0.01em', fontWeight: '700' }],
+              'title-lg': ['1.125rem', { lineHeight: '1.35', fontWeight: '700' }],
+              'body-lg': ['1.0625rem', { lineHeight: '1.5', fontWeight: '500' }],
+              'body-md': ['0.9375rem', { lineHeight: '1.5', fontWeight: '500' }],
+              'body-sm': ['0.8125rem', { lineHeight: '1.45', fontWeight: '500' }],
+              'label-lg': ['0.875rem', { lineHeight: '1.2', letterSpacing: '0.03em', fontWeight: '700' }],
+              'label-md': ['0.75rem', { lineHeight: '1.2', letterSpacing: '0.04em', fontWeight: '700' }],
+              'label-sm': ['0.6875rem', { lineHeight: '1.15', letterSpacing: '0.05em', fontWeight: '700' }],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-background text-on-surface font-body-md antialiased">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

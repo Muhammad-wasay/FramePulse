@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "secondary-fixed": "#ffe083", "on-secondary-fixed-variant": "#574500", "surface-dim": "#dcd9dd", "on-secondary-container": "#6f5900", "primary-fixed-dim": "#7bd0ff", "on-tertiary-container": "#841630", "surface-container-high": "#eae7eb", "secondary-fixed-dim": "#eec200", "surface": "#fbf8fc", "tertiary-container": "#ff919e", "on-error-container": "#93000a", "tertiary-fixed-dim": "#ffb2b9", "surface-container-highest": "#e4e1e6", "inverse-on-surface": "#f3f0f4", "on-secondary-fixed": "#231b00", "primary": "#00668a", "on-background": "#1b1b1e", "on-primary-fixed": "#001e2c", "outline-variant": "#bdc8d1", "surface-tint": "#00668a", "on-tertiary": "#ffffff", "on-surface-variant": "#3e484f", "primary-container": "#38bdf8", "surface-container-lowest": "#ffffff", "tertiary": "#a93349", "surface-bright": "#fbf8fc", "on-error": "#ffffff", "on-tertiary-fixed": "#400010", "inverse-surface": "#303033", "surface-variant": "#e4e1e6", "outline": "#6e7980", "secondary": "#735c00", "on-secondary": "#ffffff", "inverse-primary": "#7bd0ff", "primary-fixed": "#c4e7ff", "on-primary-fixed-variant": "#004c69", "surface-container-low": "#f6f2f7", "secondary-container": "#fed01b", "error-container": "#ffdad6", "on-tertiary-fixed-variant": "#891933", "surface-container": "#f0edf1", "on-surface": "#1b1b1e", "error": "#ba1a1a", "on-primary-container": "#004965", "tertiary-fixed": "#ffdadc", "on-primary": "#ffffff", "background": "#fbf8fc" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "gutter": "1.25rem", "space-md": "1rem", "gutter-mobile": "0.75rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "margin": "2rem", "space-2xl": "3rem", "space-xl": "2.25rem", "space-sm": "0.5rem", "margin-mobile": "1rem" }, "fontFamily": { "headline-md": [ "Space Grotesk" ], "headline-lg": [ "Space Grotesk" ], "label-md": [ "Space Grotesk" ], "headline-sm": [ "Space Grotesk" ], "label-lg": [ "Space Grotesk" ], "display-hero": [ "Space Grotesk" ], "body-md": [ "Plus Jakarta Sans" ], "display-hero-mobile": [ "Space Grotesk" ], "label-sm": [ "Space Grotesk" ], "headline-lg-mobile": [ "Space Grotesk" ], "body-sm": [ "Plus Jakarta Sans" ], "body-lg": [ "Plus Jakarta Sans" ] }, "fontSize": { "headline-md": [ "24px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "headline-lg": [ "32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "label-md": [ "12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "700" } ], "headline-sm": [ "20px", { "lineHeight": "26px", "letterSpacing": "0em", "fontWeight": "600" } ], "label-lg": [ "14px", { "lineHeight": "18px", "letterSpacing": "0.04em", "fontWeight": "700" } ], "display-hero": [ "48px", { "lineHeight": "52px", "letterSpacing": "-0.03em", "fontWeight": "700" } ], "body-md": [ "15px", { "lineHeight": "22px", "fontWeight": "500" } ], "display-hero-mobile": [ "32px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "label-sm": [ "10px", { "lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "700" } ], "headline-lg-mobile": [ "24px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" } ], "body-sm": [ "13px", { "lineHeight": "18px", "fontWeight": "500" } ], "body-lg": [ "18px", { "lineHeight": "28px", "fontWeight": "400" } ] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest border-r-[2.5px] border-[#18181b] shadow-[4px_0px_0px_#18181b] z-50 flex flex-col justify-between p-space-md"><div class="flex flex-col gap-space-lg"><div class="flex items-center gap-space-sm p-space-sm bg-surface-container-low rounded-xl border-[2px] border-[#18181b] shadow-[3px_3px_0px_#18181b]"><img alt="FramePulse Toon Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Wl0VtHtB-WNhhWt3xkPXqe3iaJ0c-JtWmLQIHZjtKBSeT-rDgam3lLNALZij96tBACJUsxs4pZMfBws2A2pmJn6J2gUpLkVF0MB6TDbrUx4RJ1drrDw1QygT1q2hPmHPhnAooSJsmEXoc-8yrupL3_DIdSZEdSwYJgHcHS9WXTJ7nzF3bLpiKVd0TjCgIT7VfIA6RKXRkHZGKHoB3Mc-CNlbfquje7xZKYezskj-Xl"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm uppercase tracking-tight text-[#18181b]">FramePulse</span><span class="font-label-sm text-label-sm uppercase text-on-surface-variant font-bold">Game Telemetry &amp; Reviews</span></div></div><nav class="flex flex-col gap-space-sm" data-active-classes="bg-primary-container text-on-primary-container shadow-[3px_3px_0px_#18181b] -translate-y-0.5"><a class="flex items-center justify-between px-space-md py-space-sm rounded-lg border-[2px] border-[#18181b] bg-surface font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant shadow-[2px_2px_0px_#18181b] transition-all hover:bg-surface-container-high hover:text-on-surface hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-none" data-path="analytics-dashboard" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px]">monitoring</span><span>Analytics Dashboard</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-lg border-[2px] border-[#18181b] bg-surface font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant shadow-[2px_2px_0px_#18181b] transition-all hover:bg-surface-container-high hover:text-on-surface hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-none" data-path="log-fps-session" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px]">speed</span><span>Log FPS Session</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-lg border-[2px] border-[#18181b] bg-surface font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant shadow-[2px_2px_0px_#18181b] transition-all hover:bg-surface-container-high hover:text-on-surface hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-none" data-path="submit-review" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px]">rate_review</span><span>Submit Review</span></div></a><a aria-current="page" class="flex items-center justify-between px-space-md py-space-sm rounded-lg border-[2px] border-[#18181b] font-label-lg uppercase tracking-wider transition-all active:translate-y-0.5 bg-primary-container text-on-primary-container shadow-[3px_3px_0px_#18181b] -translate-y-0.5" data-path="admin-moderation" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px]">gavel</span><span>Admin Moderation</span></div><span class="flex items-center justify-center w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container border-[1.5px] border-[#18181b] font-label-sm text-label-sm font-bold shadow-[1px_1px_0px_#18181b]">3</span></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-lg border-[2px] border-[#18181b] bg-surface font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant shadow-[2px_2px_0px_#18181b] transition-all hover:bg-surface-container-high hover:text-on-surface hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-none" data-path="manage-games" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px]">sports_esports</span><span>Manage Games</span></div></a></nav></div><div class="p-space-sm bg-surface-container-low rounded-xl border-[2px] border-[#18181b] shadow-[3px_3px_0px_#18181b] flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="relative"><div class="w-10 h-10 rounded-full bg-primary-container border-[2px] border-[#18181b] flex items-center justify-center shadow-[2px_2px_0px_#18181b]"><span class="material-symbols-outlined text-on-primary-container text-[20px]">shield_person</span></div><span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-[#4ade80] rounded-full border-[1.5px] border-[#18181b]"></span></div><div class="flex flex-col"><span class="font-label-lg text-label-lg text-[#18181b]">admin_usman</span><span class="font-label-sm text-label-sm uppercase bg-secondary-fixed text-on-secondary-fixed-variant px-1.5 py-0.5 rounded border border-[#18181b] w-fit font-bold">Lv.42 Auditor</span></div></div><div class="flex items-center"><span class="material-symbols-outlined text-on-surface-variant text-[20px] hover:text-[#18181b] cursor-pointer">more_vert</span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/90 backdrop-blur-md border-b-[2.5px] border-[#18181b] z-40 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 px-3 py-1 rounded-full bg-[#faf9f6] border-[2px] border-[#18181b] shadow-[2px_2px_0px_#18181b]"><span class="w-2.5 h-2.5 rounded-full bg-[#4ade80] animate-pulse border border-[#18181b]"></span><span class="font-label-md text-label-md uppercase text-[#18181b]">🟢 Ingest Online 12.4ms</span></div><div class="hidden md:flex items-center gap-1 font-label-md text-label-md text-on-surface-variant"><span class="uppercase">Telemetry Cluster</span><span class="material-symbols-outlined text-[16px]">chevron_right</span><span class="uppercase font-bold text-[#18181b]">Live Stream 01</span></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-sm"><button class="w-9 h-9 rounded-lg bg-surface-container-lowest border-[2px] border-[#18181b] shadow-[2px_2px_0px_#18181b] flex items-center justify-center hover:-translate-y-0.5 active:translate-y-0 active:shadow-none transition-all"><span class="material-symbols-outlined text-[20px] text-on-surface">refresh</span></button><button class="w-9 h-9 rounded-lg bg-surface-container-lowest border-[2px] border-[#18181b] shadow-[2px_2px_0px_#18181b] flex items-center justify-center hover:-translate-y-0.5 active:translate-y-0 active:shadow-none transition-all"><span class="material-symbols-outlined text-[20px] text-on-surface">notifications</span></button></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center border-[2px] border-[#18181b] shadow-[2px_2px_0px_#18181b]"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="relative w-full pt-16 px-space-lg py-space-lg bg-background min-h-screen"><div class="flex flex-col w-full">
+<!-- Top Banner & Persona Badge -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md p-space-md rounded-xl bg-surface-container-lowest border-[2.5px] border-[#18181b] shadow-[4px_4px_0px_#18181b] mb-space-lg">
+<div class="flex items-center gap-space-md flex-wrap">
+<div class="flex items-center gap-space-sm bg-primary-fixed px-3 py-1.5 rounded-lg border-[2px] border-[#18181b] shadow-[2px_2px_0px_#18181b]">
+<span class="material-symbols-outlined text-[22px] text-on-primary-fixed-variant" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm uppercase text-[#18181b] leading-tight">admin_usman</span>
+<span class="font-label-sm text-label-sm uppercase text-on-primary-fixed-variant font-bold">L3 Master Auditor</span>
+</div>
+</div>
+<div class="h-6 w-0.5 bg-[#18181b] hidden sm:block"></div>
+<div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant border-[2px] border-[#18181b] shadow-[3px_3px_0px_#18181b]">
+<span class="text-[18px]">🚨</span>
+<span class="font-label-lg text-label-lg font-bold tracking-tight">3 review(s) waiting for moderation!</span>
+</div>
+</div>
+<!-- Live Ingest Status Chip & Quick Search -->
+<div class="flex items-center gap-space-sm">
+<div class="relative flex-1 sm:w-64">
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full pl-9 pr-3 py-1.5 rounded-lg bg-surface-container-low border-[2px] border-[#18181b] font-body-sm text-body-sm text-[#18181b] focus:bg-surface-container-lowest focus:border-primary-container focus:outline-none transition-all shadow-[2px_2px_0px_#18181b]" placeholder="Filter telemetry or HW..." type="text"/>
+</div>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container border-[2px] border-[#18181b] font-label-md text-label-md uppercase font-bold text-[#18181b] shadow-[2px_2px_0px_#18181b] hover:bg-surface-container-high transition-all flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+<span>Filters</span>
+</button>
+</div>
+</div>
+<!-- Queue Filter Tabs & Batch Summary -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-md mb-space-md">
+<div class="flex items-center gap-space-sm flex-wrap">
+<!-- ALL Filter -->
+<button class="queue-tab px-4 py-1.5 rounded-lg border-[2px] border-[#18181b] bg-surface-container-lowest text-on-surface font-label-lg text-label-lg uppercase tracking-wider shadow-[3px_3px_0px_#18181b] hover:-translate-y-0.5 transition-all">
+        ALL <span class="ml-1 text-on-surface-variant font-bold">(12)</span>
+</button>
+<!-- PENDING Filter (Active) -->
+<button class="queue-tab active-tab px-4 py-1.5 rounded-lg border-[2.5px] border-[#18181b] bg-secondary-container text-on-secondary-container font-label-lg text-label-lg uppercase tracking-wider shadow-[3px_3px_0px_#18181b] -translate-y-0.5">
+        PENDING <span class="ml-1.5 px-2 py-0.5 rounded-full bg-[#18181b] text-secondary-container text-[11px] font-bold">3</span>
+</button>
+<!-- APPROVED Filter -->
+<button class="queue-tab px-4 py-1.5 rounded-lg border-[2px] border-[#18181b] bg-surface-container-lowest text-on-surface font-label-lg text-label-lg uppercase tracking-wider shadow-[3px_3px_0px_#18181b] hover:-translate-y-0.5 transition-all">
+        APPROVED <span class="ml-1 text-on-surface-variant font-bold">(7)</span>
+</button>
+<!-- REJECTED Filter -->
+<button class="queue-tab px-4 py-1.5 rounded-lg border-[2px] border-[#18181b] bg-surface-container-lowest text-on-surface font-label-lg text-label-lg uppercase tracking-wider shadow-[3px_3px_0px_#18181b] hover:-translate-y-0.5 transition-all">
+        REJECTED <span class="ml-1 text-on-surface-variant font-bold">(2)</span>
+</button>
+</div>
+<!-- Quick Telemetry Stats Indicator -->
+<div class="flex items-center gap-2 bg-surface-container-low px-3 py-1 rounded-lg border-[2px] border-[#18181b] shadow-[2px_2px_0px_#18181b]">
+<span class="w-2.5 h-2.5 rounded-full bg-[#4ade80] border border-[#18181b]"></span>
+<span class="font-label-sm text-label-sm uppercase font-bold text-[#18181b]">Queue Velocity: 3.4/hr</span>
+</div>
+</div>
+<!-- Moderation Data Table Panel -->
+<div class="w-full bg-surface-container-lowest border-[2.5px] border-[#18181b] rounded-xl shadow-[5px_5px_0px_#18181b] overflow-hidden mb-space-xl">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse min-w-[980px]">
+<!-- Comic Table Header -->
+<thead>
+<tr class="bg-surface-container-high border-b-[2.5px] border-[#18181b]">
+<th class="p-3.5 w-12 text-center">
+<input class="w-5 h-5 rounded border-[2px] border-[#18181b] text-primary focus:ring-0 cursor-pointer accent-[#18181b]" id="select-all" type="checkbox"/>
+</th>
+<th class="p-3.5 font-label-lg text-label-lg uppercase text-[#18181b] font-bold">Review ID</th>
+<th class="p-3.5 font-label-lg text-label-lg uppercase text-[#18181b] font-bold">Game Target</th>
+<th class="p-3.5 font-label-lg text-label-lg uppercase text-[#18181b] font-bold">Player Handle</th>
+<th class="p-3.5 font-label-lg text-label-lg uppercase text-[#18181b] font-bold">Rating</th>
+<th class="p-3.5 font-label-lg text-label-lg uppercase text-[#18181b] font-bold">Hardware Critique &amp; Logs</th>
+<th class="p-3.5 font-label-lg text-label-lg uppercase text-[#18181b] font-bold">Timestamp</th>
+<th class="p-3.5 font-label-lg text-label-lg uppercase text-[#18181b] font-bold text-center">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y-[2px] divide-[#18181b]">
+<!-- Row 1: REV-901 (Selected) -->
+<tr class="review-row bg-primary-fixed/20 hover:bg-primary-fixed/30 transition-colors" data-id="REV-901">
+<td class="p-3.5 text-center">
+<input checked="" class="row-checkbox w-5 h-5 rounded border-[2px] border-[#18181b] cursor-pointer accent-[#18181b]" type="checkbox"/>
+</td>
+<td class="p-3.5 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-primary-container text-on-primary-container border-[1.5px] border-[#18181b] font-label-sm text-label-sm font-bold shadow-[2px_2px_0px_#18181b]">
+                REV-901
+              </span>
+</td>
+<td class="p-3.5 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-lg object-cover border-[1.5px] border-[#18181b] shadow-[2px_2px_0px_#18181b]" data-alt="Cyberpunk sci-fi metropolis video game box art cover, vibrant neon colors, cel-shaded ink art styling, isometric futuristic hero on hovercraft" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhsqGHFd0qT2VmR_kU4Ho-kmifuQ2NKIzsy-G1pZpIutmZsfBfGFMmu04H3nqLpVh9XWUzrv7j9xFWgDoA_2Q0moju0lLDXjk7bh668yUcYw6yG7HFFcrdWFfcSxzfhVTI_8NQhmayoJ_n1APrHgk98JAh1rdjFI7kZPZd1tzzSSZCXPyuRQrwc-1mqcprQEXQuMZQ4J9g6wOGwgOmeYN6IR-G4sAzWvpQWl-g8zI"/>
+<div class="flex flex-col">
+<span class="font-headline-sm text-[16px] leading-tight text-[#18181b] font-bold">CyberGrid 2088</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Patch v2.12a</span>
+</div>
+</div>
+</td>
+<td class="p-3.5 whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="font-label-lg text-label-lg text-[#18181b] font-bold">@VortexRider</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container border border-[#18181b] font-label-sm text-[10px]">Tier 3</span>
+</div>
+</td>
+<td class="p-3.5 whitespace-nowrap">
+<div class="flex items-center text-secondary">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]">star_half</span>
+<span class="ml-1 font-label-md text-label-md text-[#18181b] font-bold">4.5</span>
+</div>
+</td>
+<td class="p-3.5 max-w-xs">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="px-2 py-0.5 rounded bg-surface-container border border-[#18181b] font-label-sm text-label-sm font-bold text-[#18181b]">RTX 4090</span>
+<span class="px-2 py-0.5 rounded bg-surface-container border border-[#18181b] font-label-sm text-label-sm font-bold text-[#18181b]">4K Ultra</span>
+<span class="px-1.5 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-[10px] font-bold">DLSS 3.5</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface line-clamp-2">
+                  "Ray Reconstruction produces severe specular shimmer on rain puddles after 45 mins. VRAM spikes from 14GB to 22.4GB indicating a memory leak in buffer allocation."
+                </p>
+</div>
+</td>
+<td class="p-3.5 whitespace-nowrap font-label-md text-label-md text-on-surface-variant font-bold">
+              12m ago
+            </td>
+<td class="p-3.5 text-center whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container border-[1.5px] border-[#18181b] font-label-sm text-label-sm font-bold shadow-[2px_2px_0px_#18181b]">
+                PENDING
+              </span>
+</td>
+</tr>
+<!-- Row 2: REV-902 -->
+<tr class="review-row bg-surface-container-lowest hover:bg-surface-container-low transition-colors" data-id="REV-902">
+<td class="p-3.5 text-center">
+<input class="row-checkbox w-5 h-5 rounded border-[2px] border-[#18181b] cursor-pointer accent-[#18181b]" type="checkbox"/>
+</td>
+<td class="p-3.5 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-primary-container text-on-primary-container border-[1.5px] border-[#18181b] font-label-sm text-label-sm font-bold shadow-[2px_2px_0px_#18181b]">
+                REV-902
+              </span>
+</td>
+<td class="p-3.5 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-lg object-cover border-[1.5px] border-[#18181b] shadow-[2px_2px_0px_#18181b]" data-alt="Tactical sci-fi mech combat anime game cover, bold comic lines, high-contrast mech armor, explosion backdrop" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwZcfjbxl2kbNMZzyyOkKu09SNhMsjvITylH-OBQHAOI4TIwbZ_FfVMjmrFRcdIhuIqtxx5gOaM9-dhO32OKK49fIzyRDr3nFXZHRK9rrT9KGxahw6ihSO5OxDra7yaJRQBG4ORf2qAyCdXI0RSbdqjBQh23-0KILKF0hbG2t1VAGPJ182FHsOawrrW3RsOf9Qf1HB6x2X29FIrTkRO5UHm_PiYl8nHNSWElD3_bI"/>
+<div class="flex flex-col">
+<span class="font-headline-sm text-[16px] leading-tight text-[#18181b] font-bold">Armored Nexus</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Update 1.04</span>
+</div>
+</div>
+</td>
+<td class="p-3.5 whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="font-label-lg text-label-lg text-[#18181b] font-bold">@KuroBench</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container border border-[#18181b] font-label-sm text-[10px]">BenchPro</span>
+</div>
+</td>
+<td class="p-3.5 whitespace-nowrap">
+<div class="flex items-center text-secondary">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]">star</span>
+<span class="material-symbols-outlined text-[18px]">star</span>
+<span class="material-symbols-outlined text-[18px]">star</span>
+<span class="ml-1 font-label-md text-label-md text-[#18181b] font-bold">2.0</span>
+</div>
+</td>
+<td class="p-3.5 max-w-xs">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="px-2 py-0.5 rounded bg-surface-container border border-[#18181b] font-label-sm text-label-sm font-bold text-[#18181b]">Ryzen 7 7800X3D</span>
+<span class="px-2 py-0.5 rounded bg-surface-container border border-[#18181b] font-label-sm text-label-sm font-bold text-[#18181b]">RX 7900 XTX</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface line-clamp-2">
+                  "Zen 4 multi-core load shows massive 99th percentile stuttering in 32-player lobbies. Frame pacing degrades to 38ms frametimes during orbital laser strikes."
+                </p>
+</div>
+</td>
+<td class="p-3.5 whitespace-nowrap font-label-md text-label-md text-on-surface-variant font-bold">
+              34m ago
+            </td>
+<td class="p-3.5 text-center whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container border-[1.5px] border-[#18181b] font-label-sm text-label-sm font-bold shadow-[2px_2px_0px_#18181b]">
+                PENDING
+              </span>
+</td>
+</tr>
+<!-- Row 3: REV-903 -->
+<tr class="review-row bg-surface-container-lowest hover:bg-surface-container-low transition-colors" data-id="REV-903">
+<td class="p-3.5 text-center">
+<input class="row-checkbox w-5 h-5 rounded border-[2px] border-[#18181b] cursor-pointer accent-[#18181b]" type="checkbox"/>
+</td>
+<td class="p-3.5 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-primary-container text-on-primary-container border-[1.5px] border-[#18181b] font-label-sm text-label-sm font-bold shadow-[2px_2px_0px_#18181b]">
+                REV-903
+              </span>
+</td>
+<td class="p-3.5 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-lg object-cover border-[1.5px] border-[#18181b] shadow-[2px_2px_0px_#18181b]" data-alt="High fantasy action RPG hero casting magic spell, anime cell-shaded art style, vibrant amber and purple magic effects" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEO28W1jdXY7Uj_k6H2R_jfvTYxt_vTPW3c3HsceHzH7jfpRDUVoywqF7n55B3elKzxbns0-pBWjRVd_e2F44jb5QROrO1Lb9-_SIFSFyH-hNoOej_kzK3_sGs8_nJZ-7Yazrnk8aPcOJHdm4sPgggrTmU9J22CF-RLxxBA009LVSInUsx08nuewUdx53Rs39FywTrvoaWmij3cnv6imz301lI5TQYu3vibwpfk-Q"/>
+<div class="flex flex-col">
+<span class="font-headline-sm text-[16px] leading-tight text-[#18181b] font-bold">Elden Spire</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Day 1 Release</span>
+</div>
+</div>
+</td>
+<td class="p-3.5 whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="font-label-lg text-label-lg text-[#18181b] font-bold">@ShinjukuZero</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container border border-[#18181b] font-label-sm text-[10px]">Overclocker</span>
+</div>
+</td>
+<td class="p-3.5 whitespace-nowrap">
+<div class="flex items-center text-secondary">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="ml-1 font-label-md text-label-md text-[#18181b] font-bold">5.0</span>
+</div>
+</td>
+<td class="p-3.5 max-w-xs">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="px-2 py-0.5 rounded bg-surface-container border border-[#18181b] font-label-sm text-label-sm font-bold text-[#18181b]">i9-14900K</span>
+<span class="px-2 py-0.5 rounded bg-surface-container border border-[#18181b] font-label-sm text-label-sm font-bold text-[#18181b]">RTX 4080 Super</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface line-clamp-2">
+                  "Shader compilation pre-caching is flawlessly implemented. 0 microstutters logged across 4 hours of intense open-world streaming telemetry."
+                </p>
+</div>
+</td>
+<td class="p-3.5 whitespace-nowrap font-label-md text-label-md text-on-surface-variant font-bold">
+              1h 05m ago
+            </td>
+<td class="p-3.5 text-center whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container border-[1.5px] border-[#18181b] font-label-sm text-label-sm font-bold shadow-[2px_2px_0px_#18181b]">
+                PENDING
+              </span>
+</td>
+</tr>
+<!-- Row 4: REV-899 (Approved) -->
+<tr class="review-row bg-surface-container-lowest hover:bg-surface-container-low transition-colors" data-id="REV-899">
+<td class="p-3.5 text-center">
+<input class="row-checkbox w-5 h-5 rounded border-[2px] border-[#18181b] cursor-pointer accent-[#18181b]" type="checkbox"/>
+</td>
+<td class="p-3.5 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-primary-container text-on-primary-container border-[1.5px] border-[#18181b] font-label-sm text-label-sm font-bold shadow-[2px_2px_0px_#18181b]">
+                REV-899
+              </span>
+</td>
+<td class="p-3.5 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-lg object-cover border-[1.5px] border-[#18181b] shadow-[2px_2px_0px_#18181b]" data-alt="Fast-paced anime drift street racing video game cover, vibrant cyan and yellow motion blur, stylized tuner sports car" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrmSMSgSszZP9-L-O5wVuTVTMNZsTFC357KRK8dBiNddY_vlBjvukQwzWQOhQ0LM41HBOLxPG4eSJmjfz-ehS8y94xxOnTBbfPSkBi5yB13-GZwHiHJcfTWSnNgHQRI7Ogc7N6rU690ts8-Z9J6-l5hO6GlgO8OnI8iAkNO4lSsCUJY_n11Y91DFLyHXwXgcjM_fpbm5JhczNiL1fc97wLvNyprH1I9SqamxySMSE"/>
+<div class="flex flex-col">
+<span class="font-headline-sm text-[16px] leading-tight text-[#18181b] font-bold">HyperDrift GP</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Patch 1.8</span>
+</div>
+</div>
+</td>
+<td class="p-3.5 whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="font-label-lg text-label-lg text-[#18181b] font-bold">@ApexSimul</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container border border-[#18181b] font-label-sm text-[10px]">Verified</span>
+</div>
+</td>
+<td class="p-3.5 whitespace-nowrap">
+<div class="flex items-center text-secondary">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]">star</span>
+<span class="ml-1 font-label-md text-label-md text-[#18181b] font-bold">4.0</span>
+</div>
+</td>
+<td class="p-3.5 max-w-xs">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="px-2 py-0.5 rounded bg-surface-container border border-[#18181b] font-label-sm text-label-sm font-bold text-[#18181b]">Steam Deck OLED</span>
+<span class="px-1.5 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed-variant font-label-sm text-[10px] font-bold">FSR 2.2</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface line-clamp-2">
+                  "Steady 90Hz frame lock achieved with 12W TDP limiter. Battery drain stabilized at 2h 45m continuous racing."
+                </p>
+</div>
+</td>
+<td class="p-3.5 whitespace-nowrap font-label-md text-label-md text-on-surface-variant font-bold">
+              3h 12m ago
+            </td>
+<td class="p-3.5 text-center whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-[#4ade80] text-[#18181b] border-[1.5px] border-[#18181b] font-label-sm text-label-sm font-bold shadow-[2px_2px_0px_#18181b]">
+                APPROVED
+              </span>
+</td>
+</tr>
+<!-- Row 5: REV-898 (Rejected) -->
+<tr class="review-row bg-surface-container-lowest hover:bg-surface-container-low transition-colors" data-id="REV-898">
+<td class="p-3.5 text-center">
+<input class="row-checkbox w-5 h-5 rounded border-[2px] border-[#18181b] cursor-pointer accent-[#18181b]" type="checkbox"/>
+</td>
+<td class="p-3.5 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-primary-container text-on-primary-container border-[1.5px] border-[#18181b] font-label-sm text-label-sm font-bold shadow-[2px_2px_0px_#18181b]">
+                REV-898
+              </span>
+</td>
+<td class="p-3.5 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-lg object-cover border-[1.5px] border-[#18181b] shadow-[2px_2px_0px_#18181b]" data-alt="Anime stylized survival horror game cover art, dark abandoned orbital space station, atmospheric glowing red warning lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlYign4AaErtYHLEZO19Rpp5Qr9mvlqxk9SdSLaGn9Etjoyu17aR46YfN_0SeWjCphmyhScOSdESFUH1w_zqnHuq73u08rUWC99YHBS3GXyaz7rF4aMDEp32F087SwrNSkP9Z9cdqcNvUX1a68vy_hL5Os6q2X7Ed1xM0gbNKiGf9I_a5yUsVTyVChDl9yV8bvhpm6LaUXsqEt9qdqZet0ouIpq4X7fndiTWp3Rpg"/>
+<div class="flex flex-col">
+<span class="font-headline-sm text-[16px] leading-tight text-[#18181b] font-bold">Void Station Omega</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Early Access</span>
+</div>
+</div>
+</td>
+<td class="p-3.5 whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="font-label-lg text-label-lg text-[#18181b] font-bold">@TrollMaster99</span>
+<span class="px-1.5 py-0.2 rounded bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-[10px] font-bold">Flagged</span>
+</div>
+</td>
+<td class="p-3.5 whitespace-nowrap">
+<div class="flex items-center text-secondary">
+<span class="material-symbols-outlined text-[18px]">star</span>
+<span class="material-symbols-outlined text-[18px]">star</span>
+<span class="material-symbols-outlined text-[18px]">star</span>
+<span class="material-symbols-outlined text-[18px]">star</span>
+<span class="material-symbols-outlined text-[18px]">star</span>
+<span class="ml-1 font-label-md text-label-md text-[#18181b] font-bold">1.0</span>
+</div>
+</td>
+<td class="p-3.5 max-w-xs">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="px-2 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-[10px] font-bold">INVALID LOGS</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface line-clamp-2">
+                  "Worst game ever doesn't run on my potato toaster laptop lol fix it devs garbage 0 fps scam."
+                </p>
+</div>
+</td>
+<td class="p-3.5 whitespace-nowrap font-label-md text-label-md text-on-surface-variant font-bold">
+              5h 40m ago
+            </td>
+<td class="p-3.5 text-center whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-tertiary-container text-on-tertiary-container border-[1.5px] border-[#18181b] font-label-sm text-label-sm font-bold shadow-[2px_2px_0px_#18181b]">
+                REJECTED
+              </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Pagination / Telemetry Quick Feed -->
+<div class="p-space-sm bg-surface-container-low border-t-[2.5px] border-[#18181b] flex flex-col sm:flex-row items-center justify-between gap-space-sm">
+<div class="flex items-center gap-2 font-label-md text-label-md text-on-surface-variant">
+<span>Showing 1-5 of 12 moderation records</span>
+</div>
+<div class="flex items-center gap-1.5">
+<button class="w-8 h-8 rounded border-[2px] border-[#18181b] bg-surface-container-lowest flex items-center justify-center shadow-[2px_2px_0px_#18181b] hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded border-[2px] border-[#18181b] bg-primary-container text-on-primary-container font-label-sm text-label-sm font-bold flex items-center justify-center shadow-[2px_2px_0px_#18181b]">
+          1
+        </button>
+<button class="w-8 h-8 rounded border-[2px] border-[#18181b] bg-surface-container-lowest text-on-surface font-label-sm text-label-sm font-bold flex items-center justify-center shadow-[2px_2px_0px_#18181b] hover:bg-surface-container transition-all">
+          2
+        </button>
+<button class="w-8 h-8 rounded border-[2px] border-[#18181b] bg-surface-container-lowest text-on-surface font-label-sm text-label-sm font-bold flex items-center justify-center shadow-[2px_2px_0px_#18181b] hover:bg-surface-container transition-all">
+          3
+        </button>
+<button class="w-8 h-8 rounded border-[2px] border-[#18181b] bg-surface-container-lowest flex items-center justify-center shadow-[2px_2px_0px_#18181b] hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Docked Batch Command Action Bar -->
+<div class="sticky bottom-4 z-30 w-full p-space-md rounded-2xl bg-surface-container-lowest border-[3px] border-[#18181b] shadow-[6px_6px_0px_#18181b] flex flex-col md:flex-row items-center justify-between gap-space-md mb-space-lg">
+<!-- Selected Item Count & Details -->
+<div class="flex items-center gap-space-sm w-full md:w-auto">
+<div class="w-10 h-10 rounded-xl bg-secondary-fixed border-[2px] border-[#18181b] flex items-center justify-center shadow-[2px_2px_0px_#18181b]">
+<span class="material-symbols-outlined text-[#18181b] text-[22px]">checklist</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-[17px] text-[#18181b] font-bold" id="selection-counter">
+          1 item selected: <span class="bg-primary-container px-2 py-0.5 rounded border border-[#18181b] font-mono text-[13px]">REV-901</span>
+</span>
+<span class="font-label-sm text-label-sm uppercase text-on-surface-variant">Batch Commands Staged for Execution</span>
+</div>
+</div>
+<!-- Chunky Cartoon Action Buttons -->
+<div class="flex items-center gap-space-sm w-full md:w-auto justify-end flex-wrap">
+<!-- Approve Button (Mint Green) -->
+<button class="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl border-[2.5px] border-[#18181b] bg-[#4ade80] text-[#18181b] font-label-lg text-label-lg uppercase tracking-wider font-bold shadow-[4px_4px_0px_#18181b] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#18181b] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all" id="btn-approve">
+<span class="text-[18px]">✅</span>
+<span>Approve</span>
+</button>
+<!-- Reject Button (Bright Amber/Yellow) -->
+<button class="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl border-[2.5px] border-[#18181b] bg-secondary-container text-on-secondary-container font-label-lg text-label-lg uppercase tracking-wider font-bold shadow-[4px_4px_0px_#18181b] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#18181b] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all" id="btn-reject">
+<span class="text-[18px]">⚠️</span>
+<span>Reject</span>
+</button>
+<!-- Delete Button (Coral Red) -->
+<button class="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl border-[2.5px] border-[#18181b] bg-[#fb7185] text-[#18181b] font-label-lg text-label-lg uppercase tracking-wider font-bold shadow-[4px_4px_0px_#18181b] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#18181b] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all" id="btn-delete">
+<span class="text-[18px]">🗑️</span>
+<span>Delete</span>
+</button>
+</div>
+</div>
+<!-- Footer Stats Dashboard Strip -->
+<div class="w-full p-space-md rounded-xl bg-surface-container-low border-[2px] border-[#18181b] shadow-[3px_3px_0px_#18181b] flex flex-col md:flex-row items-center justify-between gap-space-md mb-space-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">analytics</span>
+<span class="font-label-md text-label-md uppercase font-bold text-[#18181b]">Auditor Metrics Live Sync</span>
+</div>
+<div class="flex items-center gap-space-lg flex-wrap justify-center font-label-lg text-label-lg text-[#18181b]">
+<div class="flex items-center gap-1.5">
+<span class="text-on-surface-variant uppercase text-label-sm font-bold">Total Moderated:</span>
+<span class="font-headline-sm text-[16px] font-bold bg-surface-container-lowest px-2 py-0.5 rounded border border-[#18181b]">124 reviews</span>
+</div>
+<div class="w-1.5 h-1.5 rounded-full bg-[#18181b] hidden sm:block"></div>
+<div class="flex items-center gap-1.5">
+<span class="text-on-surface-variant uppercase text-label-sm font-bold">Accuracy:</span>
+<span class="font-headline-sm text-[16px] font-bold text-[#15803d] bg-surface-container-lowest px-2 py-0.5 rounded border border-[#18181b]">99.2%</span>
+</div>
+<div class="w-1.5 h-1.5 rounded-full bg-[#18181b] hidden sm:block"></div>
+<div class="flex items-center gap-1.5">
+<span class="text-on-surface-variant uppercase text-label-sm font-bold">Avg Response Time:</span>
+<span class="font-headline-sm text-[16px] font-bold text-primary bg-surface-container-lowest px-2 py-0.5 rounded border border-[#18181b]">42 mins</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-block w-2 h-2 rounded-full bg-[#4ade80] animate-ping"></span>
+<span class="font-label-sm text-label-sm uppercase font-bold text-on-surface-variant">Cluster Synchronized</span>
+</div>
+</div>
+<!-- Interactive Logic for Checkbox Selection & Batch Actions -->
+<script>
+    (function initModerationConsole() {
+      const selectAll = document.getElementById('select-all');
+      const rowCheckboxes = document.querySelectorAll('.row-checkbox');
+      const counterLabel = document.getElementById('selection-counter');
+
+      function updateSelectionState() {
+        const checked = document.querySelectorAll('.row-checkbox:checked');
+        const count = checked.length;
+        
+        // Update row highlight
+        rowCheckboxes.forEach(cb => {
+          const row = cb.closest('tr');
+          if (cb.checked) {
+            row.classList.add('bg-primary-fixed/20');
+            row.classList.remove('bg-surface-container-lowest');
+          } else {
+            row.classList.remove('bg-primary-fixed/20');
+            row.classList.add('bg-surface-container-lowest');
+          }
+        });
+
+        if (count === 0) {
+          counterLabel.innerHTML = '0 items selected <span class="text-on-surface-variant font-normal text-xs">(Select rows above)</span>';
+        } else if (count === 1) {
+          const rowId = checked[0].closest('tr').getAttribute('data-id');
+          counterLabel.innerHTML = '1 item selected: <span class="bg-primary-container px-2 py-0.5 rounded border border-[#18181b] font-mono text-[13px]">' + rowId + '</span>';
+        } else {
+          counterLabel.innerHTML = count + ' items selected <span class="bg-primary-container px-2 py-0.5 rounded border border-[#18181b] font-mono text-[13px]">Batch Mode</span>';
+        }
+
+        if (selectAll) {
+          selectAll.checked = count === rowCheckboxes.length && rowCheckboxes.length > 0;
+        }
+      }
+
+      if (selectAll) {
+        selectAll.addEventListener('change', (e) => {
+          rowCheckboxes.forEach(cb => {
+            cb.checked = e.target.checked;
+          });
+          updateSelectionState();
+        });
+      }
+
+      rowCheckboxes.forEach(cb => {
+        cb.addEventListener('change', updateSelectionState);
+      });
+
+      // Simple action feedback micro-interactions
+      const actionButtons = [
+        { id: 'btn-approve', action: 'Approved' },
+        { id: 'btn-reject', action: 'Rejected' },
+        { id: 'btn-delete', action: 'Deleted' }
+      ];
+
+      actionButtons.forEach(btnConfig => {
+        const btn = document.getElementById(btnConfig.id);
+        if (btn) {
+          btn.addEventListener('click', () => {
+            const checked = document.querySelectorAll('.row-checkbox:checked');
+            if (checked.length === 0) {
+              alert('Please select at least one review record to apply actions.');
+              return;
+            }
+            const ids = Array.from(checked).map(c => c.closest('tr').getAttribute('data-id')).join(', ');
+            alert('Action applied: ' + btnConfig.action + ' on [' + ids + ']');
+          });
+        }
+      });
+
+      // Filter tabs interaction
+      const tabs = document.querySelectorAll('.queue-tab');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => {
+            t.classList.remove('bg-secondary-container', 'text-on-secondary-container', '-translate-y-0.5', 'border-[2.5px]');
+            t.classList.add('bg-surface-container-lowest', 'text-on-surface', 'border-[2px]');
+          });
+          tab.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'border-[2px]');
+          tab.classList.add('bg-secondary-container', 'text-on-secondary-container', '-translate-y-0.5', 'border-[2.5px]');
+        });
+      });
+    })();
+  </script>
+</div></main></div></body></html>
