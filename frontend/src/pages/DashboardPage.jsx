@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import AnimatedContent from '../components/AnimatedContent';
 import { Sticker } from '../stickers/Sticker';
 import { brand } from '../stickers/fun';
-import { trophy, streak, battery, notes } from '../stickers/icons';
+import { trophy, streak, battery, notes, chat } from '../stickers/icons';
 
 // Warm coffee palette for the animated isometric stickers (minimal: KPI cards only)
 const COFFEE = brand('#c88a52', '#7c4a21');
@@ -400,7 +400,8 @@ export default function DashboardPage({
 
             <div className="mt-4 flex flex-col gap-3 max-h-[260px] overflow-y-auto pr-1">
               {approvedReviews.length === 0 ? (
-                <div className="p-5 rounded-xl bg-surface-container-low border-[2px] border-[#18181b] text-center">
+                <div className="p-5 rounded-xl bg-surface-container-low border-[2px] border-[#18181b] text-center flex flex-col items-center">
+                  <Sticker icon={chat} palette={COFFEE} style={{ width: 72, height: 72 }} />
                   <p className="font-label-lg text-label-lg text-[#18181b]">
                     No Approved Reviews Yet
                   </p>

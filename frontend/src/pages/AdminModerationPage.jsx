@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+import { Sticker } from '../stickers/Sticker';
+import { brand } from '../stickers/fun';
+import { search } from '../stickers/icons';
+
+const COFFEE = brand('#c88a52', '#7c4a21');
 
 export default function AdminModerationPage({ games, onModerateReviews }) {
   const [statusFilter, setStatusFilter] = useState('ALL');
@@ -112,9 +117,12 @@ export default function AdminModerationPage({ games, onModerateReviews }) {
                 <tr>
                   <td
                     colSpan={showActionsColumn ? 7 : 6}
-                    className="py-10 text-center font-label-lg text-label-lg text-on-surface-variant"
+                    className="py-8 text-center font-label-lg text-label-lg text-on-surface-variant"
                   >
-                    No reviews found for this filter.
+                    <div className="flex flex-col items-center">
+                      <Sticker icon={search} palette={COFFEE} style={{ width: 84, height: 84 }} />
+                      <span>No reviews found for this filter.</span>
+                    </div>
                   </td>
                 </tr>
               ) : (
