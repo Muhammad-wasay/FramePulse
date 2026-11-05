@@ -17,6 +17,23 @@ import {
   checkJavaBackendStatus,
 } from './services/api';
 
+// Makes any backend game JSON safe for the UI: missing arrays/fields never crash a page.
+function normalizeGames(list) {
+  return list.map((g, i) => ({
+    gameId: g.gameId ?? `GM-${501 + i}`,
+    title: g.title ?? 'Untitled Game',
+    genre: g.genre ?? 'Unknown',
+    releaseDate: g.releaseDate ?? '',
+    engineStack: g.engineStack ?? '',
+    patchVersion: g.patchVersion ?? '',
+    coverUrl: g.coverUrl ?? '',
+    chartHistory: g.chartHistory ?? [],
+    ...g,
+    sessions: g.sessions ?? g.performanceLogs ?? [],
+    reviews: g.reviews ?? [],
+  }));
+}
+
 export default function App() {
   const [activePage, setActivePage] = useState('analytics-dashboard');
   const [games, setGames] = useState(INITIAL_GAMES);
@@ -43,7 +60,7 @@ export default function App() {
       if (!mounted) return;
       setBackendOnline(online);
       if (online && Array.isArray(data) && data.length > 0) {
-        setGames(data);
+        setGames(normalizeGames(data));
       }
     });
     return () => {
@@ -64,7 +81,7 @@ export default function App() {
     const { online, data } = await checkJavaBackendStatus();
     setBackendOnline(online);
     if (online && Array.isArray(data) && data.length > 0) {
-      setGames(data);
+      setGames(normalizeGames(data));
       showToast(
         'Java Backend Synced!',
         'Telemetry refreshed from http://localhost:8080/api/games',
@@ -88,7 +105,13 @@ export default function App() {
       prevGames.map((game) => {
         if (game.gameId !== sessionPayload.gameId) return game;
 
-        const nextLogNum = 300 + (game.sessions?.length || 0) + 10;
+        const maxLogNum = prevGames
+          .flatMap((g) => g.sessions || [])
+          .reduce((max, s) => {
+            const n = parseInt(String(s.logId).replace(/\D/g, ''), 10);
+            return Number.isNaN(n) ? max : Math.max(max, n);
+          }, 300);
+        const nextLogNum = maxLogNum + 1;
         const nextRunNum = `#${String((game.sessions?.length || 0) + 1).padStart(
           2,
           '0'
@@ -131,11 +154,13 @@ export default function App() {
     await apiSubmitReview(reviewPayload);
 
     setGames((prevGames) => {
-      const totalReviewsSoFar = prevGames.reduce(
-        (acc, g) => acc + (g.reviews?.length || 0),
-        0
-      );
-      const newReviewId = `REV-${900 + totalReviewsSoFar + 1}`;
+      const maxReviewNum = prevGames
+        .flatMap((g) => g.reviews || [])
+        .reduce((max, r) => {
+          const n = parseInt(String(r.reviewId).replace(/\D/g, ''), 10);
+          return Number.isNaN(n) ? max : Math.max(max, n);
+        }, 900);
+      const newReviewId = `REV-${maxReviewNum + 1}`;
 
       return prevGames.map((game) => {
         if (game.gameId !== reviewPayload.gameId) return game;
