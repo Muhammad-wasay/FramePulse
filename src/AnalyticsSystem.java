@@ -2,7 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Main controller & data store (combines AnalyticsEngine + DatabaseHandler from diagrams).
+ * Main controller & in-memory business logic repository.
+ * Coordinates between UI, AuthService, Games, Reviews, PerformanceLogs, and AnalyticsEngine.
  */
 public class AnalyticsSystem {
 
@@ -11,6 +12,7 @@ public class AnalyticsSystem {
     // Matches Object Diagram: admin1 : Admin (userId = "A-101", username = "admin_usman", email = "admin@gaming.org")
     private Admin admin = new Admin("A-101", "admin_usman", "admin@gaming.org");
     private AnalyticsEngine engine = AnalyticsEngine.getInstance();
+    private AuthService authService = new AuthService();
 
     // Counters matching Object Diagram IDs (GM-501, G-201, LOG-301, REV-901)
     private int nextGameNumber = 501;
@@ -19,16 +21,63 @@ public class AnalyticsSystem {
     private int nextPlayerNumber = 201;
 
     public AnalyticsSystem() {
-        admin.login();
+        // Wire up game lookup for the AnalyticsEngine
+        engine.setGameLookup(this::findGameById);
+
+        // Register default admin in auth service
+        authService.registerUser(admin, "admin123");
+
+        // Load predefined data from Object Diagram
         loadSampleData();
+
+        // Default login as admin (or current active session)
+        authService.login("admin_usman", "admin123");
     }
 
     public List<Game> getGames()           { return games; }
     public List<Player> getPlayers()       { return players; }
     public Admin getAdmin()                { return admin; }
     public AnalyticsEngine getEngine()     { return engine; }
+    public AuthService getAuthService()    { return authService; }
 
-    // ---------------- Use cases ----------------
+    // ---------------- Authentication Operations ----------------
+
+    /**
+     * Diagram method: login(username, password) -> verifyCredentials()
+     */
+    public User login(String username, String password) {
+        return authService.login(username, password);
+    }
+
+    /**
+     * Diagram method: logout()
+     */
+    public void logout() {
+        authService.logout();
+    }
+
+    public User getCurrentUser() {
+        return authService.getCurrentUser();
+    }
+
+    public boolean isAdminLoggedIn() {
+        return authService.isAdmin();
+    }
+
+    // ---------------- Game Management Operations ----------------
+
+    /**
+     * Finds a game by its ID (e.g. "GM-501").
+     */
+    public Game findGameById(String gameId) {
+        if (gameId == null) return null;
+        for (Game g : games) {
+            if (g.getGameId().equalsIgnoreCase(gameId.trim())) {
+                return g;
+            }
+        }
+        return null;
+    }
 
     /** Use case: Admin adds a new game. */
     public Game addGame(String title, String genre) {
@@ -36,6 +85,24 @@ public class AnalyticsSystem {
         nextGameNumber++;
         admin.addGame(game, games);
         return game;
+    }
+
+    /** Updates an existing game's details. */
+    public boolean updateGame(String gameId, String newTitle, String newGenre) {
+        Game game = findGameById(gameId);
+        if (game != null) {
+            // Note: Game fields title & genre are private, we keep encapsulation intact
+            int index = games.indexOf(game);
+            if (index != -1) {
+                Game updated = new Game(game.getGameId(), newTitle, newGenre, game.getReleaseDate());
+                // Preserve existing reviews and sessions
+                for (PerformanceSession s : game.getSessions()) updated.addSession(s);
+                for (Review r : game.getReviews()) updated.addReview(r);
+                games.set(index, updated);
+                return true;
+            }
+        }
+        return false;
     }
 
     /** Finds a player by name, or registers a new Gamer if not found. */
@@ -49,8 +116,12 @@ public class AnalyticsSystem {
                 name.toLowerCase().replace(" ", "_") + "@gmail.com", 45.5);
         nextPlayerNumber++;
         players.add(player);
+        // Register in auth service so newly created gamers can also log in
+        authService.registerUser(player, "gamer123");
         return player;
     }
+
+    // ---------------- Performance Logging Operations ----------------
 
     /** Use case: Gamer logs a hardware performance session (LOG-301, LOG-302, ...). */
     public PerformanceSession logSession(Game game, String playerName, String resolution,
@@ -62,6 +133,8 @@ public class AnalyticsSystem {
         game.recordPerformance(session);
         return session;
     }
+
+    // ---------------- Review Management Operations ----------------
 
     /** Use case: Gamer submits a review (REV-901, REV-902, ...). */
     public Review submitReview(Game game, String playerName, int rating, String comment) {
@@ -105,6 +178,7 @@ public class AnalyticsSystem {
 
         // Object Diagram: gamer1 : Gamer (G-201, "shadow_ninja", "gamer1@gmail.com", 45.5)
         Player gamer1 = getOrCreatePlayer("shadow_ninja");
+        authService.registerUser(gamer1, "gamer123");
         gamer1.login();
 
         // Object Diagram: perfLog1 : PerformanceLog (LOG-301, 1440p, 72.4 FPS, CPU 64.0%, GPU 91.5%)

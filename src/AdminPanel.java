@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Screen 4: Admin approves, rejects or deletes reviews.
+ * Enforces role-based permissions per the Use Case Diagram (Admin actor).
  */
 public class AdminPanel extends JPanel implements Refreshable {
 
@@ -97,8 +98,17 @@ public class AdminPanel extends JPanel implements Refreshable {
                 });
             }
         }
-        subtitle.setText("Logged in as " + system.getAdmin().getName() + "  |  "
-                + system.getPendingReviewCount() + " review(s) waiting for moderation");
+
+        User current = system.getCurrentUser();
+        if (current != null && current.getRole().equals("Admin")) {
+            subtitle.setText("Logged in as Administrator: " + current.getUsername() + "  |  "
+                    + system.getPendingReviewCount() + " review(s) waiting for moderation");
+        } else if (current != null) {
+            subtitle.setText("Current User: " + current.getUsername() + " (" + current.getRole()
+                    + ")  |  Administrator privileges required to moderate reviews");
+        } else {
+            subtitle.setText("Guest Mode  |  " + system.getPendingReviewCount() + " review(s) waiting for moderation");
+        }
     }
 
     /** Returns the selected review, or null (and shows a message) if nothing is selected. */
@@ -113,6 +123,12 @@ public class AdminPanel extends JPanel implements Refreshable {
     }
 
     private void approveSelected() {
+        if (!system.isAdminLoggedIn()) {
+            JOptionPane.showMessageDialog(this,
+                    "Access Denied: Only administrators can approve reviews.\nPlease switch to an Admin account (e.g. admin_usman).",
+                    "Admin Privileges Required", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         Review review = getSelectedReview();
         if (review == null) return;
         system.getAdmin().approveReview(review);
@@ -120,6 +136,12 @@ public class AdminPanel extends JPanel implements Refreshable {
     }
 
     private void rejectSelected() {
+        if (!system.isAdminLoggedIn()) {
+            JOptionPane.showMessageDialog(this,
+                    "Access Denied: Only administrators can reject reviews.\nPlease switch to an Admin account (e.g. admin_usman).",
+                    "Admin Privileges Required", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         Review review = getSelectedReview();
         if (review == null) return;
         system.getAdmin().rejectReview(review);
@@ -127,6 +149,12 @@ public class AdminPanel extends JPanel implements Refreshable {
     }
 
     private void deleteSelected() {
+        if (!system.isAdminLoggedIn()) {
+            JOptionPane.showMessageDialog(this,
+                    "Access Denied: Only administrators can delete reviews.\nPlease switch to an Admin account (e.g. admin_usman).",
+                    "Admin Privileges Required", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         Review review = getSelectedReview();
         if (review == null) return;
         int answer = JOptionPane.showConfirmDialog(this,

@@ -79,6 +79,9 @@ public class LogSessionPanel extends JPanel implements Refreshable {
     @Override
     public void refresh() {
         Theme.fillGameCombo(gameCombo, system.getGames());
+        if (system.getCurrentUser() != null && (playerField.getText().trim().isEmpty() || playerField.getText().trim().equals("shadow_ninja") || playerField.getText().trim().equals("admin_usman"))) {
+            playerField.setText(system.getCurrentUser().getUsername());
+        }
     }
 
     private void submit() {
@@ -124,7 +127,11 @@ public class LogSessionPanel extends JPanel implements Refreshable {
     }
 
     private void clearForm() {
-        playerField.setText("");
+        if (system.getCurrentUser() != null) {
+            playerField.setText(system.getCurrentUser().getUsername());
+        } else {
+            playerField.setText("");
+        }
         fpsField.setText("");
         cpuField.setText("");
         gpuField.setText("");

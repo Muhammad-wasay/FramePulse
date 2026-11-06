@@ -5,6 +5,7 @@ import java.awt.*;
 
 /**
  * Screen 5: Add new games and see a summary of all games.
+ * Enforces role-based permissions per the Use Case Diagram (Admin actor manages games).
  */
 public class GamesPanel extends JPanel implements Refreshable {
 
@@ -12,6 +13,7 @@ public class GamesPanel extends JPanel implements Refreshable {
 
     private JTextField titleField = Theme.textField();
     private JTextField genreField = Theme.textField();
+    private JLabel subtitleLabel = new JLabel(" ");
     private DefaultTableModel model = Theme.tableModel(
             "Game ID", "Title", "Genre", "Sessions", "Approved Reviews", "Avg Rating", "Avg FPS", "Stability");
 
@@ -21,8 +23,7 @@ public class GamesPanel extends JPanel implements Refreshable {
         setBackground(Theme.BG_DARK);
         setBorder(new EmptyBorder(25, 30, 25, 30));
 
-        add(Theme.pageHeader("Manage Games",
-                new JLabel("Add games to the catalog and compare their analytics")), BorderLayout.NORTH);
+        add(Theme.pageHeader("Manage Games", subtitleLabel), BorderLayout.NORTH);
 
         // ----- Add game form (one row) -----
         titleField.setPreferredSize(new Dimension(260, 38));
@@ -42,7 +43,7 @@ public class GamesPanel extends JPanel implements Refreshable {
 
         JPanel body = new JPanel(new BorderLayout(0, 20));
         body.setOpaque(false);
-        body.add(Theme.sectionCard("Add New Game", form), BorderLayout.NORTH);
+        body.add(Theme.sectionCard("Add New Game (Admin Only)", form), BorderLayout.NORTH);
         body.add(Theme.sectionCard("All Games", Theme.scroll(Theme.table(model))), BorderLayout.CENTER);
         add(body, BorderLayout.CENTER);
     }
@@ -64,9 +65,25 @@ public class GamesPanel extends JPanel implements Refreshable {
                     hasSessions ? String.format("%.1f / 100", g.getStabilityScore()) : "-"
             });
         }
+
+        User current = system.getCurrentUser();
+        if (current != null && current.getRole().equals("Admin")) {
+            subtitleLabel.setText("Logged in as Admin: " + current.getUsername() + "  |  Full catalog management authorized");
+        } else if (current != null) {
+            subtitleLabel.setText("Browsing as " + current.getUsername() + " (" + current.getRole() + ")  |  Catalog view mode");
+        } else {
+            subtitleLabel.setText("Add games to the catalog and compare their analytics");
+        }
     }
 
     private void addGame() {
+        if (!system.isAdminLoggedIn()) {
+            JOptionPane.showMessageDialog(this,
+                    "Access Denied: Only administrators can add new games to the catalog.\nPlease switch to an Admin account (e.g. admin_usman).",
+                    "Admin Privileges Required", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         String title = titleField.getText().trim();
         String genre = genreField.getText().trim();
 

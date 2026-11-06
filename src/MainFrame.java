@@ -16,13 +16,17 @@ import java.util.Map;
  */
 public class MainFrame extends JFrame {
 
+    private AnalyticsSystem system;
     private CardLayout cardLayout = new CardLayout();
     private JPanel content = new JPanel(cardLayout);
     private JPanel sidebar = new JPanel();
     private Map<String, Refreshable> pages = new HashMap<>();
     private List<NavButton> navButtons = new ArrayList<>();
+    private JLabel userBadge = new JLabel(" ");
+    private JButton authBtn;
 
     public MainFrame(AnalyticsSystem system) {
+        this.system = system;
         setTitle("FramePulse - Game Performance & Review Analytics System");
         setSize(1280, 820);
         setMinimumSize(new Dimension(1150, 720));
@@ -38,14 +42,14 @@ public class MainFrame extends JFrame {
 
         // ----- Sidebar -----
         sidebar.setBackground(Theme.SIDEBAR_BG);
-        sidebar.setPreferredSize(new Dimension(245, 0));
+        sidebar.setPreferredSize(new Dimension(250, 0));
         sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
         sidebar.setBorder(new EmptyBorder(25, 16, 25, 16));
 
         JPanel brandHeader = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
         brandHeader.setOpaque(false);
         brandHeader.setAlignmentX(Component.LEFT_ALIGNMENT);
-        brandHeader.setMaximumSize(new Dimension(220, 56));
+        brandHeader.setMaximumSize(new Dimension(230, 56));
 
         if (logoImage != null) {
             brandHeader.add(new JLabel(createRoundedLogoIcon(logoImage, 44)));
@@ -62,7 +66,35 @@ public class MainFrame extends JFrame {
         brandHeader.add(brandText);
 
         sidebar.add(brandHeader);
-        sidebar.add(Box.createVerticalStrut(30));
+        sidebar.add(Box.createVerticalStrut(18));
+
+        // ----- User Session Card (Auth Component Integration) -----
+        JPanel userCard = new JPanel(new BorderLayout(8, 4));
+        userCard.setOpaque(false);
+        userCard.setAlignmentX(Component.LEFT_ALIGNMENT);
+        userCard.setMaximumSize(new Dimension(230, 55));
+        userCard.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Theme.BORDER, 1, true),
+                new EmptyBorder(8, 10, 8, 10)));
+
+        userBadge.setFont(Theme.FONT_SMALL);
+        userBadge.setForeground(Theme.INDIGO);
+        userCard.add(userBadge, BorderLayout.NORTH);
+
+        authBtn = new JButton("Switch User / Login");
+        authBtn.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+        authBtn.setForeground(Theme.TEXT_MUTED);
+        authBtn.setBackground(Theme.INPUT_BG);
+        authBtn.setFocusPainted(false);
+        authBtn.setBorderPainted(false);
+        authBtn.setContentAreaFilled(false);
+        authBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        authBtn.setHorizontalAlignment(SwingConstants.LEFT);
+        authBtn.addActionListener(e -> openLoginDialog());
+        userCard.add(authBtn, BorderLayout.CENTER);
+
+        sidebar.add(userCard);
+        sidebar.add(Box.createVerticalStrut(20));
 
         // ----- Screens -----
         addPage("Analytics Dashboard", new DashboardPanel(system));
@@ -79,7 +111,29 @@ public class MainFrame extends JFrame {
         add(sidebar, BorderLayout.WEST);
         add(content, BorderLayout.CENTER);
 
+        updateUserBadge();
         showPage("Analytics Dashboard");
+    }
+
+    public void updateUserBadge() {
+        User user = system.getCurrentUser();
+        if (user != null) {
+            userBadge.setText("👤 " + user.getUsername() + " (" + user.getRole() + ")");
+            authBtn.setText("Switch User (" + user.getRole() + ")");
+        } else {
+            userBadge.setText("👤 Guest (Not Authenticated)");
+            authBtn.setText("Login to Account");
+        }
+    }
+
+    public void openLoginDialog() {
+        LoginDialog dialog = new LoginDialog(this, system);
+        dialog.setVisible(true);
+        updateUserBadge();
+        // Refresh current visible page so any role changes take effect
+        for (Map.Entry<String, Refreshable> entry : pages.entrySet()) {
+            entry.getValue().refresh();
+        }
     }
 
     private BufferedImage loadLogo() {
@@ -131,7 +185,7 @@ public class MainFrame extends JFrame {
         NavButton(String text) {
             super(text);
             setAlignmentX(Component.LEFT_ALIGNMENT);
-            setMaximumSize(new Dimension(213, 44));
+            setMaximumSize(new Dimension(218, 44));
             setHorizontalAlignment(SwingConstants.LEFT);
             setFont(Theme.FONT_BOLD);
             setBorder(new EmptyBorder(10, 16, 10, 16));
