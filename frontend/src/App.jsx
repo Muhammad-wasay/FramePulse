@@ -19,19 +19,79 @@ import {
 
 // Makes any backend game JSON safe for the UI: missing arrays/fields never crash a page.
 function normalizeGames(list) {
-  return list.map((g, i) => ({
-    gameId: g.gameId ?? `GM-${501 + i}`,
-    title: g.title ?? 'Untitled Game',
-    genre: g.genre ?? 'Unknown',
-    releaseDate: g.releaseDate ?? '',
-    engineStack: g.engineStack ?? '',
-    patchVersion: g.patchVersion ?? '',
-    coverUrl: g.coverUrl ?? '',
-    chartHistory: g.chartHistory ?? [],
-    ...g,
-    sessions: g.sessions ?? g.performanceLogs ?? [],
-    reviews: g.reviews ?? [],
-  }));
+  const coverKeys = [
+    GAME_COVERS.cyber,
+    GAME_COVERS.apex,
+    GAME_COVERS.chronos,
+    GAME_COVERS.valkyrie,
+    GAME_COVERS.armored,
+  ];
+  const avatarKeys = [AVATARS.vortex, AVATARS.pixel, AVATARS.kira];
+
+  return list.map((g, i) => {
+    const rawSessions = g.sessions ?? g.performanceLogs ?? [];
+    const sessions = rawSessions.map((s, idx) => ({
+      logId: s.logId ?? s.sessionId ?? `LOG-${301 + idx}`,
+      runNumber: s.runNumber ?? `#${String(idx + 1).padStart(2, '0')}`,
+      player:
+        typeof s.player === 'object' && s.player !== null
+          ? s.player.username || s.player.name || 'shadow_ninja'
+          : s.player ?? 'shadow_ninja',
+      hardware: s.hardware ?? 'Verified PC Telemetry Rig',
+      resolution: s.resolution ?? '1440p',
+      averageFps: Number(s.averageFps ?? 60),
+      onePercentLow: Number(
+        s.onePercentLow ?? ((Number(s.averageFps ?? 60) * 0.78).toFixed(1))
+      ),
+      cpuUsagePercent: Number(s.cpuUsagePercent ?? s.cpuUsage ?? 50),
+      gpuUsagePercent: Number(s.gpuUsagePercent ?? s.gpuUsage ?? 80),
+      crashed: Boolean(s.crashed),
+      timestamp: s.timestamp ?? '2026-10-10 09:15',
+    }));
+
+    const rawReviews = g.reviews ?? [];
+    const reviews = rawReviews.map((r, idx) => ({
+      reviewId: r.reviewId ?? `REV-${901 + idx}`,
+      player:
+        typeof r.player === 'object' && r.player !== null
+          ? r.player.username || r.player.name || 'shadow_ninja'
+          : r.player ?? 'shadow_ninja',
+      roleBadge: r.roleBadge ?? 'Verified Gamer',
+      avatar: r.avatar || avatarKeys[idx % avatarKeys.length],
+      hardwareSpec: r.hardwareSpec ?? '1440p Telemetry Verified',
+      tags: r.tags ?? [g.genre || 'PC', 'Verified Log'],
+      rating: Number(r.rating ?? 5),
+      comment: r.comment ?? '',
+      submissionDate: r.submissionDate ?? '2026-10-10',
+      status: r.status ?? 'PENDING',
+    }));
+
+    const chartHistory =
+      Array.isArray(g.chartHistory) && g.chartHistory.length > 0
+        ? g.chartHistory
+        : sessions.map((s, idx) => ({
+            run: `#${String(idx + 1).padStart(2, '0')}${
+              idx === sessions.length - 1 ? '*' : ''
+            }`,
+            fps: Math.round(s.averageFps),
+            note: `${s.resolution} • ${s.averageFps} FPS`,
+            current: idx === sessions.length - 1,
+          }));
+
+    return {
+      ...g,
+      gameId: g.gameId ?? `GM-${501 + i}`,
+      title: g.title ?? 'Untitled Game',
+      genre: g.genre ?? 'Action',
+      releaseDate: g.releaseDate ?? '2023-11-15',
+      engineStack: g.engineStack || `${g.releaseDate || '2024'} • OOAD Telemetry Engine`,
+      patchVersion: g.patchVersion || 'Patch v1.0',
+      coverUrl: g.coverUrl || coverKeys[i % coverKeys.length],
+      chartHistory,
+      sessions,
+      reviews,
+    };
+  });
 }
 
 export default function App() {

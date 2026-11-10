@@ -3,7 +3,7 @@ import java.util.List;
 
 /**
  * Main controller & in-memory business logic repository.
- * Coordinates between UI, AuthService, Games, Reviews, PerformanceLogs, and AnalyticsEngine.
+ * Coordinates between UI, AuthService, DatabaseHandler, Games, Reviews, PerformanceLogs, and AnalyticsEngine.
  */
 public class AnalyticsSystem {
 
@@ -13,6 +13,7 @@ public class AnalyticsSystem {
     private Admin admin = new Admin("A-101", "admin_usman", "admin@gaming.org");
     private AnalyticsEngine engine = AnalyticsEngine.getInstance();
     private AuthService authService = new AuthService();
+    private DatabaseHandler databaseHandler = new DatabaseHandler(games, authService);
 
     // Counters matching Object Diagram IDs (GM-501, G-201, LOG-301, REV-901)
     private int nextGameNumber = 501;
@@ -34,11 +35,12 @@ public class AnalyticsSystem {
         authService.login("admin_usman", "admin123");
     }
 
-    public List<Game> getGames()           { return games; }
-    public List<Player> getPlayers()       { return players; }
-    public Admin getAdmin()                { return admin; }
-    public AnalyticsEngine getEngine()     { return engine; }
-    public AuthService getAuthService()    { return authService; }
+    public List<Game> getGames()                   { return games; }
+    public List<Player> getPlayers()               { return players; }
+    public Admin getAdmin()                        { return admin; }
+    public AnalyticsEngine getEngine()             { return engine; }
+    public AuthService getAuthService()            { return authService; }
+    public DatabaseHandler getDatabaseHandler()    { return databaseHandler; }
 
     // ---------------- Authentication Operations ----------------
 
@@ -130,7 +132,7 @@ public class AnalyticsSystem {
         PerformanceSession session = new PerformanceSession(
                 "LOG-" + nextSessionNumber, player, game, resolution, fps, cpu, gpu, crashed);
         nextSessionNumber++;
-        game.recordPerformance(session);
+        databaseHandler.savePerformanceLog(game, session);
         return session;
     }
 
@@ -142,7 +144,7 @@ public class AnalyticsSystem {
         Review review = new Review("REV-" + nextReviewNumber, player, game, rating, comment,
                 "2026-10-10", ReviewStatus.PENDING);
         nextReviewNumber++;
-        game.addReview(review);
+        databaseHandler.saveReview(game, review);
         return review;
     }
 
