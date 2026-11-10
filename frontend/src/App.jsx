@@ -94,14 +94,38 @@ function normalizeGames(list) {
   });
 }
 
+const STORAGE_KEY = 'framepulse_telemetry_store_v1';
+
 export default function App() {
   const [activePage, setActivePage] = useState('analytics-dashboard');
-  const [games, setGames] = useState(INITIAL_GAMES);
+  const [games, setGames] = useState(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return normalizeGames(parsed);
+        }
+      }
+    } catch {
+      // Ignore storage read errors and fall back to INITIAL_GAMES
+    }
+    return INITIAL_GAMES;
+  });
   const [selectedGameId, setSelectedGameId] = useState('GM-501');
   const [backendOnline, setBackendOnline] = useState(false);
   const [reportModalGame, setReportModalGame] = useState(null);
   const [reportCounter, setReportCounter] = useState(1);
   const [toast, setToast] = useState(null);
+
+  // Persist all telemetry, reviews, moderation status, and games across browser refreshes
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(games));
+    } catch {
+      // Ignore storage quota errors
+    }
+  }, [games]);
 
   const showToast = (title, message, type = 'success', icon = 'task_alt') => {
     setToast({ title, message, type, icon });
