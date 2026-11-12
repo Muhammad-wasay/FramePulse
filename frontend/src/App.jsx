@@ -95,9 +95,37 @@ function normalizeGames(list) {
 }
 
 const STORAGE_KEY = 'framepulse_telemetry_store_v1';
+const VALID_PAGES = new Set([
+  'analytics-dashboard',
+  'log-fps-session',
+  'submit-review',
+  'admin-moderation',
+  'manage-games',
+]);
+
+function getInitialPage() {
+  const hash = window.location.hash.replace(/^#/, '');
+  return VALID_PAGES.has(hash) ? hash : 'analytics-dashboard';
+}
 
 export default function App() {
-  const [activePage, setActivePage] = useState('analytics-dashboard');
+  const [activePage, setActivePage] = useState(getInitialPage);
+
+  useEffect(() => {
+    const onHashChange = () => {
+      const hash = window.location.hash.replace(/^#/, '');
+      if (VALID_PAGES.has(hash)) setActivePage(hash);
+    };
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+
+  const navigateTo = (page) => {
+    if (VALID_PAGES.has(page)) {
+      window.location.hash = page;
+    }
+    setActivePage(page);
+  };
   const [games, setGames] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -379,7 +407,7 @@ export default function App() {
 
   const handleInspectGame = (gameId) => {
     setSelectedGameId(gameId);
-    setActivePage('analytics-dashboard');
+    navigateTo('analytics-dashboard');
   };
 
   const handleOpenReport = (game) => {
@@ -393,10 +421,10 @@ export default function App() {
 
   return (
     <div className="gaming-grid-bg text-on-surface font-body-md antialiased selection:bg-secondary-container selection:text-on-secondary-container min-h-screen flex flex-col overflow-x-hidden">
-      {/* Top Horizontal Gaming HUD Navbar (with 180° Flip Text) */}
+      {/* Top Horizontal HUD Navbar */}
       <Header
         activePage={activePage}
-        onNavigate={setActivePage}
+        onNavigate={navigateTo}
         backendOnline={backendOnline}
         onRefresh={handleRefresh}
         pendingCount={pendingCount}
@@ -411,7 +439,7 @@ export default function App() {
               selectedGameId={selectedGameId}
               onSelectGame={setSelectedGameId}
               onOpenReport={handleOpenReport}
-              onNavigate={setActivePage}
+              onNavigate={navigateTo}
             />
           )}
 
