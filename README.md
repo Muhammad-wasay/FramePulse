@@ -14,7 +14,7 @@
 
 <br />
 
-<img src="stitch_framepulse_analytics_dashboard/stitch_framepulse_analytics_dashboard/framepulse_analytics_dashboard_toon_edition_2/screen.png" alt="FramePulse Analytics Dashboard — Gaming Toon Web Edition" width="85%" />
+<img src="assets/screenshots/web/1_dashboard.png" alt="FramePulse Analytics Dashboard — Warm Mocha Web Edition" width="85%" />
 
 </div>
 
@@ -44,11 +44,11 @@ When a modern PC title launches, players and optimization engineers face a **tel
 
 | 📊 Analytics Dashboard (Telemetry & KPIs) | 🎮 Log FPS Session (Hardware Telemetry Form) |
 | :---: | :---: |
-| <img src="stitch_framepulse_analytics_dashboard/stitch_framepulse_analytics_dashboard/framepulse_analytics_dashboard_toon_edition_2/screen.png" width="100%" alt="Analytics Dashboard Web UI" /> | <img src="stitch_framepulse_analytics_dashboard/stitch_framepulse_analytics_dashboard/framepulse_log_fps_session_toon_edition/screen.png" width="100%" alt="Log FPS Session Web UI" /> |
+| <img src="assets/screenshots/web/1_dashboard.png" width="100%" alt="Analytics Dashboard Web UI" /> | <img src="assets/screenshots/web/2_log_session.png" width="100%" alt="Log FPS Session Web UI" /> |
 | **⭐ Submit Review (Interactive 5-Star Matrix)** | **🛡️ Admin Moderation (Queue & Bulk Actions)** |
-| <img src="stitch_framepulse_analytics_dashboard/stitch_framepulse_analytics_dashboard/framepulse_submit_review_toon_edition/screen.png" width="100%" alt="Submit Review Web UI" /> | <img src="stitch_framepulse_analytics_dashboard/stitch_framepulse_analytics_dashboard/framepulse_admin_moderation_toon_edition/screen.png" width="100%" alt="Admin Moderation Web UI" /> |
-| **🗂️ Manage Games Catalog & Comparison Matrix** | **📈 Telemetry Deep-Dive View** |
-| <img src="stitch_framepulse_analytics_dashboard/stitch_framepulse_analytics_dashboard/framepulse_manage_games_toon_edition/screen.png" width="100%" alt="Manage Games Web UI" /> | <img src="stitch_framepulse_analytics_dashboard/stitch_framepulse_analytics_dashboard/framepulse_analytics_dashboard_toon_edition_1/screen.png" width="100%" alt="Analytics Dashboard Alternate View" /> |
+| <img src="assets/screenshots/web/3_submit_review.png" width="100%" alt="Submit Review Web UI" /> | <img src="assets/screenshots/web/4_admin_moderation.png" width="100%" alt="Admin Moderation Web UI" /> |
+| **🗂️ Manage Games Catalog & Comparison Matrix** | **⚡ Official FramePulse Identity** |
+| <img src="assets/screenshots/web/5_manage_games.png" width="100%" alt="Manage Games Web UI" /> | <img src="frontend/public/logo/logo.png" width="45%" alt="FramePulse Official Logo" /> |
 
 ### 🖥️ Native Java Swing & Java2D Desktop Screens (`src/`)
 
@@ -179,7 +179,9 @@ flowchart TD
 FramePulse/
 ├── assets/
 │   ├── logo.png                          # Official FramePulse brand emblem
-│   └── screenshots/                      # Native Java Swing UI screenshots (1_dashboard..5_manage_games)
+│   └── screenshots/                      # Live UI screenshots (Swing desktop + web/ React screens)
+│       ├── 1_dashboard.png .. 5_manage_games.png # Native Java Swing UI screenshots
+│       └── web/                          # Live React 18 Warm Mocha UI screenshots (1..5)
 ├── diagrams/                             # All 8 UML Diagrams (.puml source + rendered .png images)
 │   ├── 1_class_diagram.puml / .png       # Class Diagram (8 core classes, inheritance & composition)
 │   ├── 2_object_diagram.puml / .png      # Object Diagram (GM-501, LOG-301, REV-901, REP-001 snapshot)
