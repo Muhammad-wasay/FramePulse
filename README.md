@@ -50,16 +50,6 @@ When a modern PC title launches, players and optimization engineers face a **tel
 | **🗂️ Manage Games Catalog & Comparison Matrix** | **⚡ Official FramePulse Identity** |
 | <img src="assets/screenshots/web/5_manage_games.png" width="100%" alt="Manage Games Web UI" /> | <img src="frontend/public/logo/logo.png" width="45%" alt="FramePulse Official Logo" /> |
 
-### 🖥️ Native Java Swing & Java2D Desktop Screens (`src/`)
-
-| 📊 Java Swing Analytics Dashboard | 🎮 Java Swing Log FPS Session |
-| :---: | :---: |
-| <img src="assets/screenshots/1_dashboard.png" width="100%" alt="Java Swing Dashboard" /> | <img src="assets/screenshots/2_log_session.png" width="100%" alt="Java Swing Log Session" /> |
-| **⭐ Java Swing Submit Review** | **🛡️ Java Swing Admin Moderation** |
-| <img src="assets/screenshots/3_submit_review.png" width="100%" alt="Java Swing Submit Review" /> | <img src="assets/screenshots/4_admin_moderation.png" width="100%" alt="Java Swing Admin Moderation" /> |
-| **🗂️ Java Swing Manage Games** | **⚡ FramePulse Official Emblem** |
-| <img src="assets/screenshots/5_manage_games.png" width="100%" alt="Java Swing Manage Games" /> | <img src="assets/logo.png" width="55%" alt="FramePulse Emblem" /> |
-
 ### 📐 Complete UML Diagrams Suite (`diagrams/`)
 
 | 1. Class Diagram (`1_class_diagram.png`) | 2. Object Diagram (`2_object_diagram.png`) |
