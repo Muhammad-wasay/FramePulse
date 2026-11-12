@@ -4,7 +4,7 @@
 
 # ⚡ FramePulse — Game Performance & Review Analytics System
 
-**A full-stack OOAD game telemetry & moderated community review suite powered by a Java 17+ Backend (`HttpServer` + Swing Desktop GUI) and a React 18 + Vite Cel-Shaded "Gaming Toon" Web Frontend.**
+**A full-stack OOAD game telemetry & moderated community review suite powered by a Java 17+ Backend (`HttpServer` + Swing Desktop GUI) and a sleek Warm Mocha & Caramel React 18 + Vite Web Frontend.**
 
 ![Java](https://img.shields.io/badge/Backend-Java_17%2B_%26_HttpServer-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![React](https://img.shields.io/badge/Frontend-React_18_%2B_Vite_5-61DAFB?style=for-the-badge&logo=react&logoColor=18181B)
@@ -25,7 +25,7 @@
 When a modern PC title launches, players and optimization engineers face a **telemetry fragmentation problem**: hardware benchmarks (average FPS, 1% lows, CPU/GPU utilization, and crash frequency across `720p`, `1080p`, `1440p`, and `4K`) are scattered across separate benchmarking utilities, while community review feeds suffer from unmoderated spam and review-bombing that distort a game's true rating.
 
 **FramePulse** unifies **multi-session hardware telemetry logging**, **role-guarded community review moderation**, and **automated stability scoring (`0–100`)** into a single Object-Oriented system designed for **CT-263 Object-Oriented Analysis & Design (OOAD)**. It ships with a dual-interface architecture:
-- **Web Frontend (`frontend/`)**: An eye-safe Warm Mocha / Caramel cel-shaded **React 18 + Vite** web application with GSAP staggered entrance animations (`AnimatedContent.jsx`), animated 2D canvas isometric stickers (`Sticker.tsx`), and persistent `localStorage` + live Java REST API synchronization.
+- **Web Frontend (`frontend/`)**: An eye-safe, clean Warm Mocha & Caramel **React 18 + Vite** analytics web application featuring `1px` espresso borders, subtle card elevation, GSAP staggered entrance animations (`AnimatedContent.jsx`), animated 2D canvas isometric stickers (`Sticker.tsx`), and persistent `localStorage` + live Java REST API synchronization.
 - **Java Backend & Desktop Suite (`src/`)**: A zero-dependency **Java 17+** domain core implementing all 8 UML diagrams, complete with a built-in REST API server (`ApiServer.java` on `http://localhost:8080/api`), authentication service (`AuthService.java`), data access repository (`DatabaseHandler.java`), and a native **Java Swing & Java2D** desktop client (`MainFrame.java`).
 
 ### 🔄 Step-by-Step Core Workflow
@@ -40,7 +40,7 @@ When a modern PC title launches, players and optimization engineers face a **tel
 
 ## 🖼️ Visual Showcase / Screenshots Gallery
 
-### 🌐 Web Application Screens (React 18 + Vite "Gaming Toon" Edition)
+### 🌐 Web Application Screens (React 18 + Vite Edition)
 
 | 📊 Analytics Dashboard (Telemetry & KPIs) | 🎮 Log FPS Session (Hardware Telemetry Form) |
 | :---: | :---: |
@@ -82,7 +82,7 @@ When a modern PC title launches, players and optimization engineers face a **tel
 - **Singleton Calculation Engine (`AnalyticsEngine.java`)**: Implements the **Singleton Design Pattern** (`AnalyticsEngine.getInstance()`) with overloaded methods supporting both `Game` references and `String gameId` lookups (`calculateAverageRating()`, `calculateAverageFps()`, `getSystemStabilityScore()`, `generateGameReport()`).
 - **Authentication & Data Access Layers (`AuthService.java`, `DatabaseHandler.java`, `LoginDialog.java`)**: Implements the Component, Sequence, and Activity Diagram workflows (`verifyCredentials()`, `savePerformanceLog()`, `saveReview()`, `fetchAllReviews()`, `fetchAllLogs()`) with role-based access enforcement in `AdminPanel.java` and `GamesPanel.java`.
 
-### 🌐 2. Cel-Shaded "Gaming Toon" React 18 Web Frontend (`frontend/src/`)
+### 🌐 2. Warm Mocha Analytics React 18 Web Frontend (`frontend/src/`)
 - **Floating Glossy Pill HUD Navbar (`Header.jsx`, `index.css`)**: Single-bar rounded-full navigation pill featuring the `FP` emblem, vertical 3D roll-shift link hover transitions (`.nav-flip-wrapper`), live pending moderation badge, and a one-click Java API sync button.
 - **Isometric 2D Canvas Stickers (`Sticker.tsx`, `fun.ts`, `icons.ts`, `motions.ts`)**: Custom 60fps HTML5 `<canvas>` isometric sticker renderer using Riso palettes (`#F15060`, `#0078BF`, `#FFB511`, `#00A95C`) and After Effects cubic-bezier keyframe presets (`trophy`, `streak`, `battery`, `notes`, `chat`, `search`) across KPI cards and empty states.
 - **GSAP Staggered Entrance Animations (`AnimatedContent.jsx`)**: ScrollTrigger and mount-driven spring/back-out transitions (`gsap`) across dashboard cards and page switches.
@@ -189,20 +189,20 @@ FramePulse/
 │   ├── 6_activity_diagram.puml / .png    # Activity Diagram (3-swimlane authentication & action flow)
 │   ├── 7_component_diagram.puml / .png   # Component Diagram (Presentation, Business Logic & Data Access)
 │   └── 8_deployment_diagram.puml / .png  # Deployment Diagram (Client, Application Server & Storage nodes)
-├── frontend/                             # React 18 + Vite 5 + Tailwind Cel-Shaded Web Application
+├── frontend/                             # React 18 + Vite 5 + Tailwind Warm Mocha Web Application
 │   ├── index.html                        # Warm Mocha theme config, Google Fonts & Material Symbols
 │   ├── package.json                      # Frontend dependencies (react, gsap, vite) & build scripts
 │   ├── vite.config.js                    # Vite dev server config with /api proxy to localhost:8080
 │   ├── public/logo/                      # Static brand assets (favicon.png, logo.png)
 │   └── src/
 │       ├── main.jsx                      # React DOM root mount
-│       ├── index.css                     # Tactical grid background, 3D nav flip & cel-shaded utilities
+│       ├── index.css                     # Subtle coffee blueprint grid background & 3D nav flip CSS
 │       ├── App.jsx                       # Root controller, normalizeGames(), localStorage & API sync
 │       ├── components/
-│       │   ├── Header.jsx                # Floating rounded-full pill HUD navbar with FP emblem
+│       │   ├── Header.jsx                # Floating rounded-full glass pill navbar with FP emblem
 │       │   ├── AnimatedContent.jsx       # GSAP ScrollTrigger & mount entrance animation wrapper
 │       │   ├── ReportModal.jsx           # Interactive REP-001 report viewer, copy & .txt downloader
-│       │   └── Toast.jsx                 # Cel-shaded notification toast banner
+│       │   └── Toast.jsx                 # Clean notification toast banner
 │       ├── pages/
 │       │   ├── DashboardPage.jsx         # Screen 1: Bento KPIs, FPS bar chart, session table & reviews
 │       │   ├── LogSessionPage.jsx        # Screen 2: Hardware telemetry submission form & formula card
@@ -287,7 +287,7 @@ cd frontend
 npm install
 npm run dev
 ```
-Then open **`http://localhost:5173`** in your browser. If the Java Backend is running on `:8080`, the top navbar badge will automatically show **`JAVA API: ONLINE`**!
+Then open **`http://localhost:5173`** in your browser. Click the **Refresh** button in the top navbar pill to sync live telemetry with the Java Backend (`http://localhost:8080/api/games`)!
 
 ---
 
