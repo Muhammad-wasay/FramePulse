@@ -17,23 +17,23 @@ export default function Header({
 }) {
   return (
     <div className="fixed top-4 left-0 right-0 z-50 px-4 flex justify-center pointer-events-none">
-      {/* w-fit ensures the rounded pill border ALWAYS wraps every item inside */}
+      {/* Sleek floating glass pill navbar */}
       <header
-        className="pointer-events-auto inline-flex w-fit max-w-[98vw] h-14 px-6 rounded-full border-[2px] border-[#2b1d14]/85 items-center justify-center gap-5 backdrop-blur-2xl"
+        className="pointer-events-auto inline-flex w-fit max-w-[98vw] h-14 px-6 rounded-full border border-[#2b1d14]/15 items-center justify-center gap-5 backdrop-blur-2xl"
         style={{
           background:
-            'linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(247, 238, 226, 0.76) 55%, rgba(239, 226, 209, 0.85) 100%)',
+            'linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(250, 245, 238, 0.85) 55%, rgba(244, 236, 225, 0.9) 100%)',
           boxShadow:
-            'inset 0 2px 2px rgba(255, 255, 255, 0.95), inset 0 -1px 2px rgba(124, 74, 33, 0.12), 0 10px 28px -8px rgba(43, 29, 20, 0.18)',
+            'inset 0 1px 1px rgba(255, 255, 255, 0.95), 0 10px 30px -10px rgba(43, 29, 20, 0.14)',
         }}
       >
         {/* Left: Bold "FP" in Archivo Black */}
         <div
           onClick={() => onNavigate('analytics-dashboard')}
-          className="flex items-center pr-5 border-r-[1.5px] border-[#2b1d14]/20 cursor-pointer group select-none flex-shrink-0"
+          className="flex items-center pr-5 border-r border-[#2b1d14]/12 cursor-pointer group select-none flex-shrink-0"
         >
           <span
-            className="text-[25px] uppercase tracking-tighter text-[#2b1d14] leading-none transition-transform duration-300 group-hover:scale-105"
+            className="text-[24px] uppercase tracking-tighter text-[#2b1d14] leading-none transition-transform duration-300 group-hover:scale-105"
             style={{ fontFamily: "'Archivo Black', sans-serif" }}
           >
             F<span className="text-[#8b5a2b]">P</span>
@@ -49,10 +49,11 @@ export default function Header({
                 key={item.id}
                 type="button"
                 onClick={() => onNavigate(item.id)}
-                className={`group relative flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[12px] font-bold uppercase tracking-wide transition-all cursor-pointer whitespace-nowrap ${isActive
-                    ? 'bg-primary-container text-[#2b1d14] border-[1.5px] border-[#2b1d14] shadow-[inset_0_1px_1px_rgba(255,255,255,0.6)]'
-                    : 'bg-transparent text-on-surface-variant border-[1.5px] border-transparent hover:bg-white/70 hover:text-[#2b1d14] hover:border-[#2b1d14]/25'
-                  }`}
+                className={`group relative flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[12px] font-semibold uppercase tracking-wide transition-all cursor-pointer whitespace-nowrap ${
+                  isActive
+                    ? 'bg-[#7c4a21] text-white border border-[#7c4a21] shadow-sm'
+                    : 'bg-transparent text-on-surface-variant border border-transparent hover:bg-white/80 hover:text-[#2b1d14] hover:border-[#2b1d14]/12'
+                }`}
               >
                 <span className="material-symbols-outlined text-[17px] transition-transform duration-300 group-hover:scale-110">
                   {item.icon}
@@ -62,14 +63,24 @@ export default function Header({
                 <span className="nav-flip-wrapper">
                   <span className="nav-flip-inner">
                     <span className="nav-flip-front">{item.label}</span>
-                    <span className="nav-flip-back text-primary font-extrabold">
+                    <span
+                      className={`nav-flip-back font-bold ${
+                        isActive ? 'text-[#f7deb0]' : 'text-primary'
+                      }`}
+                    >
                       {item.label}
                     </span>
                   </span>
                 </span>
 
                 {item.hasBadge && pendingCount > 0 && (
-                  <span className="flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-secondary-container text-[#2b1d14] border border-[#2b1d14] text-[10px] font-bold leading-none">
+                  <span
+                    className={`flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full text-[10px] font-bold leading-none ${
+                      isActive
+                        ? 'bg-secondary-container text-[#2b1d14]'
+                        : 'bg-secondary-container/80 text-[#2b1d14] border border-[#2b1d14]/15'
+                    }`}
+                  >
                     {pendingCount}
                   </span>
                 )}
@@ -79,7 +90,7 @@ export default function Header({
         </nav>
 
         {/* Right: Sync + Admin Profile */}
-        <div className="flex items-center gap-2.5 pl-5 border-l-[1.5px] border-[#2b1d14]/20 flex-shrink-0">
+        <div className="flex items-center gap-2.5 pl-5 border-l border-[#2b1d14]/12 flex-shrink-0">
           <button
             type="button"
             onClick={onRefresh}
@@ -88,7 +99,7 @@ export default function Header({
                 ? 'Connected to Java API (:8080)'
                 : 'Sync Telemetry Store'
             }
-            className="w-8 h-8 rounded-full bg-white/80 hover:bg-white border border-[#2b1d14]/40 flex items-center justify-center transition-all group cursor-pointer flex-shrink-0"
+            className="w-8 h-8 rounded-full bg-white/85 hover:bg-white border border-[#2b1d14]/15 shadow-xs flex items-center justify-center transition-all group cursor-pointer flex-shrink-0"
           >
             <span className="material-symbols-outlined text-[16px] text-[#2b1d14] group-hover:rotate-180 transition-transform duration-500">
               refresh
@@ -98,13 +109,13 @@ export default function Header({
           <button
             type="button"
             onClick={() => onNavigate('admin-moderation')}
-            className="group flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/80 hover:bg-white border border-[#2b1d14]/40 transition-colors cursor-pointer flex-shrink-0"
+            className="group flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/85 hover:bg-white border border-[#2b1d14]/15 shadow-xs transition-colors cursor-pointer flex-shrink-0"
           >
-            <span className="w-2 h-2 rounded-full bg-[#52946b] border border-[#2b1d14] flex-shrink-0"></span>
+            <span className="w-2 h-2 rounded-full bg-emerald-600 flex-shrink-0"></span>
             <span className="nav-flip-wrapper font-label-md text-[12px] text-[#2b1d14] leading-none">
               <span className="nav-flip-inner">
                 <span className="nav-flip-front">admin</span>
-                <span className="nav-flip-back text-primary">Lv.42 PRO</span>
+                <span className="nav-flip-back text-primary">A-101 PRO</span>
               </span>
             </span>
           </button>

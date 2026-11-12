@@ -57,21 +57,21 @@ export default function ReportModal({ game, reportNumber = 1, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#18181b]/60 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="w-full max-w-xl bg-surface-container-lowest rounded-2xl border-[2px] border-[#18181b] overflow-hidden animate-spring-pop">
-        {/* Top Toon Ribbon Header */}
-        <div className="bg-secondary-container border-b-[2px] border-[#18181b] px-6 py-4 flex items-center justify-between">
+    <div className="fixed inset-0 z-50 bg-[#2b1d14]/45 backdrop-blur-sm flex items-center justify-center p-4">
+      <div className="w-full max-w-xl bg-surface-container-lowest rounded-2xl border border-[#2b1d14]/15 shadow-2xl overflow-hidden animate-spring-pop">
+        {/* Top Clean Header */}
+        <div className="bg-surface-container-low border-b border-[#2b1d14]/12 px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-surface-container-lowest border-[2px] border-[#18181b] flex items-center justify-center">
-              <span className="material-symbols-outlined text-[#18181b] text-[20px]">
+            <div className="w-9 h-9 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+              <span className="material-symbols-outlined text-primary text-[20px]">
                 description
               </span>
             </div>
             <div>
-              <h3 className="font-headline-sm text-headline-sm uppercase text-[#18181b] leading-none">
+              <h3 className="font-headline-sm text-headline-sm text-[#2b1d14] leading-none">
                 Generated Game Report ({reportId})
               </h3>
-              <span className="font-label-sm text-label-sm uppercase text-on-secondary-fixed-variant font-bold">
+              <span className="font-label-sm text-label-sm text-on-surface-variant font-semibold">
                 AnalyticsEngine.generateGameReport()
               </span>
             </div>
@@ -79,7 +79,7 @@ export default function ReportModal({ game, reportNumber = 1, onClose }) {
           <button
             type="button"
             onClick={onClose}
-            className="w-8 h-8 rounded-lg bg-surface-container-lowest border-[2px] border-[#18181b] flex items-center justify-center hover:bg-tertiary-container transition-all cursor-pointer"
+            className="w-8 h-8 rounded-lg bg-white/80 border border-[#2b1d14]/12 flex items-center justify-center hover:bg-rose-50 hover:text-rose-700 transition-all cursor-pointer"
           >
             <span className="material-symbols-outlined text-[18px]">close</span>
           </button>
@@ -88,33 +88,33 @@ export default function ReportModal({ game, reportNumber = 1, onClose }) {
         {/* Body */}
         <div className="p-6 flex flex-col gap-4">
           <div className="grid grid-cols-3 gap-3">
-            <div className="p-3 rounded-xl bg-surface-container-low border-[2px] border-[#18181b]">
+            <div className="p-3.5 rounded-xl bg-surface-container-low border border-[#2b1d14]/10">
               <span className="font-label-sm text-label-sm uppercase text-on-surface-variant block">
                 Target Game
               </span>
-              <span className="font-headline-sm text-[17px] text-[#18181b] font-bold">
+              <span className="font-headline-sm text-[16px] text-[#2b1d14] font-bold">
                 {game.title}
               </span>
               <span className="font-label-sm text-label-sm text-primary block">
                 {game.gameId}
               </span>
             </div>
-            <div className="p-3 rounded-xl bg-surface-container-low border-[2px] border-[#18181b]">
+            <div className="p-3.5 rounded-xl bg-surface-container-low border border-[#2b1d14]/10">
               <span className="font-label-sm text-label-sm uppercase text-on-surface-variant block">
                 Avg FPS &amp; Load
               </span>
-              <span className="font-headline-sm text-[17px] text-[#0f5132] font-bold">
+              <span className="font-headline-sm text-[16px] text-emerald-700 font-bold">
                 {avgFps.toFixed(1)} FPS
               </span>
               <span className="font-label-sm text-label-sm text-on-surface-variant block">
                 CPU {avgCpu}% • GPU {avgGpu}%
               </span>
             </div>
-            <div className="p-3 rounded-xl bg-surface-container-low border-[2px] border-[#18181b]">
+            <div className="p-3.5 rounded-xl bg-surface-container-low border border-[#2b1d14]/10">
               <span className="font-label-sm text-label-sm uppercase text-on-surface-variant block">
                 Overall Score
               </span>
-              <span className="font-headline-sm text-[17px] text-[#18181b] font-bold">
+              <span className="font-headline-sm text-[16px] text-[#2b1d14] font-bold">
                 {stability.toFixed(1)} / 100
               </span>
               <span className="font-label-sm text-label-sm text-primary block">
@@ -123,7 +123,7 @@ export default function ReportModal({ game, reportNumber = 1, onClose }) {
             </div>
           </div>
 
-          <pre className="p-4 rounded-xl bg-[#18181b] text-[#4ade80] font-mono text-xs leading-relaxed overflow-x-auto border-[2px] border-[#18181b]">
+          <pre className="p-4 rounded-xl bg-[#241912] text-emerald-300 font-mono text-xs leading-relaxed overflow-x-auto border border-[#2b1d14]/20">
             {rawReportText}
           </pre>
 
@@ -131,7 +131,7 @@ export default function ReportModal({ game, reportNumber = 1, onClose }) {
             <button
               type="button"
               onClick={handleCopy}
-              className="px-4 py-2 rounded-xl bg-surface-container-low border-[2px] border-[#18181b] font-label-md text-label-md uppercase font-bold text-[#18181b] hover:bg-surface-container-high transition-all cursor-pointer flex items-center gap-1.5"
+              className="px-4 py-2 rounded-xl bg-surface-container-low border border-[#2b1d14]/15 font-label-md text-label-md font-semibold text-[#2b1d14] hover:bg-surface-container transition-all cursor-pointer flex items-center gap-1.5"
             >
               <span className="material-symbols-outlined text-[16px]">
                 {copied ? 'check' : 'content_copy'}
@@ -141,7 +141,7 @@ export default function ReportModal({ game, reportNumber = 1, onClose }) {
             <button
               type="button"
               onClick={handleDownload}
-              className="px-5 py-2 rounded-xl bg-primary-container border-[2px] border-[#18181b] font-label-md text-label-md uppercase font-bold text-on-primary-container hover:bg-primary-fixed transition-all cursor-pointer flex items-center gap-1.5"
+              className="px-5 py-2 rounded-xl bg-[#7c4a21] text-white border border-[#7c4a21] font-label-md text-label-md font-semibold hover:bg-[#663b19] shadow-sm transition-all cursor-pointer flex items-center gap-1.5"
             >
               <span className="material-symbols-outlined text-[16px]">
                 download

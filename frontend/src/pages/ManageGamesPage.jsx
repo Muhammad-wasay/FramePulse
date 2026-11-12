@@ -41,33 +41,33 @@ export default function ManageGamesPage({
   return (
     <div className="flex flex-col w-full gap-7 pb-12">
       {/* Header */}
-      <div className="flex flex-col gap-1">
-        <span className="w-fit px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container border-[1.5px] border-[#18181b] font-label-sm text-label-sm uppercase font-bold">
+      <div className="flex flex-col gap-1.5">
+        <span className="w-fit px-2.5 py-0.5 rounded-full bg-primary-fixed/80 text-on-primary-fixed-variant border border-primary/20 font-label-sm text-label-sm uppercase font-semibold">
           Catalog Repository • {games.length} Active Titles
         </span>
-        <h1 className="font-headline-lg text-headline-lg text-[#18181b] uppercase tracking-tight">
+        <h1 className="font-headline-lg text-headline-lg text-[#2b1d14] tracking-tight">
           Manage Games
         </h1>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left: Add New Game Card (4 Cols, Crisp 2px Outline) */}
+        {/* Left: Add New Game Card (4 Cols) */}
         <form
           onSubmit={handleSubmit}
-          className="lg:col-span-4 bg-surface-container-lowest rounded-xl border-[2px] border-[#18181b] overflow-hidden"
+          className="lg:col-span-4 bg-surface-container-lowest rounded-2xl border border-[#2b1d14]/12 shadow-[0_2px_12px_-3px_rgba(43,29,20,0.08)] overflow-hidden"
         >
-          <div className="bg-primary-container border-b-[2px] border-[#18181b] px-5 py-3.5 flex items-center justify-between">
-            <span className="font-headline-sm text-headline-sm uppercase text-[#18181b]">
+          <div className="bg-surface-container-low border-b border-[#2b1d14]/10 px-5 py-3.5 flex items-center justify-between">
+            <span className="font-headline-sm text-headline-sm text-[#2b1d14]">
               Add New Game
             </span>
-            <span className="px-2 py-0.5 rounded bg-surface-container-lowest border border-[#18181b] font-label-sm text-label-sm font-bold">
+            <span className="px-2.5 py-0.5 rounded-md bg-primary-fixed text-primary border border-primary/20 font-label-sm text-label-sm font-bold">
               GM-{nextGameNumber}
             </span>
           </div>
 
           <div className="p-5 flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
-              <label className="font-label-md text-label-md uppercase text-[#18181b]">
+              <label className="font-label-md text-label-md uppercase text-on-surface-variant">
                 Game Title
               </label>
               <input
@@ -76,18 +76,18 @@ export default function ManageGamesPage({
                 onChange={(e) => setTitle(e.target.value)}
                 required
                 placeholder="e.g. Armored Core VII"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-container-low border-[2px] border-[#18181b] font-body-md text-body-md font-semibold text-[#18181b] focus:bg-white focus:outline-none"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-container-low/80 border border-[#2b1d14]/15 font-body-md text-body-md font-semibold text-[#2b1d14] focus:bg-white focus:border-primary focus:outline-none transition-colors"
               />
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label className="font-label-md text-label-md uppercase text-[#18181b]">
+              <label className="font-label-md text-label-md uppercase text-on-surface-variant">
                 Genre
               </label>
               <select
                 value={genre}
                 onChange={(e) => setGenre(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-container-low border-[2px] border-[#18181b] font-body-md text-body-md font-semibold text-[#18181b] focus:bg-white focus:outline-none"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-container-low/80 border border-[#2b1d14]/15 font-body-md text-body-md font-semibold text-[#2b1d14] focus:bg-white focus:border-primary focus:outline-none transition-colors"
               >
                 <option value="RPG">RPG</option>
                 <option value="Racing">Racing</option>
@@ -98,30 +98,30 @@ export default function ManageGamesPage({
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label className="font-label-md text-label-md uppercase text-[#18181b]">
+              <label className="font-label-md text-label-md uppercase text-on-surface-variant">
                 Engine Stack
               </label>
               <input
                 type="text"
                 value={engineStack}
                 onChange={(e) => setEngineStack(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-container-low border-[2px] border-[#18181b] font-body-md text-body-md text-[#18181b] focus:bg-white focus:outline-none"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-container-low/80 border border-[#2b1d14]/15 font-body-md text-body-md text-[#2b1d14] focus:bg-white focus:border-primary focus:outline-none transition-colors"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full py-2.5 rounded-xl bg-secondary-container text-on-secondary-container border-[2px] border-[#18181b] font-headline-sm text-headline-sm uppercase hover:bg-amber-300 transition-all cursor-pointer mt-1"
+              className="w-full py-2.5 rounded-xl bg-[#7c4a21] text-white border border-[#7c4a21] shadow-xs font-headline-sm text-headline-sm hover:bg-[#663b19] transition-all cursor-pointer mt-1"
             >
               + Add Game
             </button>
           </div>
         </form>
 
-        {/* Right: Game Catalog Table (8 Cols, Crisp 2px Outline) */}
-        <div className="lg:col-span-8 bg-surface-container-lowest rounded-xl border-[2px] border-[#18181b] p-6 flex flex-col gap-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b-[2px] border-[#18181b]">
-            <h2 className="font-headline-sm text-headline-sm uppercase text-[#18181b]">
+        {/* Right: Game Catalog Table (8 Cols) */}
+        <div className="lg:col-span-8 bg-surface-container-lowest rounded-2xl border border-[#2b1d14]/12 shadow-[0_2px_12px_-3px_rgba(43,29,20,0.08)] p-6 flex flex-col gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3.5 border-b border-[#2b1d14]/10">
+            <h2 className="font-headline-sm text-headline-sm text-[#2b1d14]">
               Indexed Game Catalog
             </h2>
             <input
@@ -129,23 +129,23 @@ export default function ManageGamesPage({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search title or genre..."
-              className="px-3.5 py-1.5 rounded-xl bg-surface-container-low border-[2px] border-[#18181b] font-body-sm text-body-sm text-[#18181b] focus:outline-none"
+              className="px-3.5 py-1.5 rounded-xl bg-surface-container-low/80 border border-[#2b1d14]/15 font-body-sm text-body-sm text-[#2b1d14] focus:bg-white focus:border-primary focus:outline-none transition-colors"
             />
           </div>
 
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b-[2px] border-[#18181b] bg-surface-container-low font-label-md text-label-md uppercase text-[#18181b]">
-                  <th className="py-3 px-4">Game</th>
+                <tr className="border-b border-[#2b1d14]/12 bg-surface-container-low/80 font-label-md text-label-md uppercase text-on-surface-variant">
+                  <th className="py-3 px-4 rounded-tl-lg">Game</th>
                   <th className="py-3 px-4">Genre</th>
                   <th className="py-3 px-4">Avg FPS</th>
                   <th className="py-3 px-4">Rating</th>
                   <th className="py-3 px-4">Stability</th>
-                  <th className="py-3 px-4 text-right">Inspect</th>
+                  <th className="py-3 px-4 text-right rounded-tr-lg">Inspect</th>
                 </tr>
               </thead>
-              <tbody className="divide-y-[1.5px] divide-[#18181b]/15 font-body-md text-body-md">
+              <tbody className="divide-y divide-[#2b1d14]/10 font-body-md text-body-md">
                 {filteredGames.map((g) => {
                   const fps = calculateAverageFps(g);
                   const rating = calculateAverageRating(g);
@@ -155,31 +155,31 @@ export default function ManageGamesPage({
                   return (
                     <tr
                       key={g.gameId}
-                      className="hover:bg-secondary-fixed/20 transition-colors"
+                      className="hover:bg-surface-container-low/50 transition-colors"
                     >
                       <td className="py-3.5 px-4">
-                        <div className="font-bold text-[#18181b]">{g.title}</div>
-                        <div className="font-label-sm text-label-sm text-primary font-bold">
+                        <div className="font-semibold text-[#2b1d14]">{g.title}</div>
+                        <div className="font-label-sm text-label-sm text-primary font-semibold">
                           {g.gameId}
                         </div>
                       </td>
                       <td className="py-3.5 px-4">
-                        <span className="px-2.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant border-[1.5px] border-[#18181b] font-label-sm text-label-sm font-bold">
+                        <span className="px-2.5 py-0.5 rounded-full bg-primary-fixed/75 text-on-primary-fixed-variant border border-primary/15 font-label-sm text-label-sm font-semibold">
                           {g.genre}
                         </span>
                       </td>
-                      <td className="py-3.5 px-4 font-headline-sm text-headline-sm text-[#18181b]">
+                      <td className="py-3.5 px-4 font-headline-sm text-headline-sm text-[#2b1d14]">
                         {fps.toFixed(1)} FPS
                       </td>
-                      <td className="py-3.5 px-4 font-bold text-[#18181b]">
-                        <span className="text-secondary-container">★</span>{' '}
+                      <td className="py-3.5 px-4 font-semibold text-[#2b1d14]">
+                        <span className="text-[#d99b26]">★</span>{' '}
                         {rating.toFixed(1)}{' '}
                         <span className="text-xs text-on-surface-variant">
                           ({revCount})
                         </span>
                       </td>
                       <td className="py-3.5 px-4">
-                        <span className="px-2.5 py-0.5 rounded-full bg-[#4ade80] text-[#18181b] border-[1.5px] border-[#18181b] font-label-sm text-label-sm font-bold">
+                        <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-700/20 font-label-sm text-label-sm font-semibold">
                           {stability.toFixed(1)} / 100
                         </span>
                       </td>
@@ -187,7 +187,7 @@ export default function ManageGamesPage({
                         <button
                           type="button"
                           onClick={() => onInspectGame(g.gameId)}
-                          className="group px-3 py-1 rounded-lg bg-primary-container text-on-primary-container border-[1.5px] border-[#18181b] font-label-sm text-label-sm uppercase font-bold hover:bg-primary-fixed cursor-pointer"
+                          className="group px-3 py-1 rounded-lg bg-primary-fixed/80 text-on-primary-fixed-variant border border-primary/20 font-label-sm text-label-sm uppercase font-semibold hover:bg-primary-container hover:text-white transition-colors cursor-pointer"
                         >
                           <span className="nav-flip-wrapper">
                             <span className="nav-flip-inner">

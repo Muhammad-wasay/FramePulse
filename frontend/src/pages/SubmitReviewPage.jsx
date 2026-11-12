@@ -54,31 +54,31 @@ export default function SubmitReviewPage({
   return (
     <div className="flex flex-col w-full gap-7 pb-12 max-w-5xl mx-auto">
       {/* Page Title */}
-      <div className="flex flex-col gap-1">
-        <span className="w-fit px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container border-[1.5px] border-[#18181b] font-label-sm text-label-sm uppercase font-bold">
+      <div className="flex flex-col gap-1.5">
+        <span className="w-fit px-2.5 py-0.5 rounded-full bg-primary-fixed/80 text-on-primary-fixed-variant border border-primary/20 font-label-sm text-label-sm uppercase font-semibold">
           Community Feedback
         </span>
-        <h1 className="font-headline-lg text-headline-lg uppercase text-[#18181b] tracking-tight">
+        <h1 className="font-headline-lg text-headline-lg text-[#2b1d14] tracking-tight">
           Submit Review
         </h1>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left: Toon Review Form (8 Cols, Crisp 2px Outline) */}
+        {/* Left: Review Form (8 Cols) */}
         <form
           onSubmit={handleSubmit}
-          className="lg:col-span-8 bg-surface-container-lowest rounded-xl border-[2px] border-[#18181b] p-6 flex flex-col gap-6"
+          className="lg:col-span-8 bg-surface-container-lowest rounded-2xl border border-[#2b1d14]/12 shadow-[0_2px_12px_-3px_rgba(43,29,20,0.08)] p-6 flex flex-col gap-6"
         >
           {/* Game & Player */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5">
-              <label className="font-label-md text-label-md uppercase text-[#18181b]">
+              <label className="font-label-md text-label-md uppercase text-on-surface-variant">
                 Select Game
               </label>
               <select
                 value={gameId}
                 onChange={(e) => setGameId(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-container-low border-[2px] border-[#18181b] font-body-md text-body-md font-semibold text-[#18181b] focus:bg-white focus:outline-none"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-container-low/80 border border-[#2b1d14]/15 font-body-md text-body-md font-semibold text-[#2b1d14] focus:bg-white focus:border-primary focus:outline-none transition-colors"
               >
                 {games.map((g) => (
                   <option key={g.gameId} value={g.gameId}>
@@ -89,7 +89,7 @@ export default function SubmitReviewPage({
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label className="font-label-md text-label-md uppercase text-[#18181b]">
+              <label className="font-label-md text-label-md uppercase text-on-surface-variant">
                 Gamer Handle
               </label>
               <input
@@ -97,14 +97,14 @@ export default function SubmitReviewPage({
                 value={player}
                 onChange={(e) => setPlayer(e.target.value)}
                 required
-                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-container-low border-[2px] border-[#18181b] font-body-md text-body-md font-semibold text-[#18181b] focus:bg-white focus:outline-none"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-container-low/80 border border-[#2b1d14]/15 font-body-md text-body-md font-semibold text-[#2b1d14] focus:bg-white focus:border-primary focus:outline-none transition-colors"
               />
             </div>
           </div>
 
           {/* 5-Star Selector */}
           <div className="flex flex-col gap-2">
-            <label className="font-label-md text-label-md uppercase text-[#18181b]">
+            <label className="font-label-md text-label-md uppercase text-on-surface-variant">
               Star Rating ({rating} / 5)
             </label>
             <div className="flex items-center gap-2.5">
@@ -115,10 +115,10 @@ export default function SubmitReviewPage({
                     key={star}
                     type="button"
                     onClick={() => setRating(star)}
-                    className={`w-12 h-12 rounded-xl border-[2px] border-[#18181b] flex items-center justify-center transition-transform hover:-translate-y-0.5 cursor-pointer ${
+                    className={`w-12 h-12 rounded-xl border flex items-center justify-center transition-all hover:-translate-y-0.5 cursor-pointer ${
                       active
-                        ? 'bg-secondary-container text-on-secondary-container'
-                        : 'bg-surface-container-low text-outline-variant hover:bg-surface-container'
+                        ? 'bg-amber-100/90 text-[#d99b26] border-amber-700/25 shadow-xs'
+                        : 'bg-surface-container-low/80 text-outline-variant border-[#2b1d14]/12 hover:bg-surface-container'
                     }`}
                   >
                     <span
@@ -135,7 +135,7 @@ export default function SubmitReviewPage({
 
           {/* Quick Telemetry Tags */}
           <div className="flex flex-col gap-2">
-            <label className="font-label-md text-label-md uppercase text-[#18181b]">
+            <label className="font-label-md text-label-md uppercase text-on-surface-variant">
               Telemetry Tags
             </label>
             <div className="flex flex-wrap gap-2">
@@ -146,10 +146,10 @@ export default function SubmitReviewPage({
                     key={tag}
                     type="button"
                     onClick={() => toggleTag(tag)}
-                    className={`px-3 py-1 rounded-full border-[1.5px] border-[#18181b] font-label-sm text-label-sm font-bold transition-colors cursor-pointer ${
+                    className={`px-3 py-1 rounded-full border font-label-sm text-label-sm font-semibold transition-colors cursor-pointer ${
                       isSelected
-                        ? 'bg-primary-container text-on-primary-container'
-                        : 'bg-surface-container-low text-[#18181b] hover:bg-surface-container'
+                        ? 'bg-[#7c4a21] text-white border-[#7c4a21]'
+                        : 'bg-surface-container-low/80 text-[#2b1d14] border-[#2b1d14]/15 hover:bg-surface-container'
                     }`}
                   >
                     {isSelected ? `✓ ${tag}` : `+ ${tag}`}
@@ -162,10 +162,10 @@ export default function SubmitReviewPage({
           {/* Comment Textarea */}
           <div className="flex flex-col gap-1.5">
             <div className="flex justify-between items-center">
-              <label className="font-label-md text-label-md uppercase text-[#18181b]">
+              <label className="font-label-md text-label-md uppercase text-on-surface-variant">
                 Review Verdict
               </label>
-              <span className="font-label-sm text-label-sm font-bold text-on-surface-variant">
+              <span className="font-label-sm text-label-sm font-semibold text-on-surface-variant">
                 {comment.length} / 300
               </span>
             </div>
@@ -176,55 +176,57 @@ export default function SubmitReviewPage({
               onChange={(e) => setComment(e.target.value)}
               required
               placeholder="Share your FPS stability and gameplay experience..."
-              className="w-full p-3.5 rounded-xl bg-surface-container-low border-[2px] border-[#18181b] font-body-md text-body-md text-[#18181b] focus:bg-white focus:outline-none resize-none"
+              className="w-full p-3.5 rounded-xl bg-surface-container-low/80 border border-[#2b1d14]/15 font-body-md text-body-md text-[#2b1d14] focus:bg-white focus:border-primary focus:outline-none resize-none transition-colors"
             />
           </div>
 
           {/* Submit */}
-          <div className="flex justify-end pt-3 border-t-[2px] border-[#18181b]/15">
+          <div className="flex justify-end pt-3 border-t border-[#2b1d14]/10">
             <button
               type="submit"
-              className="group px-6 py-2.5 rounded-xl bg-primary-container text-on-primary-container border-[2px] border-[#18181b] font-headline-sm text-headline-sm uppercase hover:bg-primary-fixed transition-all cursor-pointer"
+              className="group px-6 py-2.5 rounded-xl bg-[#7c4a21] text-white border border-[#7c4a21] shadow-xs font-headline-sm text-headline-sm hover:bg-[#663b19] transition-all cursor-pointer"
             >
               <span className="nav-flip-wrapper">
                 <span className="nav-flip-inner">
                   <span className="nav-flip-front">Submit Review</span>
-                  <span className="nav-flip-back">Submit Review</span>
+                  <span className="nav-flip-back text-[#f7deb0]">
+                    Submit Review
+                  </span>
                 </span>
               </span>
             </button>
           </div>
         </form>
 
-        {/* Right: Toon Live Review Preview Card (4 Cols, Crisp 2px Outline) */}
-        <div className="lg:col-span-4 bg-surface-container-lowest rounded-xl border-[2px] border-[#18181b] overflow-hidden">
-          <div className="bg-primary-container border-b-[2px] border-[#18181b] px-5 py-3.5 flex items-center justify-between">
-            <span className="font-headline-sm text-headline-sm uppercase text-[#18181b]">
+        {/* Right: Live Review Preview Card (4 Cols) */}
+        <div className="lg:col-span-4 bg-surface-container-lowest rounded-2xl border border-[#2b1d14]/12 shadow-[0_2px_12px_-3px_rgba(43,29,20,0.08)] overflow-hidden">
+          <div className="bg-surface-container-low border-b border-[#2b1d14]/10 px-5 py-3.5 flex items-center justify-between">
+            <span className="font-headline-sm text-headline-sm text-[#2b1d14]">
               Live Card Preview
             </span>
-            <span className="px-2 py-0.5 rounded-full bg-secondary-container border border-[#18181b] font-label-sm text-label-sm font-bold">
+            <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-700/20 font-label-sm text-label-sm font-semibold">
               PENDING ({pendingCount})
             </span>
           </div>
 
           <div className="p-5 flex flex-col gap-4">
-            <div className="p-4 rounded-xl bg-surface-container-low border-[2px] border-[#18181b] flex flex-col gap-2">
+            <div className="p-4 rounded-xl bg-surface-container-low/75 border border-[#2b1d14]/10 flex flex-col gap-2">
               <div className="flex items-center justify-between">
-                <span className="font-label-lg text-label-lg font-bold text-[#18181b]">
+                <span className="font-label-lg text-label-lg font-bold text-[#2b1d14]">
                   @{player || 'anonymous'}
                 </span>
-                <span className="font-label-sm text-label-sm uppercase px-2 py-0.5 rounded bg-surface border border-[#18181b] font-bold">
+                <span className="font-label-sm text-label-sm uppercase px-2 py-0.5 rounded-md bg-primary-fixed/75 text-on-primary-fixed-variant border border-primary/15 font-semibold">
                   {selectedGame.title}
                 </span>
               </div>
 
-              <div className="flex items-center text-secondary-container">
+              <div className="flex items-center">
                 {[1, 2, 3, 4, 5].map((s) => (
                   <span
                     key={s}
                     className={`material-symbols-outlined text-[18px] ${
                       s <= rating
-                        ? 'text-secondary-container'
+                        ? 'text-[#d99b26]'
                         : 'text-outline-variant'
                     }`}
                     style={{
@@ -236,12 +238,12 @@ export default function SubmitReviewPage({
                 ))}
               </div>
 
-              <p className="font-body-sm text-body-sm text-[#18181b]">
+              <p className="font-body-sm text-body-sm text-[#2b1d14]/90 leading-relaxed">
                 “{comment || 'Your review text will appear here...'}”
               </p>
             </div>
 
-            <p className="font-body-sm text-body-sm text-on-surface-variant">
+            <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
               New reviews enter the <strong>PENDING</strong> queue and appear on
               the dashboard once approved by Admin.
             </p>

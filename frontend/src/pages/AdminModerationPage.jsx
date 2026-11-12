@@ -45,13 +45,13 @@ export default function AdminModerationPage({ games, onModerateReviews }) {
     <div className="flex flex-col w-full gap-7 pb-12">
       {/* Top Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1.5">
           <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container border-[1.5px] border-[#18181b] font-label-sm text-label-sm uppercase font-bold">
-              🚨 {counts.PENDING} Pending Review(s)
+            <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-700/20 font-label-sm text-label-sm uppercase font-semibold">
+              {counts.PENDING} Pending Review(s)
             </span>
           </div>
-          <h1 className="font-headline-lg text-headline-lg uppercase text-[#18181b] tracking-tight">
+          <h1 className="font-headline-lg text-headline-lg text-[#2b1d14] tracking-tight">
             Admin Moderation
           </h1>
         </div>
@@ -66,7 +66,7 @@ export default function AdminModerationPage({ games, onModerateReviews }) {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search reviews..."
-            className="w-full pl-9 pr-3.5 py-2 rounded-xl bg-surface-container-lowest border-[2px] border-[#18181b] font-body-sm text-body-sm text-[#18181b] focus:outline-none"
+            className="w-full pl-9 pr-3.5 py-2 rounded-xl bg-surface-container-lowest border border-[#2b1d14]/15 shadow-xs font-body-sm text-body-sm text-[#2b1d14] focus:bg-white focus:border-primary focus:outline-none transition-colors"
           />
         </div>
       </div>
@@ -80,14 +80,20 @@ export default function AdminModerationPage({ games, onModerateReviews }) {
               key={tab}
               type="button"
               onClick={() => setStatusFilter(tab)}
-              className={`px-4 py-2 rounded-xl border-[2px] border-[#18181b] font-label-md text-label-md uppercase font-bold transition-all cursor-pointer flex items-center gap-2 ${
+              className={`px-4 py-2 rounded-xl border font-label-md text-label-md uppercase font-semibold transition-all cursor-pointer flex items-center gap-2 ${
                 active
-                  ? 'bg-primary-container text-on-primary-container'
-                  : 'bg-surface-container-lowest text-on-surface hover:bg-surface-container'
+                  ? 'bg-[#7c4a21] text-white border-[#7c4a21] shadow-xs'
+                  : 'bg-surface-container-lowest text-on-surface border-[#2b1d14]/12 hover:bg-surface-container-low'
               }`}
             >
               <span>{tab}</span>
-              <span className="px-1.5 py-0.5 rounded-full bg-surface border border-[#18181b] text-[11px]">
+              <span
+                className={`px-2 py-0.5 rounded-full text-[11px] font-bold ${
+                  active
+                    ? 'bg-white/20 text-white'
+                    : 'bg-surface-container text-[#2b1d14]'
+                }`}
+              >
                 {counts[tab]}
               </span>
             </button>
@@ -96,11 +102,11 @@ export default function AdminModerationPage({ games, onModerateReviews }) {
       </div>
 
       {/* Moderation Table */}
-      <div className="bg-surface-container-lowest rounded-xl border-[2px] border-[#18181b] overflow-hidden">
+      <div className="bg-surface-container-lowest rounded-2xl border border-[#2b1d14]/12 shadow-[0_2px_12px_-3px_rgba(43,29,20,0.08)] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b-[2px] border-[#18181b] bg-surface-container-low font-label-md text-label-md uppercase text-[#18181b]">
+              <tr className="border-b border-[#2b1d14]/12 bg-surface-container-low/80 font-label-md text-label-md uppercase text-on-surface-variant">
                 <th className="py-3.5 px-4">ID</th>
                 <th className="py-3.5 px-4">Game</th>
                 <th className="py-3.5 px-4">Gamer</th>
@@ -112,7 +118,7 @@ export default function AdminModerationPage({ games, onModerateReviews }) {
                 )}
               </tr>
             </thead>
-            <tbody className="divide-y-[1.5px] divide-[#18181b]/15 font-body-md text-body-md">
+            <tbody className="divide-y divide-[#2b1d14]/10 font-body-md text-body-md">
               {filteredReviews.length === 0 ? (
                 <tr>
                   <td
@@ -129,34 +135,34 @@ export default function AdminModerationPage({ games, onModerateReviews }) {
                 filteredReviews.map((rev) => {
                   const statusBadge =
                     rev.status === 'APPROVED'
-                      ? 'bg-[#4ade80] text-[#18181b]'
+                      ? 'bg-emerald-100 text-emerald-900 border-emerald-700/20'
                       : rev.status === 'REJECTED'
-                      ? 'bg-tertiary-container text-[#18181b]'
-                      : 'bg-secondary-container text-[#18181b]';
+                      ? 'bg-rose-100 text-rose-900 border-rose-700/20'
+                      : 'bg-amber-100 text-amber-900 border-amber-700/20';
 
                   return (
                     <tr
                       key={rev.reviewId}
-                      className="hover:bg-secondary-fixed/20 transition-colors"
+                      className="hover:bg-surface-container-low/50 transition-colors"
                     >
-                      <td className="py-4 px-4 font-label-md text-label-md font-bold text-[#18181b] whitespace-nowrap">
+                      <td className="py-4 px-4 font-label-md text-label-md font-bold text-[#2b1d14] whitespace-nowrap">
                         {rev.reviewId}
                       </td>
-                      <td className="py-4 px-4 font-bold text-[#18181b]">
+                      <td className="py-4 px-4 font-semibold text-[#2b1d14]">
                         {rev.gameTitle}
                       </td>
                       <td className="py-4 px-4 font-semibold text-primary">
                         @{rev.player}
                       </td>
-                      <td className="py-4 px-4 text-secondary-container font-bold whitespace-nowrap">
+                      <td className="py-4 px-4 text-[#d99b26] font-bold whitespace-nowrap">
                         {'★'.repeat(rev.rating)}
                       </td>
-                      <td className="py-4 px-4 font-body-sm text-body-sm text-[#18181b] max-w-md">
+                      <td className="py-4 px-4 font-body-sm text-body-sm text-[#2b1d14]/90 max-w-md leading-relaxed">
                         “{rev.comment}”
                       </td>
                       <td className="py-4 px-4">
                         <span
-                          className={`inline-flex px-2.5 py-0.5 rounded-full border-[1.5px] border-[#18181b] font-label-sm text-label-sm font-bold ${statusBadge}`}
+                          className={`inline-flex px-2.5 py-0.5 rounded-full border font-label-sm text-label-sm font-semibold ${statusBadge}`}
                         >
                           {rev.status}
                         </span>
@@ -171,7 +177,7 @@ export default function AdminModerationPage({ games, onModerateReviews }) {
                                 onClick={() =>
                                   onModerateReviews([rev.reviewId], 'APPROVED')
                                 }
-                                className="px-2.5 py-1 rounded-lg bg-[#4ade80] text-[#18181b] border-[1.5px] border-[#18181b] font-label-sm text-label-sm uppercase font-bold hover:opacity-90 cursor-pointer"
+                                className="px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-900 border border-emerald-700/25 font-label-sm text-label-sm uppercase font-semibold hover:bg-emerald-200 transition-colors cursor-pointer"
                               >
                                 Approve
                               </button>
@@ -180,7 +186,7 @@ export default function AdminModerationPage({ games, onModerateReviews }) {
                                 onClick={() =>
                                   onModerateReviews([rev.reviewId], 'REJECTED')
                                 }
-                                className="px-2.5 py-1 rounded-lg bg-secondary-container text-[#18181b] border-[1.5px] border-[#18181b] font-label-sm text-label-sm uppercase font-bold hover:opacity-90 cursor-pointer"
+                                className="px-2.5 py-1 rounded-lg bg-amber-100 text-amber-900 border border-amber-700/25 font-label-sm text-label-sm uppercase font-semibold hover:bg-amber-200 transition-colors cursor-pointer"
                               >
                                 Reject
                               </button>
@@ -189,13 +195,13 @@ export default function AdminModerationPage({ games, onModerateReviews }) {
                                 onClick={() =>
                                   onModerateReviews([rev.reviewId], 'DELETE')
                                 }
-                                className="px-2.5 py-1 rounded-lg bg-tertiary-container text-[#18181b] border-[1.5px] border-[#18181b] font-label-sm text-label-sm uppercase font-bold hover:opacity-90 cursor-pointer"
+                                className="px-2.5 py-1 rounded-lg bg-rose-100 text-rose-900 border border-rose-700/25 font-label-sm text-label-sm uppercase font-semibold hover:bg-rose-200 transition-colors cursor-pointer"
                               >
                                 Delete
                               </button>
                             </div>
                           ) : (
-                            <span className="font-label-sm text-label-sm uppercase text-on-surface-variant">
+                            <span className="font-label-sm text-label-sm uppercase text-on-surface-variant font-medium">
                               ✓ Moderated
                             </span>
                           )}

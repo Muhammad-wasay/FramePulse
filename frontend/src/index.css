@@ -3,16 +3,16 @@
   vertical-align: middle;
 }
 
-/* Tactical Coffee Gaming Blueprint Grid Background */
+/* Subtle Warm Coffee Analytics Grid Background */
 body,
 .gaming-grid-bg {
-  background-color: #f2e9de;
+  background-color: #f5efe7;
   background-image:
-    radial-gradient(circle, rgba(74, 44, 17, 0.32) 1.5px, transparent 1.5px),
-    linear-gradient(to right, rgba(74, 44, 17, 0.16) 1.5px, transparent 1.5px),
-    linear-gradient(to bottom, rgba(74, 44, 17, 0.16) 1.5px, transparent 1.5px),
-    linear-gradient(to right, rgba(124, 74, 33, 0.08) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(124, 74, 33, 0.08) 1px, transparent 1px);
+    radial-gradient(circle, rgba(124, 74, 33, 0.14) 1px, transparent 1px),
+    linear-gradient(to right, rgba(124, 74, 33, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(124, 74, 33, 0.06) 1px, transparent 1px),
+    linear-gradient(to right, rgba(124, 74, 33, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(124, 74, 33, 0.03) 1px, transparent 1px);
   background-size:
     50px 50px,
     200px 200px,
@@ -29,16 +29,14 @@ body,
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #efe4d4;
-  border-left: 2px solid #2b1d14;
+  background: #f4ece1;
 }
 ::-webkit-scrollbar-thumb {
-  background: #c88a52;
-  border: 2px solid #2b1d14;
-  border-radius: 4px;
+  background: #c8a27c;
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #a66c38;
+  background: #a67c52;
 }
 
 @keyframes springPop {
