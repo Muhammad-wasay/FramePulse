@@ -18,22 +18,7 @@ public class AuthService {
     private User currentUser;
 
     public AuthService() {
-        initDefaultAccounts();
-    }
-
-    /**
-     * Initializes default accounts matching the Object Diagram:
-     * - Admin: admin_usman (A-101)
-     * - Gamer: shadow_ninja (G-201)
-     */
-    private void initDefaultAccounts() {
-        // Admin from Object Diagram
-        Admin admin = new Admin("A-101", "admin_usman", "admin@gaming.org");
-        registerUser(admin, "admin123");
-
-        // Gamer from Object Diagram
-        Player gamer = new Player("G-201", "shadow_ninja", "gamer1@gmail.com", 45.5);
-        registerUser(gamer, "gamer123");
+        // Accounts now live in Supabase Auth; no hardcoded demo credentials.
     }
 
     /**
@@ -73,6 +58,20 @@ public class AuthService {
             return user;
         }
         return null;
+    }
+
+    /**
+     * Supabase login: builds the session user from the verified Supabase account.
+     * ADMIN role -> Admin object, anything else -> Player (Gamer).
+     */
+    public User loginRemote(String userId, String username, String email, String role) {
+        User user = "ADMIN".equalsIgnoreCase(role)
+                ? new Admin(userId, username, email)
+                : new Player(userId, username, email, 0.0);
+        user.login();
+        userRegistry.put(username.toLowerCase(), user);
+        this.currentUser = user;
+        return user;
     }
 
     /**

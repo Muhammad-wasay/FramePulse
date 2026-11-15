@@ -24,6 +24,7 @@ public class MainFrame extends JFrame {
     private List<NavButton> navButtons = new ArrayList<>();
     private JLabel userBadge = new JLabel(" ");
     private JButton authBtn;
+    private JButton logoutBtn;
 
     public MainFrame(AnalyticsSystem system) {
         this.system = system;
@@ -72,7 +73,7 @@ public class MainFrame extends JFrame {
         JPanel userCard = new JPanel(new BorderLayout(8, 4));
         userCard.setOpaque(false);
         userCard.setAlignmentX(Component.LEFT_ALIGNMENT);
-        userCard.setMaximumSize(new Dimension(230, 55));
+        userCard.setMaximumSize(new Dimension(230, 85));
         userCard.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Theme.BORDER, 1, true),
                 new EmptyBorder(8, 10, 8, 10)));
@@ -92,6 +93,17 @@ public class MainFrame extends JFrame {
         authBtn.setHorizontalAlignment(SwingConstants.LEFT);
         authBtn.addActionListener(e -> openLoginDialog());
         userCard.add(authBtn, BorderLayout.CENTER);
+
+        logoutBtn = new JButton("Logout");
+        logoutBtn.setFont(new Font("Segoe UI", Font.BOLD, 11));
+        logoutBtn.setForeground(Theme.ROSE);
+        logoutBtn.setFocusPainted(false);
+        logoutBtn.setBorderPainted(false);
+        logoutBtn.setContentAreaFilled(false);
+        logoutBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        logoutBtn.setHorizontalAlignment(SwingConstants.LEFT);
+        logoutBtn.addActionListener(e -> logout());
+        userCard.add(logoutBtn, BorderLayout.SOUTH);
 
         sidebar.add(userCard);
         sidebar.add(Box.createVerticalStrut(20));
@@ -120,20 +132,35 @@ public class MainFrame extends JFrame {
         if (user != null) {
             userBadge.setText("👤 " + user.getUsername() + " (" + user.getRole() + ")");
             authBtn.setText("Switch User (" + user.getRole() + ")");
+            logoutBtn.setVisible(true);
         } else {
             userBadge.setText("👤 Guest (Not Authenticated)");
             authBtn.setText("Login to Account");
+            logoutBtn.setVisible(false);
         }
+    }
+
+    /** Reloads every screen (after login, logout or a data reload). */
+    public void refreshAll() {
+        for (Refreshable page : pages.values()) {
+            page.refresh();
+        }
+    }
+
+    /** Logs out of Supabase, clears the session, then shows the login dialog again. */
+    private void logout() {
+        system.logout();
+        updateUserBadge();
+        refreshAll();
+        openLoginDialog();
     }
 
     public void openLoginDialog() {
         LoginDialog dialog = new LoginDialog(this, system);
         dialog.setVisible(true);
         updateUserBadge();
-        // Refresh current visible page so any role changes take effect
-        for (Map.Entry<String, Refreshable> entry : pages.entrySet()) {
-            entry.getValue().refresh();
-        }
+        // Refresh every page so role / data changes take effect
+        refreshAll();
     }
 
     private BufferedImage loadLogo() {

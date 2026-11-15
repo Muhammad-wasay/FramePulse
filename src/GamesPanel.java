@@ -79,7 +79,7 @@ public class GamesPanel extends JPanel implements Refreshable {
     private void addGame() {
         if (!system.isAdminLoggedIn()) {
             JOptionPane.showMessageDialog(this,
-                    "Access Denied: Only administrators can add new games to the catalog.\nPlease switch to an Admin account (e.g. admin_usman).",
+                    "Access Denied: Only administrators can add new games to the catalog.\nPlease log in with an Admin account.",
                     "Admin Privileges Required", JOptionPane.WARNING_MESSAGE);
             return;
         }

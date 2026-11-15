@@ -46,7 +46,7 @@ if "%JAVA_CMD%"=="" (
 if "%JAVA_CMD%"=="" set "JAVA_CMD=java"
 
 echo Compiling FramePulse with %JAVAC_CMD%...
-"%JAVAC_CMD%" -d out src\*.java
+"%JAVAC_CMD%" -cp "lib/*" -d out src\*.java
 if errorlevel 1 (
     echo.
     echo Compilation failed. Fix the errors above.
@@ -54,4 +54,4 @@ if errorlevel 1 (
     exit /b 1
 )
 echo Launching FramePulse with %JAVA_CMD%...
-start "" "%JAVA_CMD%" -cp out Main
+start "" "%JAVA_CMD%" -cp "out;lib/*" Main

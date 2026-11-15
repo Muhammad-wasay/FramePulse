@@ -21,6 +21,7 @@ public class Main {
             LoginDialog loginDialog = new LoginDialog(frame, system);
             loginDialog.setVisible(true);
             frame.updateUserBadge();
+            frame.refreshAll();
         });
     }
 }

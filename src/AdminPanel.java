@@ -125,33 +125,33 @@ public class AdminPanel extends JPanel implements Refreshable {
     private void approveSelected() {
         if (!system.isAdminLoggedIn()) {
             JOptionPane.showMessageDialog(this,
-                    "Access Denied: Only administrators can approve reviews.\nPlease switch to an Admin account (e.g. admin_usman).",
+                    "Access Denied: Only administrators can approve reviews.\nPlease log in with an Admin account.",
                     "Admin Privileges Required", JOptionPane.WARNING_MESSAGE);
             return;
         }
         Review review = getSelectedReview();
         if (review == null) return;
-        system.getAdmin().approveReview(review);
+        system.approveReview(review);
         refresh();
     }
 
     private void rejectSelected() {
         if (!system.isAdminLoggedIn()) {
             JOptionPane.showMessageDialog(this,
-                    "Access Denied: Only administrators can reject reviews.\nPlease switch to an Admin account (e.g. admin_usman).",
+                    "Access Denied: Only administrators can reject reviews.\nPlease log in with an Admin account.",
                     "Admin Privileges Required", JOptionPane.WARNING_MESSAGE);
             return;
         }
         Review review = getSelectedReview();
         if (review == null) return;
-        system.getAdmin().rejectReview(review);
+        system.rejectReview(review);
         refresh();
     }
 
     private void deleteSelected() {
         if (!system.isAdminLoggedIn()) {
             JOptionPane.showMessageDialog(this,
-                    "Access Denied: Only administrators can delete reviews.\nPlease switch to an Admin account (e.g. admin_usman).",
+                    "Access Denied: Only administrators can delete reviews.\nPlease log in with an Admin account.",
                     "Admin Privileges Required", JOptionPane.WARNING_MESSAGE);
             return;
         }

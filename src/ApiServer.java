@@ -115,7 +115,7 @@ public class ApiServer {
                 if (path.startsWith("/api/reviews/")) {
                     String reviewId = path.substring("/api/reviews/".length()).trim();
                     if ("DELETE".equalsIgnoreCase(method)) {
-                        boolean removed = system.getAdmin().deleteReview(reviewId, system.getGames());
+                        boolean removed = system.deleteReviewById(reviewId);
                         notifyUi(onStateChanged);
                         sendResponse(exchange, 200, "{\"deleted\":" + removed + "}");
                         return;
@@ -126,9 +126,9 @@ public class ApiServer {
                         for (Review r : system.getAllReviews()) {
                             if (r.getReviewId().equalsIgnoreCase(reviewId)) {
                                 if ("REJECTED".equalsIgnoreCase(statusStr)) {
-                                    system.getAdmin().rejectReview(r);
+                                    system.rejectReview(r);
                                 } else {
-                                    system.getAdmin().approveReview(r);
+                                    system.approveReview(r);
                                 }
                                 notifyUi(onStateChanged);
                                 sendResponse(exchange, 200, serializeReview(r));
