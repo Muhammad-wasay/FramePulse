@@ -289,45 +289,41 @@ export default function App() {
   };
 
   const handleLogSession = async (sessionPayload) => {
+    const maxLogNum = games
+      .flatMap((g) => g.sessions || [])
+      .reduce((max, s) => {
+        const n = parseInt(String(s.logId).replace(/\D/g, ''), 10);
+        return Number.isNaN(n) ? max : Math.max(max, n);
+      }, 300);
+    const nextLogNum = maxLogNum + 1;
+    const targetGame = games.find((g) => g.gameId === sessionPayload.gameId);
+    const nextRunNum = `#${String((targetGame?.sessions?.length || 0) + 1).padStart(2, '0')}`;
+    const onePercentLow = Number((sessionPayload.averageFps * 0.78).toFixed(1));
+
+    const newSession = {
+      logId: `LOG-${nextLogNum}`,
+      runNumber: nextRunNum,
+      player: sessionPayload.player || currentUser?.username || 'shadow_ninja',
+      hardware: sessionPayload.hardware,
+      resolution: sessionPayload.resolution,
+      averageFps: sessionPayload.averageFps,
+      onePercentLow,
+      cpuUsagePercent: sessionPayload.cpuUsagePercent,
+      gpuUsagePercent: sessionPayload.gpuUsagePercent,
+      crashed: sessionPayload.crashed,
+      timestamp: 'Just now • Live Ingest Session',
+      gameId: sessionPayload.gameId,
+    };
+
     // 1. Sync to local Java API if running
-    await apiLogSession(sessionPayload);
+    apiLogSession(sessionPayload).catch(() => {});
 
     // 2. Sync to Supabase in background
-    syncSessionToSupabase(sessionPayload).catch(() => {});
+    syncSessionToSupabase(newSession).catch(() => {});
 
     setGames((prevGames) =>
       prevGames.map((game) => {
         if (game.gameId !== sessionPayload.gameId) return game;
-
-        const maxLogNum = prevGames
-          .flatMap((g) => g.sessions || [])
-          .reduce((max, s) => {
-            const n = parseInt(String(s.logId).replace(/\D/g, ''), 10);
-            return Number.isNaN(n) ? max : Math.max(max, n);
-          }, 300);
-        const nextLogNum = maxLogNum + 1;
-        const nextRunNum = `#${String((game.sessions?.length || 0) + 1).padStart(
-          2,
-          '0'
-        )}`;
-        const onePercentLow = Number(
-          (sessionPayload.averageFps * 0.78).toFixed(1)
-        );
-
-        const newSession = {
-          logId: `LOG-${nextLogNum}`,
-          runNumber: nextRunNum,
-          player: sessionPayload.player || currentUser?.username || 'shadow_ninja',
-          hardware: sessionPayload.hardware,
-          resolution: sessionPayload.resolution,
-          averageFps: sessionPayload.averageFps,
-          onePercentLow,
-          cpuUsagePercent: sessionPayload.cpuUsagePercent,
-          gpuUsagePercent: sessionPayload.gpuUsagePercent,
-          crashed: sessionPayload.crashed,
-          timestamp: 'Just now • Live Ingest Session',
-        };
-
         return {
           ...game,
           sessions: [...(game.sessions || []), newSession],
@@ -345,42 +341,42 @@ export default function App() {
   };
 
   const handleSubmitReview = async (reviewPayload) => {
+    const maxReviewNum = games
+      .flatMap((g) => g.reviews || [])
+      .reduce((max, r) => {
+        const n = parseInt(String(r.reviewId).replace(/\D/g, ''), 10);
+        return Number.isNaN(n) ? max : Math.max(max, n);
+      }, 900);
+    const newReviewId = `REV-${maxReviewNum + 1}`;
+
+    const newReview = {
+      reviewId: newReviewId,
+      gameId: reviewPayload.gameId,
+      player: reviewPayload.player || currentUser?.username || 'Verified Gamer',
+      roleBadge: currentUser?.role === 'Admin' ? 'A-101 ADMIN' : 'Verified Rig',
+      avatar: AVATARS.vortex,
+      rating: reviewPayload.rating,
+      comment: reviewPayload.comment,
+      status: 'PENDING',
+      timestamp: 'Just now',
+      hardwareSpec: reviewPayload.hardwareSpec,
+    };
+
     // 1. Sync to local Java API if running
-    await apiSubmitReview(reviewPayload);
+    apiSubmitReview(reviewPayload).catch(() => {});
 
-    // 2. Sync to Supabase in background
-    syncReviewToSupabase(reviewPayload).catch(() => {});
+    // 2. Sync to Supabase in background with reviewId
+    syncReviewToSupabase(newReview).catch(() => {});
 
-    setGames((prevGames) => {
-      const maxReviewNum = prevGames
-        .flatMap((g) => g.reviews || [])
-        .reduce((max, r) => {
-          const n = parseInt(String(r.reviewId).replace(/\D/g, ''), 10);
-          return Number.isNaN(n) ? max : Math.max(max, n);
-        }, 900);
-      const newReviewId = `REV-${maxReviewNum + 1}`;
-
-      return prevGames.map((game) => {
+    setGames((prevGames) =>
+      prevGames.map((game) => {
         if (game.gameId !== reviewPayload.gameId) return game;
-
-        const newReview = {
-          reviewId: newReviewId,
-          player: reviewPayload.player || currentUser?.username || 'Verified Gamer',
-          roleBadge: currentUser?.role === 'Admin' ? 'A-101 ADMIN' : 'Verified Rig',
-          avatar: AVATARS.vortex,
-          rating: reviewPayload.rating,
-          comment: reviewPayload.comment,
-          status: 'PENDING',
-          timestamp: 'Just now',
-          hardwareSpec: reviewPayload.hardwareSpec,
-        };
-
         return {
           ...game,
           reviews: [newReview, ...(game.reviews || [])],
         };
-      });
-    });
+      })
+    );
 
     setSelectedGameId(reviewPayload.gameId);
     showToast(

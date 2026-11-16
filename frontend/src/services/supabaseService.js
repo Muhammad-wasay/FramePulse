@@ -241,25 +241,32 @@ export async function fetchSupabaseData() {
 export async function syncSessionToSupabase(session) {
   if (!isSupabaseConfigured || !supabase) return false;
   try {
+    const logId =
+      session.logId ||
+      session.log_id ||
+      `LOG-${Date.now().toString().slice(-4)}`;
+
     const { error } = await supabase.from('performance_sessions').insert([
       {
-        log_id: session.logId,
-        game_id: session.gameId,
-        run_number: session.runNumber || '#01',
-        player: session.player,
-        hardware: session.hardware,
-        resolution: session.resolution,
-        avg_fps: session.averageFps || session.fps,
-        fps_1percent_low: session.onePercentLow || (session.averageFps || session.fps) * 0.85,
-        cpu_usage: session.cpuUsagePercent || session.cpu || 50,
-        gpu_usage: session.gpuUsagePercent || session.gpu || 80,
+        log_id: logId,
+        game_id: session.gameId || session.game_id || 'GM-501',
+        run_number: session.runNumber || session.run_number || '#01',
+        player: session.player || 'Verified Gamer',
+        hardware: session.hardware || 'RTX 4080 • i7-13700K',
+        resolution: session.resolution || '1440p',
+        avg_fps: Number(session.averageFps || session.avg_fps || session.fps || 60),
+        fps_1percent_low: Number(session.onePercentLow || session.fps_1percent_low || 50),
+        cpu_usage: Number(session.cpuUsagePercent || session.cpu_usage || session.cpu || 50),
+        gpu_usage: Number(session.gpuUsagePercent || session.gpu_usage || session.gpu || 80),
         vram_used: session.vram || '8.0 GB',
-        stability_status: session.stability || 'Optimal',
-        is_crashed: Boolean(session.crashed),
+        stability_status: session.stabilityStatus || session.stability_status || 'Optimal',
+        is_crashed: Boolean(session.crashed || session.is_crashed),
       },
     ]);
+    if (error) console.warn('Supabase session sync error:', error);
     return !error;
-  } catch {
+  } catch (err) {
+    console.warn('Supabase session sync exception:', err);
     return false;
   }
 }
@@ -268,20 +275,30 @@ export async function syncSessionToSupabase(session) {
 export async function syncReviewToSupabase(review) {
   if (!isSupabaseConfigured || !supabase) return false;
   try {
+    const reviewId =
+      review.reviewId ||
+      review.review_id ||
+      `REV-${Date.now().toString().slice(-4)}`;
+
     const { error } = await supabase.from('reviews').insert([
       {
-        review_id: review.reviewId,
-        game_id: review.gameId,
-        player: review.player,
-        rating: review.rating,
-        comment: review.comment,
+        review_id: reviewId,
+        game_id: review.gameId || review.game_id || 'GM-501',
+        player: review.player || 'Verified Gamer',
+        rating: Number(review.rating || 5),
+        comment: review.comment || 'Good performance',
         status: review.status || 'PENDING',
-        role_badge: review.roleBadge || 'Verified Gamer',
-        submission_date: review.date || new Date().toISOString().split('T')[0],
+        role_badge: review.roleBadge || review.role_badge || 'Verified Gamer',
+        submission_date:
+          review.submissionDate ||
+          review.date ||
+          new Date().toISOString().split('T')[0],
       },
     ]);
+    if (error) console.warn('Supabase review sync error:', error);
     return !error;
-  } catch {
+  } catch (err) {
+    console.warn('Supabase review sync exception:', err);
     return false;
   }
 }
