@@ -16,6 +16,7 @@ import {
   syncReviewToSupabase,
   moderateReviewInSupabase,
   addGameToSupabase,
+  fetchSupabaseData,
 } from './services/supabaseService';
 import {
   apiAddGame,
@@ -91,7 +92,7 @@ function normalizeGames(list) {
   });
 }
 
-const STORAGE_KEY = 'framepulse_telemetry_store_v1';
+const STORAGE_KEY = 'framepulse_telemetry_store_v2';
 const USER_STORAGE_KEY = 'framepulse_active_user_v1';
 
 const VALID_PAGES = new Set([
@@ -232,6 +233,32 @@ export default function App() {
         setGames(normalizeGames(data));
       }
     });
+
+    // Also sync reviews dynamically from Supabase
+    fetchSupabaseData().then((supaGames) => {
+      if (!mounted || !Array.isArray(supaGames) || supaGames.length === 0) return;
+      setGames((prevGames) =>
+        prevGames.map((game) => {
+          const match = supaGames.find((sg) => sg.gameId === game.gameId);
+          if (match && Array.isArray(match.reviews) && match.reviews.length > 0) {
+            return {
+              ...game,
+              reviews: match.reviews.map((sr) => {
+                const existingRev = (game.reviews || []).find((r) => r.reviewId === sr.reviewId);
+                return {
+                  ...sr,
+                  hardwareSpec: sr.hardwareSpec || existingRev?.hardwareSpec || 'Verified Gaming Rig',
+                  tags: existingRev?.tags || ['Verified Rig'],
+                  avatar: existingRev?.avatar || AVATARS.vortex,
+                };
+              }),
+            };
+          }
+          return game;
+        })
+      );
+    });
+
     return () => {
       mounted = false;
     };

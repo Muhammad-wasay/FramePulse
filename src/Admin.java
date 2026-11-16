@@ -1,7 +1,7 @@
 /**
  * Admin class from the Class Diagram (inherits from User):
- *   + addGame(game)
- *   + deleteReview(reviewId)
+ * + addGame(game)
+ * + deleteReview(reviewId)
  */
 public class Admin extends User {
 
@@ -18,7 +18,10 @@ public class Admin extends User {
         return "Admin";
     }
 
-    /** Diagram method: + addGame(game) */
+    /**
+     * Normal users games add nahi kar sakte, lekin Admin nayi Game object ko
+     * platform ke catalog (games ki list) mein add kar sakta hai.
+     */
     public void addGame(Game game, java.util.List<Game> catalog) {
         catalog.add(game);
     }
