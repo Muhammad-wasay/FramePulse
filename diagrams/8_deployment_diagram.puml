@@ -23,19 +23,23 @@ skinparam arrow {
     FontColor #3B2A20
 }
 
-node "Client Device\n(Gamer / Admin PC)" as Client {
-    artifact "Desktop GUI / Frontend App\n(.exe / python / java)" as GUI
+node "Client Device\n(Gamer / Admin PC / Browser)" as Client {
+    artifact "React + Vite Web App\n(Vercel Production Edge)" as WebApp
+    artifact "Java Swing Desktop Client\n(MainFrame.java / Java 17)" as DesktopGUI
 }
 
-node "Application Server /\nLocal Execution Environment" as Server {
-    artifact "Core Business Logic" as Logic
-    artifact "Analytics Engine" as Engine
+node "Application Server /\nExecution Environment" as Server {
+    artifact "Core Business Logic\n(Game, Review, PerformanceLog)" as Logic
+    artifact "Analytics Engine\n(Singleton Pattern)" as Engine
+    artifact "Embedded HTTP REST Server\n(ApiServer.java :8080)" as RestServer
 }
 
-node "Database Server /\nStorage Node" as DBNode {
-    database "SQLite / MySQL\nDatabase File" as DB
+node "Supabase Cloud Platform /\nDatabase Node" as DBNode {
+    database "PostgreSQL Relational DB\n(games, reviews, sessions)" as DB
+    artifact "Supabase PostgREST &\nAuth Service" as SupaAuth
 }
 
-Client -down-> Server : TCP / HTTP\n(User Actions & Input)
-Server -down-> DBNode : SQL Queries / Database Driver
+Client -down-> Server : HTTP / REST API (:8080)\n(Local Zero-Dep Execution)
+Client -down-> DBNode : HTTPS / PostgREST\n(Cloud Persistence & Auth)
+Server -down-> DBNode : SQL Queries / REST Data Sync
 @enduml

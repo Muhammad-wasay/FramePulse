@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from './components/Header';
 import ReportModal from './components/ReportModal';
 import Toast from './components/Toast';
+import LoginModal from './components/LoginModal';
 import AnimatedContent from './components/AnimatedContent';
 import DashboardPage from './pages/DashboardPage';
 import LogSessionPage from './pages/LogSessionPage';
@@ -9,6 +10,13 @@ import SubmitReviewPage from './pages/SubmitReviewPage';
 import AdminModerationPage from './pages/AdminModerationPage';
 import ManageGamesPage from './pages/ManageGamesPage';
 import { AVATARS, GAME_COVERS, INITIAL_GAMES } from './data/initialData';
+import {
+  DEFAULT_ACCOUNTS,
+  syncSessionToSupabase,
+  syncReviewToSupabase,
+  moderateReviewInSupabase,
+  addGameToSupabase,
+} from './services/supabaseService';
 import {
   apiAddGame,
   apiLogSession,
@@ -43,51 +51,40 @@ function normalizeGames(list) {
       onePercentLow: Number(
         s.onePercentLow ?? ((Number(s.averageFps ?? 60) * 0.78).toFixed(1))
       ),
-      cpuUsagePercent: Number(s.cpuUsagePercent ?? s.cpuUsage ?? 50),
-      gpuUsagePercent: Number(s.gpuUsagePercent ?? s.gpuUsage ?? 80),
+      cpuUsagePercent: Number(s.cpuUsagePercent ?? 50),
+      gpuUsagePercent: Number(s.gpuUsagePercent ?? 80),
       crashed: Boolean(s.crashed),
-      timestamp: s.timestamp ?? '2026-10-10 09:15',
+      timestamp: s.timestamp ?? 'Oct 2026 • Verified Pass',
     }));
 
     const rawReviews = g.reviews ?? [];
-    const reviews = rawReviews.map((r, idx) => ({
-      reviewId: r.reviewId ?? `REV-${901 + idx}`,
+    const reviews = rawReviews.map((r, rIdx) => ({
+      reviewId: r.reviewId ?? `REV-${901 + rIdx}`,
       player:
         typeof r.player === 'object' && r.player !== null
-          ? r.player.username || r.player.name || 'shadow_ninja'
-          : r.player ?? 'shadow_ninja',
+          ? r.player.username || r.player.name || 'Verified Gamer'
+          : r.player ?? 'Verified Gamer',
       roleBadge: r.roleBadge ?? 'Verified Gamer',
-      avatar: r.avatar || avatarKeys[idx % avatarKeys.length],
-      hardwareSpec: r.hardwareSpec ?? '1440p Telemetry Verified',
-      tags: r.tags ?? [g.genre || 'PC', 'Verified Log'],
-      rating: Number(r.rating ?? 5),
-      comment: r.comment ?? '',
-      submissionDate: r.submissionDate ?? '2026-10-10',
-      status: r.status ?? 'PENDING',
+      avatar: r.avatar ?? avatarKeys[rIdx % avatarKeys.length],
+      rating: Number(r.rating ?? 4),
+      comment: r.comment ?? 'Solid performance with minimal frame drop.',
+      status: r.status ?? (r.approved ? 'APPROVED' : 'PENDING'),
+      timestamp: r.timestamp ?? r.submissionDate ?? 'Oct 2026',
+      hardwareSpec: r.hardwareSpec ?? 'RTX 40-Series Verified Rig',
     }));
 
-    const chartHistory =
-      Array.isArray(g.chartHistory) && g.chartHistory.length > 0
-        ? g.chartHistory
-        : sessions.map((s, idx) => ({
-            run: `#${String(idx + 1).padStart(2, '0')}${
-              idx === sessions.length - 1 ? '*' : ''
-            }`,
-            fps: Math.round(s.averageFps),
-            note: `${s.resolution} • ${s.averageFps} FPS`,
-            current: idx === sessions.length - 1,
-          }));
-
     return {
-      ...g,
       gameId: g.gameId ?? `GM-${501 + i}`,
       title: g.title ?? 'Untitled Game',
       genre: g.genre ?? 'Action',
       releaseDate: g.releaseDate ?? '2023-11-15',
-      engineStack: g.engineStack || `${g.releaseDate || '2024'} • OOAD Telemetry Engine`,
-      patchVersion: g.patchVersion || 'Patch v1.0',
-      coverUrl: g.coverUrl || coverKeys[i % coverKeys.length],
-      chartHistory,
+      engineStack: g.engineStack ?? 'DirectX 12 / Vulkan',
+      patchVersion: g.patchVersion ?? 'v1.0.0',
+      coverUrl: g.coverUrl ?? coverKeys[i % coverKeys.length],
+      chartHistory: g.chartHistory ?? [
+        { run: '#01', fps: 60, note: 'Baseline' },
+        { run: '#02*', fps: 72, note: 'Current Pass', current: true },
+      ],
       sessions,
       reviews,
     };
@@ -95,6 +92,8 @@ function normalizeGames(list) {
 }
 
 const STORAGE_KEY = 'framepulse_telemetry_store_v1';
+const USER_STORAGE_KEY = 'framepulse_active_user_v1';
+
 const VALID_PAGES = new Set([
   'analytics-dashboard',
   'log-fps-session',
@@ -111,6 +110,20 @@ function getInitialPage() {
 export default function App() {
   const [activePage, setActivePage] = useState(getInitialPage);
 
+  // Active User session matching OOAD Actor hierarchy (Admin vs Gamer)
+  const [currentUser, setCurrentUser] = useState(() => {
+    try {
+      const saved = localStorage.getItem(USER_STORAGE_KEY);
+      if (saved) return JSON.parse(saved);
+    } catch {
+      // Fallback
+    }
+    // Default to Gamer (shadow_ninja, G-201 from Object Diagram)
+    return DEFAULT_ACCOUNTS[1];
+  });
+
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
   useEffect(() => {
     const onHashChange = () => {
       const hash = window.location.hash.replace(/^#/, '');
@@ -126,6 +139,7 @@ export default function App() {
     }
     setActivePage(page);
   };
+
   const [games, setGames] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -140,6 +154,7 @@ export default function App() {
     }
     return INITIAL_GAMES;
   });
+
   const [selectedGameId, setSelectedGameId] = useState('GM-501');
   const [backendOnline, setBackendOnline] = useState(false);
   const [reportModalGame, setReportModalGame] = useState(null);
@@ -154,6 +169,19 @@ export default function App() {
       // Ignore storage quota errors
     }
   }, [games]);
+
+  // Persist active user
+  useEffect(() => {
+    try {
+      if (currentUser) {
+        localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(currentUser));
+      } else {
+        localStorage.removeItem(USER_STORAGE_KEY);
+      }
+    } catch {
+      // Ignore storage quota errors
+    }
+  }, [currentUser]);
 
   const showToast = (title, message, type = 'success', icon = 'task_alt') => {
     setToast({ title, message, type, icon });
@@ -203,15 +231,41 @@ export default function App() {
     } else {
       showToast(
         'Telemetry Stream Active',
-        'Synced with local React state store (Java API standby on :8080)',
+        'Synced with local state store & Supabase Cloud API',
         'success',
         'sync'
       );
     }
   };
 
+  const handleLoginSuccess = (user) => {
+    setCurrentUser(user);
+    setIsLoginModalOpen(false);
+    showToast(
+      'Login Successful!',
+      `Logged in as ${user.username} (${user.role} • ${user.userId}).`,
+      'success',
+      'verified_user'
+    );
+  };
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+    showToast(
+      'Logged Out',
+      'Session ended. Please sign in to access privileged actions.',
+      'warning',
+      'logout'
+    );
+    setIsLoginModalOpen(true);
+  };
+
   const handleLogSession = async (sessionPayload) => {
+    // 1. Sync to local Java API if running
     await apiLogSession(sessionPayload);
+
+    // 2. Sync to Supabase in background
+    syncSessionToSupabase(sessionPayload).catch(() => {});
 
     setGames((prevGames) =>
       prevGames.map((game) => {
@@ -235,7 +289,7 @@ export default function App() {
         const newSession = {
           logId: `LOG-${nextLogNum}`,
           runNumber: nextRunNum,
-          player: sessionPayload.player,
+          player: sessionPayload.player || currentUser?.username || 'shadow_ninja',
           hardware: sessionPayload.hardware,
           resolution: sessionPayload.resolution,
           averageFps: sessionPayload.averageFps,
@@ -263,7 +317,11 @@ export default function App() {
   };
 
   const handleSubmitReview = async (reviewPayload) => {
+    // 1. Sync to local Java API if running
     await apiSubmitReview(reviewPayload);
+
+    // 2. Sync to Supabase in background
+    syncReviewToSupabase(reviewPayload).catch(() => {});
 
     setGames((prevGames) => {
       const maxReviewNum = prevGames
@@ -279,8 +337,8 @@ export default function App() {
 
         const newReview = {
           reviewId: newReviewId,
-          player: reviewPayload.player,
-          roleBadge: 'Verified Rig',
+          player: reviewPayload.player || currentUser?.username || 'Verified Gamer',
+          roleBadge: currentUser?.role === 'Admin' ? 'A-101 ADMIN' : 'Verified Rig',
           avatar: AVATARS.vortex,
           rating: reviewPayload.rating,
           comment: reviewPayload.comment,
@@ -299,7 +357,7 @@ export default function App() {
     setSelectedGameId(reviewPayload.gameId);
     showToast(
       'Review Queued!',
-      `Submitted by ${reviewPayload.player} with status PENDING for Admin Moderation.`,
+      `Submitted by ${reviewPayload.player || currentUser?.username} with status PENDING for Admin Moderation.`,
       'warning',
       'rate_review'
     );
@@ -308,6 +366,7 @@ export default function App() {
   const handleModerateReviews = async (reviewIds, action) => {
     for (const id of reviewIds) {
       await apiModerateReview(id, action);
+      moderateReviewInSupabase(id, action).catch(() => {});
     }
 
     setGames((prevGames) =>
@@ -381,7 +440,7 @@ export default function App() {
         {
           logId: `LOG-${350 + games.length}`,
           runNumber: '#01',
-          player: 'TelemetryBot_01',
+          player: currentUser?.username || 'TelemetryBot_01',
           hardware: 'RTX 4070 Super • Ryzen 7 7700X',
           resolution: '1440p QHD',
           averageFps: 72.0,
@@ -394,6 +453,8 @@ export default function App() {
       ],
       reviews: [],
     };
+
+    addGameToSupabase(createdGame).catch(() => {});
 
     setGames((prev) => [...prev, createdGame]);
     setSelectedGameId(newGameId);
@@ -428,6 +489,9 @@ export default function App() {
         backendOnline={backendOnline}
         onRefresh={handleRefresh}
         pendingCount={pendingCount}
+        currentUser={currentUser}
+        onOpenLogin={() => setIsLoginModalOpen(true)}
+        onLogout={handleLogout}
       />
 
       {/* Main Content Canvas (Centered Full Width, Clean Static Grid Background) */}
@@ -477,35 +541,85 @@ export default function App() {
           )}
 
           {activePage === 'admin-moderation' && (
-            <AnimatedContent
-              key="page-admin-moderation"
-              trigger="mount"
-              distance={28}
-              duration={0.55}
-              ease="back.out(1.35)"
-            >
-              <AdminModerationPage
-                games={games}
-                onModerateReviews={handleModerateReviews}
-              />
-            </AnimatedContent>
+            currentUser?.role === 'Admin' ? (
+              <AnimatedContent
+                key="page-admin-moderation"
+                trigger="mount"
+                distance={28}
+                duration={0.55}
+                ease="back.out(1.35)"
+              >
+                <AdminModerationPage
+                  games={games}
+                  onModerateReviews={handleModerateReviews}
+                />
+              </AnimatedContent>
+            ) : (
+              <div className="rounded-3xl border-2 border-[#2b1d14] bg-white p-8 text-center max-w-lg mx-auto shadow-lg mt-12 animate-fade-in">
+                <div className="w-16 h-16 rounded-2xl bg-amber-100 text-amber-800 border border-[#2b1d14]/20 flex items-center justify-center mx-auto mb-4">
+                  <span className="material-symbols-outlined text-[32px]">gavel</span>
+                </div>
+                <h3
+                  className="text-xl font-black text-[#2b1d14] uppercase mb-2"
+                  style={{ fontFamily: "'Archivo Black', sans-serif" }}
+                >
+                  Admin Moderation Locked
+                </h3>
+                <p className="text-xs text-[#6e5849] mb-5 leading-relaxed">
+                  Per the <strong>OOAD Use Case Diagram</strong>, only users with the <strong>Admin</strong> role can review, approve, reject, or delete community reviews.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setIsLoginModalOpen(true)}
+                  className="px-5 py-2.5 rounded-xl bg-[#7c4a21] hover:bg-[#633a17] text-white font-bold text-xs uppercase tracking-wide border border-[#2b1d14] shadow-sm cursor-pointer inline-flex items-center gap-2 transition-all"
+                >
+                  <span className="material-symbols-outlined text-[16px]">switch_account</span>
+                  <span>Login as Admin (admin_usman)</span>
+                </button>
+              </div>
+            )
           )}
 
           {activePage === 'manage-games' && (
-            <AnimatedContent
-              key="page-manage-games"
-              trigger="mount"
-              distance={28}
-              duration={0.55}
-              ease="back.out(1.35)"
-            >
-              <ManageGamesPage
-                games={games}
-                nextGameNumber={nextGameNumber}
-                onAddGame={handleAddGame}
-                onInspectGame={handleInspectGame}
-              />
-            </AnimatedContent>
+            currentUser?.role === 'Admin' ? (
+              <AnimatedContent
+                key="page-manage-games"
+                trigger="mount"
+                distance={28}
+                duration={0.55}
+                ease="back.out(1.35)"
+              >
+                <ManageGamesPage
+                  games={games}
+                  nextGameNumber={nextGameNumber}
+                  onAddGame={handleAddGame}
+                  onInspectGame={handleInspectGame}
+                />
+              </AnimatedContent>
+            ) : (
+              <div className="rounded-3xl border-2 border-[#2b1d14] bg-white p-8 text-center max-w-lg mx-auto shadow-lg mt-12 animate-fade-in">
+                <div className="w-16 h-16 rounded-2xl bg-amber-100 text-amber-800 border border-[#2b1d14]/20 flex items-center justify-center mx-auto mb-4">
+                  <span className="material-symbols-outlined text-[32px]">sports_esports</span>
+                </div>
+                <h3
+                  className="text-xl font-black text-[#2b1d14] uppercase mb-2"
+                  style={{ fontFamily: "'Archivo Black', sans-serif" }}
+                >
+                  Game Management Locked
+                </h3>
+                <p className="text-xs text-[#6e5849] mb-5 leading-relaxed">
+                  Per the <strong>OOAD Use Case Diagram</strong>, only users with the <strong>Admin</strong> role can add or update game titles in the catalog.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setIsLoginModalOpen(true)}
+                  className="px-5 py-2.5 rounded-xl bg-[#7c4a21] hover:bg-[#633a17] text-white font-bold text-xs uppercase tracking-wide border border-[#2b1d14] shadow-sm cursor-pointer inline-flex items-center gap-2 transition-all"
+                >
+                  <span className="material-symbols-outlined text-[16px]">switch_account</span>
+                  <span>Login as Admin (admin_usman)</span>
+                </button>
+              </div>
+            )
           )}
         </div>
       </main>
@@ -515,6 +629,14 @@ export default function App() {
         game={reportModalGame}
         reportNumber={reportCounter}
         onClose={handleCloseReport}
+      />
+
+      {/* Login & Role Switch Modal (Activity & Sequence Diagram) */}
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        currentUser={currentUser}
+        onLoginSuccess={handleLoginSuccess}
+        onClose={() => setIsLoginModalOpen(false)}
       />
 
       {/* Cel-Shaded Toast Notification */}
