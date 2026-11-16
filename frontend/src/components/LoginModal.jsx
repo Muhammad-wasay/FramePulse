@@ -133,7 +133,7 @@ export default function LoginModal({
             type="button"
             onClick={() => {
               setMode('signin');
-              setError('');
+              resetForm();
             }}
             className={`py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
               mode === 'signin'
@@ -147,7 +147,7 @@ export default function LoginModal({
             type="button"
             onClick={() => {
               setMode('signup');
-              setError('');
+              resetForm();
             }}
             className={`py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
               mode === 'signup'
@@ -205,6 +205,7 @@ export default function LoginModal({
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter password"
+                  autoComplete="current-password"
                   className="w-full pl-9 pr-3.5 py-2 rounded-xl bg-white border border-[#2b1d14]/20 text-[#2b1d14] text-xs font-medium focus:outline-none focus:border-[#7c4a21] focus:ring-1 focus:ring-[#7c4a21]"
                 />
               </div>
@@ -279,6 +280,7 @@ export default function LoginModal({
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Create password"
+                  autoComplete="new-password"
                   className="w-full pl-9 pr-3.5 py-2 rounded-xl bg-white border border-[#2b1d14]/20 text-[#2b1d14] text-xs font-medium focus:outline-none focus:border-[#7c4a21] focus:ring-1 focus:ring-[#7c4a21]"
                 />
               </div>

@@ -161,6 +161,35 @@ export default function App() {
   const [reportCounter, setReportCounter] = useState(1);
   const [toast, setToast] = useState(null);
 
+  // Persistent Form Drafts across tab navigation (never resets on tab switch)
+  const [fpsDraft, setFpsDraft] = useState({
+    gameId: 'GM-501',
+    player: 'Falcon_Pilot',
+    hardware: 'RTX 4080 • Core i7-14700K',
+    resolution: '1440p QHD',
+    fps: 142,
+    cpu: 54,
+    gpu: 89,
+    crashed: false,
+  });
+
+  const [reviewDraft, setReviewDraft] = useState({
+    gameId: 'GM-501',
+    player: 'Falcon_Pilot',
+    rating: 4,
+    comment:
+      'Solid 120 FPS lock on 1440p High Preset. Frame generation remains clean without noticeable latency artifacts.',
+    selectedTags: ['RTX 4070 Tested', 'DLSS Enabled'],
+  });
+
+  // Sync draft player names with active logged-in user
+  useEffect(() => {
+    if (currentUser?.username) {
+      setFpsDraft((prev) => ({ ...prev, player: currentUser.username }));
+      setReviewDraft((prev) => ({ ...prev, player: currentUser.username }));
+    }
+  }, [currentUser]);
+
   // Persist all telemetry, reviews, moderation status, and games across browser refreshes
   useEffect(() => {
     try {
@@ -518,6 +547,8 @@ export default function App() {
                 games={games}
                 selectedGameId={selectedGameId}
                 onLogSession={handleLogSession}
+                draft={fpsDraft}
+                onDraftChange={setFpsDraft}
               />
             </AnimatedContent>
           )}
@@ -535,6 +566,8 @@ export default function App() {
                 selectedGameId={selectedGameId}
                 pendingCount={pendingCount}
                 onSubmitReview={handleSubmitReview}
+                draft={reviewDraft}
+                onDraftChange={setReviewDraft}
               />
             </AnimatedContent>
           )}

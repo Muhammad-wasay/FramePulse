@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const RESOLUTIONS = ['720p HD', '1080p FHD', '1440p QHD', '4K UHD'];
 
@@ -6,17 +6,34 @@ export default function LogSessionPage({
   games,
   selectedGameId,
   onLogSession,
+  draft,
+  onDraftChange,
 }) {
-  const [gameId, setGameId] = useState(
-    selectedGameId || games[0]?.gameId || 'GM-501'
-  );
-  const [player, setPlayer] = useState('NexusRider_42');
-  const [hardware, setHardware] = useState('RTX 4080 • Core i7-14700K');
-  const [resolution, setResolution] = useState('1440p QHD');
-  const [fps, setFps] = useState(142);
-  const [cpu, setCpu] = useState(54);
-  const [gpu, setGpu] = useState(89);
-  const [crashed, setCrashed] = useState(false);
+  const currentDraft = draft || {
+    gameId: selectedGameId || games[0]?.gameId || 'GM-501',
+    player: 'NexusRider_42',
+    hardware: 'RTX 4080 • Core i7-14700K',
+    resolution: '1440p QHD',
+    fps: 142,
+    cpu: 54,
+    gpu: 89,
+    crashed: false,
+  };
+
+  const updateField = (field, value) => {
+    if (onDraftChange) {
+      onDraftChange({ ...currentDraft, [field]: value });
+    }
+  };
+
+  const gameId = currentDraft.gameId || selectedGameId || games[0]?.gameId || 'GM-501';
+  const player = currentDraft.player ?? 'NexusRider_42';
+  const hardware = currentDraft.hardware ?? 'RTX 4080 • Core i7-14700K';
+  const resolution = currentDraft.resolution ?? '1440p QHD';
+  const fps = Number(currentDraft.fps ?? 142);
+  const cpu = Number(currentDraft.cpu ?? 54);
+  const gpu = Number(currentDraft.gpu ?? 89);
+  const crashed = Boolean(currentDraft.crashed);
 
   const fpsRatio = Math.min(fps / 144, 1.0);
   const fpsPoints = Number((fpsRatio * 70).toFixed(1));
@@ -82,7 +99,7 @@ export default function LogSessionPage({
               </label>
               <select
                 value={gameId}
-                onChange={(e) => setGameId(e.target.value)}
+                onChange={(e) => updateField('gameId', e.target.value)}
                 className="w-full px-3.5 py-2.5 rounded-xl bg-surface-container-low/80 border border-[#2b1d14]/15 font-body-md text-body-md font-semibold text-[#2b1d14] focus:bg-white focus:border-primary focus:outline-none transition-colors"
               >
                 {games.map((g) => (
@@ -100,7 +117,7 @@ export default function LogSessionPage({
               <input
                 type="text"
                 value={player}
-                onChange={(e) => setPlayer(e.target.value)}
+                onChange={(e) => updateField('player', e.target.value)}
                 required
                 className="w-full px-3.5 py-2.5 rounded-xl bg-surface-container-low/80 border border-[#2b1d14]/15 font-body-md text-body-md font-semibold text-[#2b1d14] focus:bg-white focus:border-primary focus:outline-none transition-colors"
               />
@@ -115,7 +132,7 @@ export default function LogSessionPage({
             <input
               type="text"
               value={hardware}
-              onChange={(e) => setHardware(e.target.value)}
+              onChange={(e) => updateField('hardware', e.target.value)}
               className="w-full px-3.5 py-2.5 rounded-xl bg-surface-container-low/80 border border-[#2b1d14]/15 font-body-md text-body-md text-[#2b1d14] focus:bg-white focus:border-primary focus:outline-none transition-colors"
             />
           </div>
@@ -130,7 +147,7 @@ export default function LogSessionPage({
                 <button
                   key={res}
                   type="button"
-                  onClick={() => setResolution(res)}
+                  onClick={() => updateField('resolution', res)}
                   className={`py-2.5 px-3 rounded-xl border font-label-md text-label-md uppercase font-semibold transition-all cursor-pointer ${
                     resolution === res
                       ? 'bg-[#7c4a21] text-white border-[#7c4a21] shadow-xs'
@@ -160,7 +177,7 @@ export default function LogSessionPage({
                 min="15"
                 max="240"
                 value={fps}
-                onChange={(e) => setFps(Number(e.target.value))}
+                onChange={(e) => updateField('fps', Number(e.target.value))}
                 className="w-full accent-[#7c4a21] cursor-pointer"
               />
             </div>
@@ -181,7 +198,7 @@ export default function LogSessionPage({
                   min="5"
                   max="100"
                   value={cpu}
-                  onChange={(e) => setCpu(Number(e.target.value))}
+                  onChange={(e) => updateField('cpu', Number(e.target.value))}
                   className="w-full accent-[#c88a52] cursor-pointer"
                 />
               </div>
@@ -200,7 +217,7 @@ export default function LogSessionPage({
                   min="5"
                   max="100"
                   value={gpu}
-                  onChange={(e) => setGpu(Number(e.target.value))}
+                  onChange={(e) => updateField('gpu', Number(e.target.value))}
                   className="w-full accent-[#d99b26] cursor-pointer"
                 />
               </div>
@@ -211,7 +228,7 @@ export default function LogSessionPage({
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-[#2b1d14]/10">
             <button
               type="button"
-              onClick={() => setCrashed((prev) => !prev)}
+              onClick={() => updateField('crashed', !crashed)}
               className={`px-4 py-2 rounded-xl border font-label-md text-label-md uppercase font-semibold transition-all cursor-pointer flex items-center gap-2 ${
                 crashed
                   ? 'bg-rose-100 text-rose-900 border-rose-700/20'
@@ -248,42 +265,35 @@ export default function LogSessionPage({
             <span className="font-headline-sm text-headline-sm text-[#2b1d14]">
               Live Score Preview
             </span>
-            <span className="material-symbols-outlined text-primary">
-              bolt
+            <span
+              className={`px-2.5 py-0.5 rounded-full font-label-sm text-label-sm border font-semibold ${tierInfo.badgeClass}`}
+            >
+              {tierInfo.text}
             </span>
           </div>
 
-          <div className="p-6 flex flex-col gap-5">
-            <div className="p-5 rounded-xl bg-surface-container-low/80 border border-[#2b1d14]/10 text-center">
-              <div className="font-display-hero text-display-hero text-[#2b1d14]">
+          <div className="p-5 flex flex-col gap-5">
+            <div className="flex flex-col items-center justify-center py-4 bg-surface-container-low/50 rounded-xl border border-[#2b1d14]/8">
+              <span className="text-4xl font-headline-lg font-black text-[#2b1d14]">
                 {totalScore}
-              </div>
-              <div className="font-label-sm text-label-sm uppercase text-on-surface-variant font-semibold">
+              </span>
+              <span className="font-label-sm text-label-sm uppercase text-on-surface-variant font-semibold">
                 Stability Score / 100
-              </div>
-              <div className="mt-3">
-                <span
-                  className={`inline-block px-3 py-1 rounded-full border font-label-sm text-label-sm font-semibold ${tierInfo.badgeClass}`}
-                >
-                  {tierInfo.text}
-                </span>
-              </div>
+              </span>
             </div>
 
-            <div className="flex flex-col gap-2 font-label-md text-label-md">
-              <div className="flex justify-between py-1.5 border-b border-[#2b1d14]/10">
-                <span className="text-on-surface-variant">FPS Score (70%)</span>
-                <span className="font-bold text-[#2b1d14]">+{fpsPoints} pts</span>
+            <div className="flex flex-col gap-3 font-body-sm text-body-sm text-on-surface-variant">
+              <div className="flex justify-between items-center pb-2 border-b border-[#2b1d14]/8">
+                <span>FPS Component (70 max)</span>
+                <span className="font-semibold text-[#2b1d14]">{fpsPoints} pts</span>
               </div>
-              <div className="flex justify-between py-1.5 border-b border-[#2b1d14]/10">
-                <span className="text-on-surface-variant">Crash Bonus (30%)</span>
-                <span className="font-bold text-[#2b1d14]">
-                  +{crashPoints} pts
-                </span>
+              <div className="flex justify-between items-center pb-2 border-b border-[#2b1d14]/8">
+                <span>Crash Penalty (30 max)</span>
+                <span className="font-semibold text-[#2b1d14]">{crashPoints} pts</span>
               </div>
-              <div className="flex justify-between py-1.5">
-                <span className="text-on-surface-variant">Resolution</span>
-                <span className="font-bold text-[#2b1d14]">{resolution}</span>
+              <div className="flex justify-between items-center">
+                <span>Selected Resolution</span>
+                <span className="font-semibold text-[#2b1d14]">{resolution}</span>
               </div>
             </div>
           </div>

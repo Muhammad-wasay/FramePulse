@@ -46,10 +46,22 @@ CREATE TABLE IF NOT EXISTS reviews (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
+-- 4. Users Table (Authentication & OOAD Profiles: Admin & Gamer)
+CREATE TABLE IF NOT EXISTS users (
+    user_id VARCHAR(50) PRIMARY KEY,
+    username VARCHAR(100) UNIQUE NOT NULL,
+    email VARCHAR(150),
+    role VARCHAR(50) NOT NULL DEFAULT 'Gamer',
+    badge VARCHAR(50) DEFAULT 'Verified Gamer',
+    play_time_hours NUMERIC(6, 1) DEFAULT 0.0,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
 -- Enable Row Level Security (RLS) but allow public read/insert for easy demo
 ALTER TABLE games ENABLE ROW LEVEL SECURITY;
 ALTER TABLE performance_sessions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE reviews ENABLE ROW LEVEL SECURITY;
+ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 
 -- Public access policies (Demo friendly)
 CREATE POLICY "Allow public read games" ON games FOR SELECT USING (true);
@@ -63,6 +75,10 @@ CREATE POLICY "Allow public read reviews" ON reviews FOR SELECT USING (true);
 CREATE POLICY "Allow public insert reviews" ON reviews FOR INSERT WITH CHECK (true);
 CREATE POLICY "Allow public update reviews" ON reviews FOR UPDATE USING (true);
 CREATE POLICY "Allow public delete reviews" ON reviews FOR DELETE USING (true);
+
+CREATE POLICY "Allow public read users" ON users FOR SELECT USING (true);
+CREATE POLICY "Allow public insert users" ON users FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow public update users" ON users FOR UPDATE USING (true);
 
 -- Seed Initial Game (matches OOAD Object Diagram: GM-501 Cyber Odyssey)
 INSERT INTO games (game_id, title, genre, release_date, engine_stack, patch_version, cover_url)
@@ -106,3 +122,10 @@ VALUES (
     'Verified Rig',
     '2026-10-10'
 ) ON CONFLICT (review_id) DO NOTHING;
+
+-- Seed Initial Users (Matches OOAD Object Diagram: A-101 admin_usman, G-201 shadow_ninja)
+INSERT INTO users (user_id, username, email, role, badge, play_time_hours)
+VALUES 
+  ('A-101', 'admin_usman', 'admin@gaming.org', 'Admin', 'A-101 ADMIN', 120.0),
+  ('G-201', 'shadow_ninja', 'gamer1@gmail.com', 'Gamer', 'G-201 GAMER', 45.5)
+ON CONFLICT (user_id) DO NOTHING;

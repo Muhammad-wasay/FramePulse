@@ -1,12 +1,12 @@
 import { supabase, isSupabaseConfigured } from './supabaseClient';
 
 /**
- * OOAD Default User Accounts matching:
+ * OOAD Diagram System Actors (Immutable)
  * - Diagram 1 (Class Diagram): Gamer & Admin inherit User
  * - Diagram 2 (Object Diagram): admin1 (A-101), gamer1 (G-201)
  * - Java AuthService.java: admin123, gamer123
  */
-export const DEFAULT_ACCOUNTS = [
+export const DEFAULT_ACCOUNTS = Object.freeze([
   {
     userId: 'A-101',
     username: 'admin_usman',
@@ -24,41 +24,81 @@ export const DEFAULT_ACCOUNTS = [
     badge: 'G-201 GAMER',
     playTimeHours: 45.5,
   },
-];
+]);
+
+const REGISTERED_USERS_KEY = 'framepulse_registered_users_v2';
+
+export function getRegisteredUsers() {
+  try {
+    const raw = localStorage.getItem(REGISTERED_USERS_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) return parsed;
+    }
+  } catch {
+    // Ignore storage parse error
+  }
+  return [];
+}
+
+function saveRegisteredUser(user) {
+  try {
+    const existing = getRegisteredUsers();
+    const updated = [...existing.filter((u) => u.username.toLowerCase() !== user.username.toLowerCase()), user];
+    localStorage.setItem(REGISTERED_USERS_KEY, JSON.stringify(updated));
+  } catch {
+    // Ignore storage write error
+  }
+}
 
 export async function authenticateUser(username, password) {
   const cleanUser = username?.trim().toLowerCase();
-  const found = DEFAULT_ACCOUNTS.find(
-    (acc) =>
-      acc.username.toLowerCase() === cleanUser && acc.password === password
-  );
+  if (!cleanUser || !password) {
+    return { success: false, error: 'Please enter both username and password.' };
+  }
 
-  if (found) {
-    const { password: _, ...safeUser } = found;
+  // 1. Check fixed system actors (admin_usman, shadow_ninja)
+  const defaultFound = DEFAULT_ACCOUNTS.find(
+    (acc) => acc.username.toLowerCase() === cleanUser && acc.password === password
+  );
+  if (defaultFound) {
+    const { password: _, ...safeUser } = defaultFound;
     return { success: true, user: safeUser };
   }
 
-  // Also check if user registered in Supabase auth if configured
+  // 2. Check local registered users store
+  const registered = getRegisteredUsers();
+  const regFound = registered.find(
+    (u) => u.username.toLowerCase() === cleanUser && u.password === password
+  );
+  if (regFound) {
+    const { password: _, ...safeUser } = regFound;
+    return { success: true, user: safeUser };
+  }
+
+  // 3. Check Supabase auth / users table if connected
   if (isSupabaseConfigured && supabase) {
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: username,
-        password: password,
-      });
-      if (!error && data?.user) {
+      const { data: supaUser } = await supabase
+        .from('users')
+        .select('*')
+        .ilike('username', cleanUser)
+        .maybeSingle();
+
+      if (supaUser) {
         return {
           success: true,
           user: {
-            userId: data.user.id.slice(0, 8),
-            username: data.user.email.split('@')[0],
-            email: data.user.email,
-            role: data.user.user_metadata?.role || 'Gamer',
-            badge: data.user.user_metadata?.role === 'Admin' ? 'ADMIN' : 'GAMER',
+            userId: supaUser.user_id,
+            username: supaUser.username,
+            email: supaUser.email,
+            role: supaUser.role || 'Gamer',
+            badge: supaUser.badge || 'Verified Gamer',
           },
         };
       }
     } catch {
-      // Ignore network errors and return failure
+      // Fallback seamlessly
     }
   }
 
@@ -68,46 +108,54 @@ export async function authenticateUser(username, password) {
 export async function registerNewUser({ username, email, password }) {
   const cleanUser = username?.trim();
   const cleanEmail = email?.trim().toLowerCase();
-  const role = 'Gamer'; // Public sign-up is strictly for Gamers; Admin accounts are pre-configured system roles
 
-  if (!cleanUser || !password) {
-    return { success: false, error: 'Username and password are required.' };
+  if (!cleanUser || cleanUser.length < 3) {
+    return { success: false, error: 'Username must be at least 3 characters.' };
   }
 
+  if (!password || password.length < 4) {
+    return { success: false, error: 'Please enter a password with at least 4 characters.' };
+  }
+
+  // Disallow taking system actor usernames
   if (DEFAULT_ACCOUNTS.some((acc) => acc.username.toLowerCase() === cleanUser.toLowerCase())) {
-    return { success: false, error: 'Username is already registered. Please choose another.' };
+    return { success: false, error: 'This username is reserved. Please pick another gamer tag.' };
   }
 
-  const gamerCount = DEFAULT_ACCOUNTS.filter((acc) => acc.role === 'Gamer').length;
-  const newUserId = `G-${201 + gamerCount}`;
+  const existingUsers = getRegisteredUsers();
+  if (existingUsers.some((u) => u.username.toLowerCase() === cleanUser.toLowerCase())) {
+    return { success: false, error: 'Gamer tag already registered. Please sign in or choose another.' };
+  }
 
+  const newUserId = `G-${202 + existingUsers.length}`;
   const newUser = {
     userId: newUserId,
     username: cleanUser,
-    password,
+    password: password.trim(),
     role: 'Gamer',
     email: cleanEmail || `${cleanUser.toLowerCase()}@framepulse.io`,
     badge: `${newUserId} GAMER`,
     playTimeHours: 0,
   };
 
-  DEFAULT_ACCOUNTS.push(newUser);
+  // Save to local registry
+  saveRegisteredUser(newUser);
 
-  // If Supabase configured, register with Supabase Auth too
-  if (isSupabaseConfigured && supabase && cleanEmail) {
+  // Sync to Supabase users table in background if configured
+  if (isSupabaseConfigured && supabase) {
     try {
-      await supabase.auth.signUp({
-        email: cleanEmail,
-        password,
-        options: {
-          data: {
-            username: cleanUser,
-            role,
-          },
+      await supabase.from('users').insert([
+        {
+          user_id: newUserId,
+          username: cleanUser,
+          email: newUser.email,
+          role: 'Gamer',
+          badge: `${newUserId} GAMER`,
+          play_time_hours: 0,
         },
-      });
+      ]);
     } catch {
-      // Fallback seamlessly
+      // Non-blocking
     }
   }
 

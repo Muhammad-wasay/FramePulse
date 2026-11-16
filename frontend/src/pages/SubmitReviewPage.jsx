@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const QUICK_TAGS = [
   'RTX 4070 Tested',
@@ -13,27 +13,38 @@ export default function SubmitReviewPage({
   selectedGameId,
   pendingCount,
   onSubmitReview,
+  draft,
+  onDraftChange,
 }) {
-  const [gameId, setGameId] = useState(
-    selectedGameId || games[0]?.gameId || 'GM-501'
-  );
-  const [player, setPlayer] = useState('Falcon_Pilot');
-  const [rating, setRating] = useState(4);
-  const [comment, setComment] = useState(
-    'Solid 120 FPS lock on 1440p High Preset. Frame generation remains clean without noticeable latency artifacts.'
-  );
-  const [selectedTags, setSelectedTags] = useState([
-    'RTX 4070 Tested',
-    'DLSS Enabled',
-  ]);
+  const currentDraft = draft || {
+    gameId: selectedGameId || games[0]?.gameId || 'GM-501',
+    player: 'Falcon_Pilot',
+    rating: 4,
+    comment:
+      'Solid 120 FPS lock on 1440p High Preset. Frame generation remains clean without noticeable latency artifacts.',
+    selectedTags: ['RTX 4070 Tested', 'DLSS Enabled'],
+  };
+
+  const updateField = (field, value) => {
+    if (onDraftChange) {
+      onDraftChange({ ...currentDraft, [field]: value });
+    }
+  };
+
+  const gameId = currentDraft.gameId || selectedGameId || games[0]?.gameId || 'GM-501';
+  const player = currentDraft.player ?? 'Falcon_Pilot';
+  const rating = Number(currentDraft.rating ?? 4);
+  const comment = currentDraft.comment ?? '';
+  const selectedTags = currentDraft.selectedTags || [];
 
   const selectedGame =
     games.find((g) => g.gameId === gameId) || games[0] || {};
 
   const toggleTag = (tag) => {
-    setSelectedTags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
-    );
+    const updated = selectedTags.includes(tag)
+      ? selectedTags.filter((t) => t !== tag)
+      : [...selectedTags, tag];
+    updateField('selectedTags', updated);
   };
 
   const handleSubmit = (e) => {
@@ -48,7 +59,7 @@ export default function SubmitReviewPage({
       tags: selectedTags,
       hardwareSpec: selectedTags.slice(0, 2).join(' • ') || 'Verified PC Rig',
     });
-    setComment('');
+    updateField('comment', '');
   };
 
   return (
@@ -77,7 +88,7 @@ export default function SubmitReviewPage({
               </label>
               <select
                 value={gameId}
-                onChange={(e) => setGameId(e.target.value)}
+                onChange={(e) => updateField('gameId', e.target.value)}
                 className="w-full px-3.5 py-2.5 rounded-xl bg-surface-container-low/80 border border-[#2b1d14]/15 font-body-md text-body-md font-semibold text-[#2b1d14] focus:bg-white focus:border-primary focus:outline-none transition-colors"
               >
                 {games.map((g) => (
@@ -95,7 +106,7 @@ export default function SubmitReviewPage({
               <input
                 type="text"
                 value={player}
-                onChange={(e) => setPlayer(e.target.value)}
+                onChange={(e) => updateField('player', e.target.value)}
                 required
                 className="w-full px-3.5 py-2.5 rounded-xl bg-surface-container-low/80 border border-[#2b1d14]/15 font-body-md text-body-md font-semibold text-[#2b1d14] focus:bg-white focus:border-primary focus:outline-none transition-colors"
               />
@@ -114,7 +125,7 @@ export default function SubmitReviewPage({
                   <button
                     key={star}
                     type="button"
-                    onClick={() => setRating(star)}
+                    onClick={() => updateField('rating', star)}
                     className={`w-12 h-12 rounded-xl border flex items-center justify-center transition-all hover:-translate-y-0.5 cursor-pointer ${
                       active
                         ? 'bg-amber-100/90 text-[#d99b26] border-amber-700/25 shadow-xs'
@@ -173,7 +184,7 @@ export default function SubmitReviewPage({
               rows={4}
               maxLength={300}
               value={comment}
-              onChange={(e) => setComment(e.target.value)}
+              onChange={(e) => updateField('comment', e.target.value)}
               required
               placeholder="Share your FPS stability and gameplay experience..."
               className="w-full p-3.5 rounded-xl bg-surface-container-low/80 border border-[#2b1d14]/15 font-body-md text-body-md text-[#2b1d14] focus:bg-white focus:border-primary focus:outline-none resize-none transition-colors"
