@@ -1,15 +1,27 @@
 import React, { useState } from 'react';
-import { DEFAULT_ACCOUNTS, authenticateUser } from '../services/supabaseService';
+import {
+  DEFAULT_ACCOUNTS,
+  authenticateUser,
+  registerNewUser,
+} from '../services/supabaseService';
 
-export default function LoginModal({ isOpen, currentUser, onLoginSuccess, onClose }) {
+export default function LoginModal({
+  isOpen,
+  currentUser,
+  onLoginSuccess,
+  onClose,
+}) {
+  const [mode, setMode] = useState('signin'); // 'signin' | 'signup'
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('Gamer'); // 'Gamer' | 'Admin'
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   if (!isOpen) return null;
 
-  const handleSubmit = async (e) => {
+  const handleSignIn = async (e) => {
     e?.preventDefault();
     setError('');
     setLoading(true);
@@ -19,12 +31,33 @@ export default function LoginModal({ isOpen, currentUser, onLoginSuccess, onClos
 
     if (result.success) {
       onLoginSuccess(result.user);
-      setUsername('');
-      setPassword('');
-      setError('');
+      resetForm();
     } else {
       setError(result.error || 'Invalid credentials. Please retry.');
     }
+  };
+
+  const handleSignUp = async (e) => {
+    e?.preventDefault();
+    setError('');
+    setLoading(true);
+
+    const result = await registerNewUser({ username, email, password, role });
+    setLoading(false);
+
+    if (result.success) {
+      onLoginSuccess(result.user);
+      resetForm();
+    } else {
+      setError(result.error || 'Failed to create account. Please retry.');
+    }
+  };
+
+  const resetForm = () => {
+    setUsername('');
+    setEmail('');
+    setPassword('');
+    setError('');
   };
 
   const handleQuickLogin = (account) => {
@@ -42,46 +75,89 @@ export default function LoginModal({ isOpen, currentUser, onLoginSuccess, onClos
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto p-4 flex items-center justify-center bg-[#2b1d14]/65 backdrop-blur-sm animate-fade-in">
+    <div
+      className="fixed inset-0 z-50 overflow-y-auto p-4 flex items-center justify-center bg-[#2b1d14]/65 backdrop-blur-sm animate-fade-in"
+      onClick={onClose}
+    >
       <div
-        className="relative w-full max-w-md my-auto max-h-[92vh] overflow-y-auto rounded-3xl bg-[#FAF7F3] border border-[#2b1d14]/20 p-5 sm:p-6 shadow-2xl transition-all"
+        className="relative w-full max-w-md my-auto max-h-[94vh] overflow-y-auto rounded-3xl bg-[#FAF7F3] border border-[#2b1d14]/20 p-5 sm:p-6 shadow-2xl transition-all"
         style={{
           boxShadow: '0 25px 50px -12px rgba(43, 29, 20, 0.35)',
         }}
+        onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button if user is already logged in */}
-        {currentUser && (
-          <button
-            type="button"
-            onClick={onClose}
-            className="absolute top-4 right-4 w-7 h-7 rounded-full border border-[#2b1d14]/15 bg-white/80 hover:bg-white text-[#2b1d14] flex items-center justify-center transition-colors cursor-pointer"
-          >
-            <span className="material-symbols-outlined text-[16px]">close</span>
-          </button>
-        )}
+        {/* Always Visible Close Button */}
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute top-4 right-4 w-8 h-8 rounded-full border border-[#2b1d14]/15 bg-white/90 hover:bg-white text-[#2b1d14] flex items-center justify-center transition-all cursor-pointer shadow-xs hover:scale-105 z-10"
+          title="Close dialog"
+        >
+          <span className="material-symbols-outlined text-[18px]">close</span>
+        </button>
 
-        {/* Modal Header with Real FramePulse Logo */}
+        {/* Modal Header with Clean FP Favicon Emblem */}
         <div className="text-center mb-4">
-          <div className="flex items-center justify-center mb-2.5">
-            <img
-              src="/logo/logo.png"
-              alt="FramePulse"
-              className="h-9 sm:h-10 w-auto object-contain"
-              onError={(e) => {
-                // Graceful fallback to favicon emblem if full logo missing
-                e.currentTarget.src = '/logo/favicon.png';
-              }}
-            />
+          <div className="flex items-center justify-center mb-2">
+            <div className="w-12 h-12 rounded-2xl bg-[#1a120c] border border-[#2b1d14]/25 flex items-center justify-center shadow-sm p-1.5">
+              <img
+                src="/logo/favicon.png"
+                alt="FP Logo"
+                className="w-full h-full object-contain"
+              />
+            </div>
           </div>
           <h2
             className="text-xl font-black text-[#2b1d14] tracking-tight uppercase"
             style={{ fontFamily: "'Archivo Black', sans-serif" }}
           >
-            Sign In to Frame<span className="text-[#8b5a2b]">Pulse</span>
+            {mode === 'signin' ? (
+              <>
+                Sign In to Frame<span className="text-[#8b5a2b]">Pulse</span>
+              </>
+            ) : (
+              <>
+                Create an <span className="text-[#8b5a2b]">Account</span>
+              </>
+            )}
           </h2>
           <p className="text-xs text-[#6e5849] mt-0.5 font-medium">
-            Access game telemetry, hardware logs & reviews
+            {mode === 'signin'
+              ? 'Access game telemetry, hardware logs & reviews'
+              : 'Join as a Gamer or Admin to track game metrics'}
           </p>
+        </div>
+
+        {/* Sign In vs Sign Up Tab Switcher */}
+        <div className="grid grid-cols-2 p-1 rounded-xl bg-[#2b1d14]/8 border border-[#2b1d14]/10 mb-4">
+          <button
+            type="button"
+            onClick={() => {
+              setMode('signin');
+              setError('');
+            }}
+            className={`py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+              mode === 'signin'
+                ? 'bg-white text-[#2b1d14] shadow-xs'
+                : 'text-[#6e5849] hover:text-[#2b1d14]'
+            }`}
+          >
+            Sign In
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setMode('signup');
+              setError('');
+            }}
+            className={`py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+              mode === 'signup'
+                ? 'bg-white text-[#2b1d14] shadow-xs'
+                : 'text-[#6e5849] hover:text-[#2b1d14]'
+            }`}
+          >
+            Create Account
+          </button>
         </div>
 
         {/* Error Alert */}
@@ -94,61 +170,184 @@ export default function LoginModal({ isOpen, currentUser, onLoginSuccess, onClos
           </div>
         )}
 
-        {/* Login Form */}
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <div>
-            <label className="block text-[10px] font-bold uppercase tracking-wider text-[#6e5849] mb-1">
-              Username
-            </label>
-            <div className="relative">
-              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[17px] text-[#8c7464]">
-                person
-              </span>
-              <input
-                type="text"
-                required
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="e.g. shadow_ninja or admin_usman"
-                className="w-full pl-9 pr-3.5 py-2 rounded-xl bg-white border border-[#2b1d14]/20 text-[#2b1d14] text-xs font-medium focus:outline-none focus:border-[#7c4a21] focus:ring-1 focus:ring-[#7c4a21]"
-              />
+        {/* Sign In Form */}
+        {mode === 'signin' ? (
+          <form onSubmit={handleSignIn} className="space-y-3">
+            <div>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-[#6e5849] mb-1">
+                Username
+              </label>
+              <div className="relative">
+                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[17px] text-[#8c7464]">
+                  person
+                </span>
+                <input
+                  type="text"
+                  required
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="e.g. shadow_ninja or admin_usman"
+                  className="w-full pl-9 pr-3.5 py-2 rounded-xl bg-white border border-[#2b1d14]/20 text-[#2b1d14] text-xs font-medium focus:outline-none focus:border-[#7c4a21] focus:ring-1 focus:ring-[#7c4a21]"
+                />
+              </div>
             </div>
-          </div>
 
-          <div>
-            <label className="block text-[10px] font-bold uppercase tracking-wider text-[#6e5849] mb-1">
-              Password
-            </label>
-            <div className="relative">
-              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[17px] text-[#8c7464]">
-                key
-              </span>
-              <input
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter password"
-                className="w-full pl-9 pr-3.5 py-2 rounded-xl bg-white border border-[#2b1d14]/20 text-[#2b1d14] text-xs font-medium focus:outline-none focus:border-[#7c4a21] focus:ring-1 focus:ring-[#7c4a21]"
-              />
+            <div>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-[#6e5849] mb-1">
+                Password
+              </label>
+              <div className="relative">
+                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[17px] text-[#8c7464]">
+                  key
+                </span>
+                <input
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter password"
+                  className="w-full pl-9 pr-3.5 py-2 rounded-xl bg-white border border-[#2b1d14]/20 text-[#2b1d14] text-xs font-medium focus:outline-none focus:border-[#7c4a21] focus:ring-1 focus:ring-[#7c4a21]"
+                />
+              </div>
             </div>
-          </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full mt-1 py-2.5 rounded-xl bg-[#7c4a21] hover:bg-[#633a17] text-white font-bold text-xs uppercase tracking-wider border border-[#2b1d14]/50 shadow-sm transition-all cursor-pointer flex items-center justify-center gap-1.5"
-          >
-            {loading ? (
-              <span>Authenticating...</span>
-            ) : (
-              <>
-                <span className="material-symbols-outlined text-[17px]">login</span>
-                <span>Sign In to System</span>
-              </>
-            )}
-          </button>
-        </form>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full mt-1 py-2.5 rounded-xl bg-[#7c4a21] hover:bg-[#633a17] text-white font-bold text-xs uppercase tracking-wider border border-[#2b1d14]/50 shadow-sm transition-all cursor-pointer flex items-center justify-center gap-1.5"
+            >
+              {loading ? (
+                <span>Authenticating...</span>
+              ) : (
+                <>
+                  <span className="material-symbols-outlined text-[17px]">login</span>
+                  <span>Sign In to System</span>
+                </>
+              )}
+            </button>
+          </form>
+        ) : (
+          /* Sign Up Form */
+          <form onSubmit={handleSignUp} className="space-y-3">
+            <div>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-[#6e5849] mb-1">
+                Choose Username
+              </label>
+              <div className="relative">
+                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[17px] text-[#8c7464]">
+                  badge
+                </span>
+                <input
+                  type="text"
+                  required
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="e.g. cyber_pilot"
+                  className="w-full pl-9 pr-3.5 py-2 rounded-xl bg-white border border-[#2b1d14]/20 text-[#2b1d14] text-xs font-medium focus:outline-none focus:border-[#7c4a21] focus:ring-1 focus:ring-[#7c4a21]"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-[#6e5849] mb-1">
+                Email Address
+              </label>
+              <div className="relative">
+                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[17px] text-[#8c7464]">
+                  mail
+                </span>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="e.g. pilot@gaming.org"
+                  className="w-full pl-9 pr-3.5 py-2 rounded-xl bg-white border border-[#2b1d14]/20 text-[#2b1d14] text-xs font-medium focus:outline-none focus:border-[#7c4a21] focus:ring-1 focus:ring-[#7c4a21]"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-[#6e5849] mb-1">
+                Password
+              </label>
+              <div className="relative">
+                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[17px] text-[#8c7464]">
+                  lock
+                </span>
+                <input
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Create a strong password"
+                  className="w-full pl-9 pr-3.5 py-2 rounded-xl bg-white border border-[#2b1d14]/20 text-[#2b1d14] text-xs font-medium focus:outline-none focus:border-[#7c4a21] focus:ring-1 focus:ring-[#7c4a21]"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-[#6e5849] mb-1">
+                Select Role (OOAD Class Hierarchy)
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setRole('Gamer')}
+                  className={`p-2 rounded-xl border text-left cursor-pointer transition-all ${
+                    role === 'Gamer'
+                      ? 'bg-white border-[#7c4a21] ring-1 ring-[#7c4a21]'
+                      : 'bg-white/60 border-[#2b1d14]/15 hover:bg-white'
+                  }`}
+                >
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-[#2b1d14]">
+                    <span className="material-symbols-outlined text-[16px] text-[#7c4a21]">
+                      sports_esports
+                    </span>
+                    <span>Gamer</span>
+                  </div>
+                  <div className="text-[9px] text-[#6e5849] mt-0.5">
+                    Log FPS & Submit Reviews
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setRole('Admin')}
+                  className={`p-2 rounded-xl border text-left cursor-pointer transition-all ${
+                    role === 'Admin'
+                      ? 'bg-white border-[#7c4a21] ring-1 ring-[#7c4a21]'
+                      : 'bg-white/60 border-[#2b1d14]/15 hover:bg-white'
+                  }`}
+                >
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-[#2b1d14]">
+                    <span className="material-symbols-outlined text-[16px] text-amber-700">
+                      shield_person
+                    </span>
+                    <span>Admin</span>
+                  </div>
+                  <div className="text-[9px] text-[#6e5849] mt-0.5">
+                    Moderate & Manage Games
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full mt-2 py-2.5 rounded-xl bg-[#7c4a21] hover:bg-[#633a17] text-white font-bold text-xs uppercase tracking-wider border border-[#2b1d14]/50 shadow-sm transition-all cursor-pointer flex items-center justify-center gap-1.5"
+            >
+              {loading ? (
+                <span>Registering...</span>
+              ) : (
+                <>
+                  <span className="material-symbols-outlined text-[17px]">person_add</span>
+                  <span>Create {role} Account</span>
+                </>
+              )}
+            </button>
+          </form>
+        )}
 
         {/* Quick Demo Access (Gamer & Admin) */}
         <div className="mt-4 pt-3.5 border-t border-[#2b1d14]/10">

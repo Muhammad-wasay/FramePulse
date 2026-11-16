@@ -118,8 +118,8 @@ export default function App() {
     } catch {
       // Fallback
     }
-    // Default to Gamer (shadow_ninja, G-201 from Object Diagram)
-    return DEFAULT_ACCOUNTS[1];
+    // Start unauthenticated so user can explicitly Sign In or Sign Up
+    return null;
   });
 
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -253,11 +253,10 @@ export default function App() {
     setCurrentUser(null);
     showToast(
       'Logged Out',
-      'Session ended. Please sign in to access privileged actions.',
+      'Session ended. You are now browsing as Guest.',
       'warning',
       'logout'
     );
-    setIsLoginModalOpen(true);
   };
 
   const handleLogSession = async (sessionPayload) => {

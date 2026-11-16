@@ -65,6 +65,56 @@ export async function authenticateUser(username, password) {
   return { success: false, error: 'Invalid username or password. Check credentials and retry.' };
 }
 
+export async function registerNewUser({ username, email, password, role = 'Gamer' }) {
+  const cleanUser = username?.trim();
+  const cleanEmail = email?.trim().toLowerCase();
+
+  if (!cleanUser || !password) {
+    return { success: false, error: 'Username and password are required.' };
+  }
+
+  if (DEFAULT_ACCOUNTS.some((acc) => acc.username.toLowerCase() === cleanUser.toLowerCase())) {
+    return { success: false, error: 'Username is already registered. Please choose another.' };
+  }
+
+  const rolePrefix = role === 'Admin' ? 'A-' : 'G-';
+  const roleCount = DEFAULT_ACCOUNTS.filter((acc) => acc.role === role).length;
+  const newUserId = `${rolePrefix}${role === 'Admin' ? 101 + roleCount : 201 + roleCount}`;
+
+  const newUser = {
+    userId: newUserId,
+    username: cleanUser,
+    password,
+    role,
+    email: cleanEmail || `${cleanUser.toLowerCase()}@framepulse.io`,
+    badge: `${newUserId} ${role === 'Admin' ? 'ADMIN' : 'GAMER'}`,
+    playTimeHours: 0,
+  };
+
+  DEFAULT_ACCOUNTS.push(newUser);
+
+  // If Supabase configured, register with Supabase Auth too
+  if (isSupabaseConfigured && supabase && cleanEmail) {
+    try {
+      await supabase.auth.signUp({
+        email: cleanEmail,
+        password,
+        options: {
+          data: {
+            username: cleanUser,
+            role,
+          },
+        },
+      });
+    } catch {
+      // Fallback seamlessly
+    }
+  }
+
+  const { password: _, ...safeUser } = newUser;
+  return { success: true, user: safeUser };
+}
+
 // Fetch all data from Supabase
 export async function fetchSupabaseData() {
   if (!isSupabaseConfigured || !supabase) return null;

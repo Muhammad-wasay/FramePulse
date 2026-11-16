@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const NAV_ITEMS = [
-  { id: 'analytics-dashboard', label: 'Dashboard', icon: 'monitoring', roles: ['Admin', 'Gamer'] },
+  { id: 'analytics-dashboard', label: 'Dashboard', icon: 'monitoring', roles: ['Admin', 'Gamer', 'Guest'] },
   { id: 'log-fps-session', label: 'Log FPS', icon: 'speed', roles: ['Admin', 'Gamer'] },
   { id: 'submit-review', label: 'Submit Review', icon: 'rate_review', roles: ['Admin', 'Gamer'] },
   { id: 'admin-moderation', label: 'Moderation', icon: 'gavel', hasBadge: true, roles: ['Admin'] },
@@ -19,10 +19,14 @@ export default function Header({
   onLogout,
 }) {
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
-  const userRole = currentUser?.role || 'Gamer';
+  const userRole = currentUser?.role || 'Guest';
 
   const handleNavClick = (item) => {
     if (item.roles && !item.roles.includes(userRole)) {
+      if (!currentUser) {
+        onOpenLogin();
+        return;
+      }
       alert(`Access Restricted: "${item.label}" requires Admin privileges (OOAD Use Case Diagram).`);
       return;
     }
