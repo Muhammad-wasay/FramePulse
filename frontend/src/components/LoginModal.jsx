@@ -15,7 +15,6 @@ export default function LoginModal({
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('Gamer'); // 'Gamer' | 'Admin'
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -42,7 +41,7 @@ export default function LoginModal({
     setError('');
     setLoading(true);
 
-    const result = await registerNewUser({ username, email, password, role });
+    const result = await registerNewUser({ username, email, password });
     setLoading(false);
 
     if (result.success) {
@@ -117,18 +116,18 @@ export default function LoginModal({
               </>
             ) : (
               <>
-                Create an <span className="text-[#8b5a2b]">Account</span>
+                Gamer <span className="text-[#8b5a2b]">Sign Up</span>
               </>
             )}
           </h2>
           <p className="text-xs text-[#6e5849] mt-0.5 font-medium">
             {mode === 'signin'
               ? 'Access game telemetry, hardware logs & reviews'
-              : 'Join as a Gamer or Admin to track game metrics'}
+              : 'Create your Gamer profile to log telemetry & review games'}
           </p>
         </div>
 
-        {/* Sign In vs Sign Up Tab Switcher */}
+        {/* Sign In vs Gamer Sign Up Tab Switcher */}
         <div className="grid grid-cols-2 p-1 rounded-xl bg-[#2b1d14]/8 border border-[#2b1d14]/10 mb-4">
           <button
             type="button"
@@ -156,7 +155,7 @@ export default function LoginModal({
                 : 'text-[#6e5849] hover:text-[#2b1d14]'
             }`}
           >
-            Create Account
+            Gamer Sign Up
           </button>
         </div>
 
@@ -227,22 +226,22 @@ export default function LoginModal({
             </button>
           </form>
         ) : (
-          /* Sign Up Form */
+          /* Gamer Sign Up Form (Public registration strictly creates Gamer profiles) */
           <form onSubmit={handleSignUp} className="space-y-3">
             <div>
               <label className="block text-[10px] font-bold uppercase tracking-wider text-[#6e5849] mb-1">
-                Choose Username
+                Choose Gamer Tag / Username
               </label>
               <div className="relative">
                 <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[17px] text-[#8c7464]">
-                  badge
+                  sports_esports
                 </span>
                 <input
                   type="text"
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="e.g. cyber_pilot"
+                  placeholder="e.g. cyber_sniper"
                   className="w-full pl-9 pr-3.5 py-2 rounded-xl bg-white border border-[#2b1d14]/20 text-[#2b1d14] text-xs font-medium focus:outline-none focus:border-[#7c4a21] focus:ring-1 focus:ring-[#7c4a21]"
                 />
               </div>
@@ -260,7 +259,7 @@ export default function LoginModal({
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="e.g. pilot@gaming.org"
+                  placeholder="e.g. sniper@gaming.org"
                   className="w-full pl-9 pr-3.5 py-2 rounded-xl bg-white border border-[#2b1d14]/20 text-[#2b1d14] text-xs font-medium focus:outline-none focus:border-[#7c4a21] focus:ring-1 focus:ring-[#7c4a21]"
                 />
               </div>
@@ -279,56 +278,9 @@ export default function LoginModal({
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Create a strong password"
+                  placeholder="Create password"
                   className="w-full pl-9 pr-3.5 py-2 rounded-xl bg-white border border-[#2b1d14]/20 text-[#2b1d14] text-xs font-medium focus:outline-none focus:border-[#7c4a21] focus:ring-1 focus:ring-[#7c4a21]"
                 />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-[10px] font-bold uppercase tracking-wider text-[#6e5849] mb-1">
-                Select Role (OOAD Class Hierarchy)
-              </label>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setRole('Gamer')}
-                  className={`p-2 rounded-xl border text-left cursor-pointer transition-all ${
-                    role === 'Gamer'
-                      ? 'bg-white border-[#7c4a21] ring-1 ring-[#7c4a21]'
-                      : 'bg-white/60 border-[#2b1d14]/15 hover:bg-white'
-                  }`}
-                >
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-[#2b1d14]">
-                    <span className="material-symbols-outlined text-[16px] text-[#7c4a21]">
-                      sports_esports
-                    </span>
-                    <span>Gamer</span>
-                  </div>
-                  <div className="text-[9px] text-[#6e5849] mt-0.5">
-                    Log FPS & Submit Reviews
-                  </div>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setRole('Admin')}
-                  className={`p-2 rounded-xl border text-left cursor-pointer transition-all ${
-                    role === 'Admin'
-                      ? 'bg-white border-[#7c4a21] ring-1 ring-[#7c4a21]'
-                      : 'bg-white/60 border-[#2b1d14]/15 hover:bg-white'
-                  }`}
-                >
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-[#2b1d14]">
-                    <span className="material-symbols-outlined text-[16px] text-amber-700">
-                      shield_person
-                    </span>
-                    <span>Admin</span>
-                  </div>
-                  <div className="text-[9px] text-[#6e5849] mt-0.5">
-                    Moderate & Manage Games
-                  </div>
-                </button>
               </div>
             </div>
 
@@ -342,17 +294,17 @@ export default function LoginModal({
               ) : (
                 <>
                   <span className="material-symbols-outlined text-[17px]">person_add</span>
-                  <span>Create {role} Account</span>
+                  <span>Create Gamer Account</span>
                 </>
               )}
             </button>
           </form>
         )}
 
-        {/* Quick Demo Access (Gamer & Admin) */}
+        {/* Quick Demo Access (Pre-Configured System Actors) */}
         <div className="mt-4 pt-3.5 border-t border-[#2b1d14]/10">
           <p className="text-[10px] font-bold uppercase tracking-wider text-[#8c7464] text-center mb-2">
-            Fast Demo Access
+            Fast Demo Access (Diagram Actors)
           </p>
           <div className="grid grid-cols-2 gap-2">
             {DEFAULT_ACCOUNTS.map((acc) => {

@@ -65,9 +65,10 @@ export async function authenticateUser(username, password) {
   return { success: false, error: 'Invalid username or password. Check credentials and retry.' };
 }
 
-export async function registerNewUser({ username, email, password, role = 'Gamer' }) {
+export async function registerNewUser({ username, email, password }) {
   const cleanUser = username?.trim();
   const cleanEmail = email?.trim().toLowerCase();
+  const role = 'Gamer'; // Public sign-up is strictly for Gamers; Admin accounts are pre-configured system roles
 
   if (!cleanUser || !password) {
     return { success: false, error: 'Username and password are required.' };
@@ -77,17 +78,16 @@ export async function registerNewUser({ username, email, password, role = 'Gamer
     return { success: false, error: 'Username is already registered. Please choose another.' };
   }
 
-  const rolePrefix = role === 'Admin' ? 'A-' : 'G-';
-  const roleCount = DEFAULT_ACCOUNTS.filter((acc) => acc.role === role).length;
-  const newUserId = `${rolePrefix}${role === 'Admin' ? 101 + roleCount : 201 + roleCount}`;
+  const gamerCount = DEFAULT_ACCOUNTS.filter((acc) => acc.role === 'Gamer').length;
+  const newUserId = `G-${201 + gamerCount}`;
 
   const newUser = {
     userId: newUserId,
     username: cleanUser,
     password,
-    role,
+    role: 'Gamer',
     email: cleanEmail || `${cleanUser.toLowerCase()}@framepulse.io`,
-    badge: `${newUserId} ${role === 'Admin' ? 'ADMIN' : 'GAMER'}`,
+    badge: `${newUserId} GAMER`,
     playTimeHours: 0,
   };
 
