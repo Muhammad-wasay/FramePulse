@@ -44,7 +44,12 @@ export function getRegisteredUsers() {
 function saveRegisteredUser(user) {
   try {
     const existing = getRegisteredUsers();
-    const updated = [...existing.filter((u) => u.username.toLowerCase() !== user.username.toLowerCase()), user];
+    const updated = [
+      ...existing.filter(
+        (u) => u.username.toLowerCase() !== user.username.toLowerCase()
+      ),
+      user,
+    ];
     localStorage.setItem(REGISTERED_USERS_KEY, JSON.stringify(updated));
   } catch {
     // Ignore storage write error
@@ -76,7 +81,7 @@ export async function authenticateUser(username, password) {
     return { success: true, user: safeUser };
   }
 
-  // 3. Check Supabase auth / users table if connected
+  // 3. Check Supabase users table
   if (isSupabaseConfigured && supabase) {
     try {
       const { data: supaUser } = await supabase
@@ -141,7 +146,7 @@ export async function registerNewUser({ username, email, password }) {
   // Save to local registry
   saveRegisteredUser(newUser);
 
-  // Sync to Supabase users table in background if configured
+  // Sync to Supabase users table
   if (isSupabaseConfigured && supabase) {
     try {
       await supabase.from('users').insert([
@@ -154,8 +159,8 @@ export async function registerNewUser({ username, email, password }) {
           play_time_hours: 0,
         },
       ]);
-    } catch {
-      // Non-blocking
+    } catch (err) {
+      console.warn('Supabase sync warning:', err);
     }
   }
 
@@ -172,7 +177,7 @@ export async function fetchSupabaseData() {
       .from('games')
       .select('*');
 
-    if (gamesErr || !gamesData) return null;
+    if (gamesErr || !gamesData || gamesData.length === 0) return null;
 
     const { data: sessionsData } = await supabase
       .from('performance_sessions')
@@ -182,11 +187,51 @@ export async function fetchSupabaseData() {
       .from('reviews')
       .select('*');
 
-    return {
-      games: gamesData,
-      sessions: sessionsData || [],
-      reviews: reviewsData || [],
-    };
+    const merged = gamesData.map((g) => {
+      const gSessions = (sessionsData || [])
+        .filter((s) => s.game_id === g.game_id)
+        .map((s) => ({
+          logId: s.log_id,
+          gameId: s.game_id,
+          runNumber: s.run_number,
+          player: s.player,
+          hardware: s.hardware,
+          resolution: s.resolution,
+          averageFps: Number(s.avg_fps),
+          onePercentLow: Number(s.fps_1percent_low || s.avg_fps * 0.8),
+          cpuUsagePercent: Number(s.cpu_usage || 50),
+          gpuUsagePercent: Number(s.gpu_usage || 80),
+          crashed: Boolean(s.is_crashed),
+          timestamp: s.logged_at ? new Date(s.logged_at).toLocaleDateString() : 'Just now',
+        }));
+
+      const gReviews = (reviewsData || [])
+        .filter((r) => r.game_id === g.game_id)
+        .map((r) => ({
+          reviewId: r.review_id,
+          gameId: r.game_id,
+          player: r.player,
+          rating: Number(r.rating),
+          comment: r.comment,
+          status: r.status,
+          roleBadge: r.role_badge,
+          timestamp: r.submission_date || 'Oct 2026',
+        }));
+
+      return {
+        gameId: g.game_id,
+        title: g.title,
+        genre: g.genre,
+        releaseDate: g.release_date,
+        engineStack: g.engine_stack,
+        patchVersion: g.patch_version,
+        coverUrl: g.cover_url,
+        sessions: gSessions,
+        reviews: gReviews,
+      };
+    });
+
+    return merged;
   } catch {
     return null;
   }
@@ -204,10 +249,10 @@ export async function syncSessionToSupabase(session) {
         player: session.player,
         hardware: session.hardware,
         resolution: session.resolution,
-        avg_fps: session.fps,
-        fps_1percent_low: session.low1Percent || session.fps * 0.85,
-        cpu_usage: session.cpu,
-        gpu_usage: session.gpu,
+        avg_fps: session.averageFps || session.fps,
+        fps_1percent_low: session.onePercentLow || (session.averageFps || session.fps) * 0.85,
+        cpu_usage: session.cpuUsagePercent || session.cpu || 50,
+        gpu_usage: session.gpuUsagePercent || session.gpu || 80,
         vram_used: session.vram || '8.0 GB',
         stability_status: session.stability || 'Optimal',
         is_crashed: Boolean(session.crashed),
